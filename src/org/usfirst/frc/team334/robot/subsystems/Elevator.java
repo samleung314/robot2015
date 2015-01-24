@@ -17,7 +17,7 @@ public class Elevator {
 	public void elevatorUp() // Makes Elevator go up
 	{
 		if (!lock) {
-			robot.mech.manualVicsElevator(1);
+			manualVicsElevator(1);
 			moving = true;
 		}
 	}
@@ -25,14 +25,14 @@ public class Elevator {
 	public void elevatorDown() // Makes Elevator go down
 	{
 		if (!lock) {
-			robot.mech.manualVicsElevator(-1);
+			manualVicsElevator(-1);
 			moving = true;
 		}
 	}
 
 	public void elevatorStop() // Makes Elevator stay still
 	{
-		robot.mech.manualVicsElevator(0);
+		manualVicsElevator(0);
 		moving = false;
 	}
 
@@ -57,6 +57,12 @@ public class Elevator {
 			
 		}
 		
+	}
+	
+	public void manualVicsElevator(double Speed)
+	{
+		robot.mech.elevatorVicA.set(Speed);
+		robot.mech.elevatorVicB.set(Speed);
 	}
 
 }
