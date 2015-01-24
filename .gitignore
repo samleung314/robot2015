@@ -1,0 +1,8 @@
+# build files
+bin/
+*.class
+*.jar
+
+# OS specific
+.DS_Store
+Thumbs.db
