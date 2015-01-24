@@ -1,6 +1,5 @@
 package org.usfirst.frc.team334.robot.subsystems;
 
-import org.usfirst.frc.team334.robot.physicals.*;
 import org.usfirst.frc.team334.robot.Robot;
 
 public class Elevator {

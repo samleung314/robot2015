@@ -15,7 +15,7 @@ public class Teleop {
     }
 
     public void teleopPeri() {
-        chooseController();
+        robot.control.joystickDrive();
         robot.smart.displayPIDs();
     }
 
