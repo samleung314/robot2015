@@ -8,31 +8,16 @@ public class Elevator {
 	boolean lock = false;
 	boolean moving = false;
 	double desiredpot = 1;
+	double maxpot = 2;
+	double minpot = 0;
 
 	public Elevator(Robot robot) {
 		this.robot = robot;
 	}
 
-	public void elevatorUp() // Makes Elevator go up
-	{
-		if (!lock) {
-			manualVicsElevator(1);
-			moving = true;
-		}
-	}
-
-	public void elevatorDown() // Makes Elevator go down
-	{
-		if (!lock) {
-			manualVicsElevator(-1);
-			moving = true;
-		}
-	}
-
 	public void elevatorStop() // Makes Elevator stay still
 	{
 		manualVicsElevator(0);
-		moving = false;
 	}
 
 	public void elevatorBreak() // Engages the Dog Break in elevator
@@ -48,18 +33,28 @@ public class Elevator {
 			lock = false;
 		}
 	}
-	
-	public void elevaterUp()
-	{
-		if(robot.sensors.elevatorPot.get()<desiredpot)
-		{
-			
+
+	public void elevatorUp() {
+		if (robot.sensors.elevatorPot.get() < desiredpot
+				&& robot.sensors.elevatorPot.get() < maxpot && !lock) {
+			manualVicsElevator(-1);
 		}
-		
 	}
-	
-	public void manualVicsElevator(double Speed)
+
+	public void elevatorDown() // Makes Elevator go down
 	{
+		if (robot.sensors.elevatorPot.get() > desiredpot
+				&& robot.sensors.elevatorPot.get() > maxpot && !lock) {
+			manualVicsElevator(1);
+		}
+	}
+
+	public void manualVicsElevator(double Speed) {
+		if (Speed != 0) {
+			moving = true;
+		} else if (Speed == 0) {
+			moving = false;
+		}
 		robot.mech.elevatorVicA.set(Speed);
 		robot.mech.elevatorVicB.set(Speed);
 	}
