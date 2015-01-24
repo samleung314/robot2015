@@ -10,7 +10,7 @@ public class Constants {
 	public static final int rightVictorB = 2;
 	
 	public static final int elevatorVictorA = 0;
-	public static final int eleavtorVictorB = 3;
+	public static final int elevatorVictorB = 3;
 	
 	/*Controllers*/
 	public static final int xbox = 0;

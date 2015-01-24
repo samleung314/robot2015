@@ -11,6 +11,9 @@ public class Mechanics {
 	VictorSP rightVicA;
 	VictorSP rightVicB;
 	
+	VictorSP elevatorVicA;
+	VictorSP elevatorVicB;
+	
 	public DoubleVics leftVics;
 	public DoubleVics rightVics;
 	
@@ -26,15 +29,24 @@ public class Mechanics {
 		leftVics = new DoubleVics(leftVicA, leftVicB);
 		rightVics = new DoubleVics(rightVicA, rightVicB);
 		
+		elevatorVicA = new VictorSP(Constants.elevatorVictorA);
+		elevatorVicB = new VictorSP(Constants.elevatorVictorB);
+		
 		tank = new RobotDrive(leftVics, rightVics);
 	}
 	
-	public void manualVics(double leftSpeed, double rightSpeed){
+	public void manualVicsDrive(double leftSpeed, double rightSpeed){
 		leftVicA.set(leftSpeed);
-		leftVicA.set(leftSpeed);
+		leftVicB.set(leftSpeed);
 		
 		rightVicA.set(rightSpeed);
-		rightVicA.set(rightSpeed);
+		rightVicB.set(rightSpeed);
+	}
+	
+	public void manualVicsElevator(double Speed)
+	{
+		elevatorVicA.set(Speed);
+		elevatorVicB.set(Speed);
 	}
 	
 

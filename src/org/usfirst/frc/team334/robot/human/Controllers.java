@@ -33,12 +33,12 @@ public class Controllers {
 	}
 	
 	public void xBoxDrive() {
-		robot.mech.manualVics(xBoxLeftY, xBoxRightY);
+		robot.mech.manualVicsDrive(xBoxLeftY, xBoxRightY);
 		//mech.tank.tankDrive(xBoxLeftY, xBoxRightY);
 	}
 	
 	public void joystickDrive() {
-		robot.mech.manualVics(leftJoyY, rightJoyY);
+		robot.mech.manualVicsDrive(leftJoyY, rightJoyY);
 		//mech.tank.tankDrive(leftJoyY, rightJoyY);
 	}
 }
