@@ -1,27 +1,25 @@
 package org.usfirst.frc.team334.robot.human;
 
-import org.usfirst.frc.team334.robot.subsystems.*;
 import edu.wpi.first.wpilibj.smartdashboard.SmartDashboard;
+import org.usfirst.frc.team334.robot.Robot;
 
 public class Smartdashboard {
 
-	Controllers control;
-	Drivetrain drive;
+	Robot robot;
 	
-	public static double chooseStick;
+	public double chooseStick;
 
-	public Smartdashboard(Controllers control, Drivetrain drive){
-		this.control = control;
-		this.drive = drive;
+	public Smartdashboard(Robot robot){
+		this.robot = robot;
 	}
 	
-	//Lets you choose between xBox and joystick drive by entering 0 or 1 in smartdash field
+	//Lets you choose between xBox and joystick drive by entering 0 or 1 in SmartDashboard field
 	public void testCommands() {
 		chooseStick = SmartDashboard.getNumber("Choose Joystick", 0);
 	}
 	
-	//Places PID object onto smartdash
+	//Places PID object onto SmartDashboard
 	public void displayPIDs() {
-		SmartDashboard.putData("Drive Straight PID", drive.straightPID);
+		SmartDashboard.putData("Drive Straight PID", robot.drive.straightPID);
 	}
 }

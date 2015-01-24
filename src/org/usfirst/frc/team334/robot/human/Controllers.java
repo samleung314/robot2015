@@ -1,14 +1,13 @@
 package org.usfirst.frc.team334.robot.human;
 
 import edu.wpi.first.wpilibj.Joystick;
-import edu.wpi.first.wpilibj.Sendable;
-import edu.wpi.first.wpilibj.tables.ITable;
+import org.usfirst.frc.team334.robot.Robot;
 
 import org.usfirst.frc.team334.robot.physicals.*;
 
 public class Controllers {
 	
-	 public Mechanics mech;
+	 Robot robot;
 	
 	 final Joystick xBox = new Joystick(Constants.xbox);
 	 final Joystick leftJoy = new Joystick(Constants.leftJoystick);
@@ -29,17 +28,17 @@ public class Controllers {
 	 double leftJoyY = leftJoy.getY();
      double rightJoyY = rightJoy.getY();
 	
-	public Controllers(Mechanics mech){
-		this.mech = mech;
+	public Controllers(Robot robot){
+		this.robot = robot;
 	}
 	
 	public void xBoxDrive() {
-		mech.manualVics(xBoxLeftY, xBoxRightY);
+		robot.mech.manualVics(xBoxLeftY, xBoxRightY);
 		//mech.tank.tankDrive(xBoxLeftY, xBoxRightY);
 	}
 	
 	public void joystickDrive() {
-		mech.manualVics(leftJoyY, rightJoyY);
+		robot.mech.manualVics(leftJoyY, rightJoyY);
 		//mech.tank.tankDrive(leftJoyY, rightJoyY);
 	}
 }

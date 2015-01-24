@@ -10,23 +10,28 @@ import org.usfirst.frc.team334.robot.subsystems.*;
 
 public class Robot extends IterativeRobot {
 	
-	//Note to self: why not just make all these public and use objects from Robot instead of passing them into each other?
-	Auton auto;
-	Controllers control;
-	Drivetrain drive;
-	Mechanics mech;
-	Sensors sensors;
-	Smartdashboard smart;
-	Teleop tele;
-	
+	//Why not just make all these public and use the class objects from Robot instead of passing them into each other?
+	public Auton auton;
+	public Air air;
+	public Controllers control;
+	public Drivetrain drive;
+	public Elevator elevate;
+	public Mechanics mech;
+	public Sensors sensors;
+	public Smartdashboard smart;
+	public Teleop tele;
+
     public void robotInit() {
     	
+    	air = new Air(this);
+    	auton = new Auton(this);
+    	control = new Controllers(this);
+    	drive = new Drivetrain(this);
+    	elevate = new Elevator(this);
     	mech = new Mechanics();
     	sensors = new Sensors();
-    	control = new Controllers(mech);
-    	drive = new Drivetrain(sensors, mech);
-    	smart = new Smartdashboard(control, drive);
-    	tele = new Teleop(control, drive, smart);
+    	smart = new Smartdashboard(this);
+    	tele = new Teleop(this);
 
     }
 

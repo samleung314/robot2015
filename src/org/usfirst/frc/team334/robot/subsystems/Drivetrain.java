@@ -2,11 +2,11 @@ package org.usfirst.frc.team334.robot.subsystems;
 
 import edu.wpi.first.wpilibj.PIDController;
 import org.usfirst.frc.team334.robot.physicals.*;
+import org.usfirst.frc.team334.robot.Robot;
 
 public class Drivetrain {
 	
-	Sensors sensors;
-	Mechanics mech;
+	Robot robot;
 
 	public PIDController straightPID;
     public PIDController turnPID;
@@ -14,11 +14,10 @@ public class Drivetrain {
     
     public double sP, sI, sD, tP, tI, tD;
     
-    public Drivetrain(Sensors sensors, Mechanics mech){
-    	this.sensors = sensors;
-    	this.mech = mech;
+    public Drivetrain(Robot robot){
+    	this.robot = robot;
     	
-    	straightPID = new PIDController(sP, sI, sD, sensors.gyro, mech.leftVics);
+    	straightPID = new PIDController(sP, sI, sD, robot.sensors.gyro, robot.mech.leftVics);
     	//turnPID = new PIDController(tP, tI, tD, sensors.gyro, )
     }
     

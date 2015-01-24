@@ -1,18 +1,14 @@
 package org.usfirst.frc.team334.robot.modes;
 
-import org.usfirst.frc.team334.robot.human.*;
-import org.usfirst.frc.team334.robot.subsystems.*;
+import org.usfirst.frc.team334.robot.Robot;
+
 
 public class Teleop {
 	
-    Controllers control;
-    Drivetrain drive;
-    Smartdashboard smart;
+    Robot robot;
     
-	public Teleop(Controllers control, Drivetrain drive, Smartdashboard smart) {
-		this.control = control;
-		this.smart = smart; 
-		this.drive = drive;
+	public Teleop(Robot robot) {
+		this.robot = robot;
 	}
 	
 	public void teleInit() {
@@ -21,16 +17,16 @@ public class Teleop {
 	
 	public void teleopPeri(){
 		chooseController();
-		smart.displayPIDs();
+		robot.smart.displayPIDs();
 	}
 	
-	//Choose betwen xBox drive and joystick drive
+	//Choose between xBox drive and joystick drive
 	public void chooseController(){
-		if (Smartdashboard.chooseStick == 0){
-			control.xBoxDrive();
+		if (robot.smart.chooseStick == 0){
+			robot.control.joystickDrive();
 		}
-		else if (Smartdashboard.chooseStick == 1){
-			control.joystickDrive();
+		else if (robot.smart.chooseStick == 1){
+			robot.control.xBoxDrive();
 		}
 	}
 
