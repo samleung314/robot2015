@@ -8,6 +8,7 @@ public class Elevator {
 	Robot robot;
 	boolean lock = false;
 	boolean moving = false;
+	double desiredpot = 1;
 
 	public Elevator(Robot robot) {
 		this.robot = robot;
@@ -47,6 +48,15 @@ public class Elevator {
 		if (!moving) {
 			lock = false;
 		}
+	}
+	
+	public void elevaterUp()
+	{
+		if(robot.sensors.elevatorPot.get()<desiredpot)
+		{
+			
+		}
+		
 	}
 
 }
