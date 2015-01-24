@@ -32,11 +32,21 @@ public class Robot extends IterativeRobot {
     	sensors = new Sensors();
     	smart = new Smartdashboard(this);
     	tele = new Teleop(this);
-
+    	
+    }
+    
+    public void autonomousInit()
+    {
+    	elevate.elevatorRelease();
     }
 
     public void autonomousPeriodic() {
 
+    }
+    
+    public void teleopInit()
+    {
+    	elevate.elevatorRelease();
     }
 
     public void teleopPeriodic() {
