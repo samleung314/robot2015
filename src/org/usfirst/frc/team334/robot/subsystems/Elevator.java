@@ -37,14 +37,14 @@ public class Elevator {
 
 	public void elevatorBreak() // Engages the Dog Break in elevator
 	{
-		if (moving) {
+		if (!moving) {
 			lock = true;
 		}
 	}
 
 	public void elevatorRelease() // Disengages the Dog Break in elevator
 	{
-		if (moving) {
+		if (!moving) {
 			lock = false;
 		}
 	}
