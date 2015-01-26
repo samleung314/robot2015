@@ -16,8 +16,7 @@ public class Drivetrain {
     public Drivetrain(Robot robot) {
         this.robot = robot;
 
-        straightPID = new PIDController(sP, sI, sD, robot.sensors.gyro,
-                robot.mech.leftVics);
+        // straightPID = new PIDController(sP, sI, sD, robot.sensors.gyro, robot.mech.leftVics);
         // turnPID = new PIDController(tP, tI, tD, sensors.gyro, )
     }
     

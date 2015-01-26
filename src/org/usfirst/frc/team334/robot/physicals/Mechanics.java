@@ -17,7 +17,7 @@ public class Mechanics {
     public VictorSP elevatorVicA;
     public VictorSP elevatorVicB;
 
-    public RobotDrive tank;
+    //public RobotDrive tank;
 
     public Mechanics() {
         leftVicA = new VictorSP(Constants.leftVictorA);
@@ -29,7 +29,7 @@ public class Mechanics {
         leftVics = new DoubleVics(leftVicA, leftVicB);
         rightVics = new DoubleVics(rightVicA, rightVicB);
 
-        tank = new RobotDrive(leftVics, rightVics);
+        //tank = new RobotDrive(leftVics, rightVics);
     }
 
 

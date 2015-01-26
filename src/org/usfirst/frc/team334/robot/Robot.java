@@ -31,13 +31,12 @@ public class Robot extends IterativeRobot {
     	mech = new Mechanics();
     	sensors = new Sensors();
     	smart = new Smartdashboard(this);
-    	tele = new Teleop(this);
-    	
+    	tele = new Teleop(this);	
     }
     
     public void autonomousInit()
     {
-    	elevate.elevatorRelease();
+    	//elevate.elevatorRelease();
     }
 
     public void autonomousPeriodic() {
@@ -46,11 +45,12 @@ public class Robot extends IterativeRobot {
     
     public void teleopInit()
     {
-    	elevate.elevatorRelease();
+    	//elevate.elevatorRelease();
     }
 
     public void teleopPeriodic() {
-        tele.teleopPeri();
+        //control.joystickDrive();
+        air.chargeAir();
     }
 
     public void testPeriodic() {
