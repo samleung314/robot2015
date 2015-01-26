@@ -14,32 +14,44 @@ public class Controllers {
     final Joystick rightJoy = new Joystick(Constants.rightJoystick);
 
     /* xBox Controller Inputs */
-    double xBoxLeftY = xBox.getRawAxis(2);
-    double xBoxRightY = xBox.getRawAxis(5);
-
-    boolean xBoxA = xBox.getRawButton(1);
-    boolean xBoxB = xBox.getRawButton(2);
-    boolean xBoxX = xBox.getRawButton(3);
-    boolean xBoxY = xBox.getRawButton(4);
-    boolean xBoxLeftBump = xBox.getRawButton(5);
-    boolean xBoxRightBump = xBox.getRawButton(6);
+    double xBoxLeftY, xBoxRightY;
+    boolean xBoxA, xBoxB, xBoxX, xBoxY, xBoxLeftBump, xBoxRightBump;
 
     /* Joystick Controllers Input */
-    double leftJoyY = leftJoy.getY();
-    double rightJoyY = rightJoy.getY();
+    double leftJoyY, rightJoyY;
 
     public Controllers(Robot robot) {
         this.robot = robot;
     }
+    
+    public void getControllers() {
+    	/* xBox Controller Inputs */
+        xBoxLeftY = xBox.getRawAxis(1);
+        xBoxRightY = xBox.getRawAxis(5);
+
+        xBoxA = xBox.getRawButton(1);
+        xBoxB = xBox.getRawButton(2);
+        xBoxX = xBox.getRawButton(3);
+        xBoxY = xBox.getRawButton(4);
+        xBoxLeftBump = xBox.getRawButton(5);
+        xBoxRightBump = xBox.getRawButton(6);
+
+        /* Joystick Controllers Input */
+        leftJoyY = 0.5*leftJoy.getY();
+        rightJoyY = rightJoy.getY();
+    }
 
     public void xBoxDrive() {
-        robot.drive.manualVicsDrive(xBoxLeftY, xBoxRightY);
+    	getControllers();
+    	robot.elevate.manualVicsElevator(xBoxLeftY);
+        //robot.drive.manualVicsDrive(xBoxLeftY, xBoxRightY);
         // mech.tank.tankDrive(xBoxLeftY, xBoxRightY);
     }
 
     //Negative input makes left victors drive forwards
     public void joystickDrive() {
-        robot.drive.manualVicsDrive(-leftJoyY, rightJoyY);
+    	getControllers();
+        robot.drive.manualVicsDrive(-leftJoyY, -rightJoyY);
         // mech.tank.tankDrive(-leftJoyY, rightJoyY);
     }
 }

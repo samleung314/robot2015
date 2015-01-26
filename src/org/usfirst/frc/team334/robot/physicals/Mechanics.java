@@ -10,12 +10,12 @@ public class Mechanics {
 
     public VictorSP rightVicA;
     public VictorSP rightVicB;
-
-    public DoubleVics leftVics;
-    public DoubleVics rightVics;
     
     public VictorSP elevatorVicA;
     public VictorSP elevatorVicB;
+
+    public DoubleVics leftVics;
+    public DoubleVics rightVics;
 
     //public RobotDrive tank;
 
@@ -25,7 +25,10 @@ public class Mechanics {
 
         rightVicA = new VictorSP(Constants.rightVictorA);
         rightVicB = new VictorSP(Constants.rightVictorB);
-
+        
+        elevatorVicA = new VictorSP(Constants.elevatorVictorA);
+        elevatorVicB = new VictorSP(Constants.elevatorVictorB);
+        
         leftVics = new DoubleVics(leftVicA, leftVicB);
         rightVics = new DoubleVics(rightVicA, rightVicB);
 

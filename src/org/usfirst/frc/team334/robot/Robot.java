@@ -49,8 +49,11 @@ public class Robot extends IterativeRobot {
     }
 
     public void teleopPeriodic() {
+    	//control.xBoxDrive();
         //control.joystickDrive();
-        air.chargeAir();
+        //air.chargeAir();
+        air.testPist2();
+    	//air.compress.start();
     }
 
     public void testPeriodic() {

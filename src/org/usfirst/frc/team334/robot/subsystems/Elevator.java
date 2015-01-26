@@ -14,6 +14,11 @@ public class Elevator {
 	public Elevator(Robot robot) {
 		this.robot = robot;
 	}
+	
+	public void manualVicsElevator(double Speed) {
+		robot.mech.elevatorVicA.set(Speed);
+		robot.mech.elevatorVicB.set(Speed);
+	}
 //
 //	public void elevatorStop() // Makes Elevator stay still
 //	{
