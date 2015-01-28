@@ -10,22 +10,4 @@ public class Teleop {
         this.robot = robot;
     }
 
-    public void teleInit() {
-        // drive.straightPID.enable();
-    }
-
-    public void teleopPeri() {
-        robot.control.joystickDrive();
-        robot.smart.displayPIDs();
-    }
-
-    // Choose between xBox drive and joystick drive
-    public void chooseController() {
-        if (robot.smart.chooseStick == 0) {
-            robot.control.joystickDrive();
-        } else if (robot.smart.chooseStick == 1) {
-            robot.control.xBoxDrive();
-        }
-    }
-
 }

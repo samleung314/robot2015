@@ -23,20 +23,19 @@ public class Robot extends IterativeRobot {
 
     public void robotInit() {
     	
+        mech = new Mechanics();
+        sensors = new Sensors();
     	air = new Air(this);
     	auton = new Auton(this);
     	control = new Controllers(this);
     	drive = new Drivetrain(this);
     	elevate = new Elevator(this);
-    	mech = new Mechanics();
-    	sensors = new Sensors();
     	smart = new Smartdashboard(this);
     	tele = new Teleop(this);	
     }
     
-    public void autonomousInit()
-    {
-    	//elevate.elevatorRelease();
+    public void autonomousInit() {
+    	
     }
 
     public void autonomousPeriodic() {
@@ -45,15 +44,11 @@ public class Robot extends IterativeRobot {
     
     public void teleopInit()
     {
-    	//elevate.elevatorRelease();
+        
     }
 
     public void teleopPeriodic() {
-    	//control.xBoxDrive();
-        //control.joystickDrive();
-        //air.chargeAir();
-        air.testPist2();
-    	//air.compress.start();
+
     }
 
     public void testPeriodic() {

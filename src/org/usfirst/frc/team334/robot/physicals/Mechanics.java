@@ -1,6 +1,5 @@
 package org.usfirst.frc.team334.robot.physicals;
 
-import edu.wpi.first.wpilibj.RobotDrive;
 import edu.wpi.first.wpilibj.VictorSP;
 
 public class Mechanics {
@@ -16,8 +15,7 @@ public class Mechanics {
 
     public DoubleVics leftVics;
     public DoubleVics rightVics;
-
-    //public RobotDrive tank;
+    public DoubleVics elevatorVics;
 
     public Mechanics() {
         leftVicA = new VictorSP(Constants.leftVictorA);
@@ -31,8 +29,7 @@ public class Mechanics {
         
         leftVics = new DoubleVics(leftVicA, leftVicB);
         rightVics = new DoubleVics(rightVicA, rightVicB);
-
-        //tank = new RobotDrive(leftVics, rightVics);
+        elevatorVics = new DoubleVics(elevatorVicA, elevatorVicB);
     }
 
 

@@ -28,26 +28,26 @@ public class Constants {
 	/*Main Pneumatic Controller Module*/
 	public static final int PCM0 = 0;
 
-	public static final int solenoid0AX = 0;
-	public static final int solenoid0AY = 7;
+	public static final int solenoidAX = 0;
+	public static final int solenoidAY = 7;
 	
-	public static final int solenoid0BX = 1;
-	public static final int solenoid0BY = 6;
+	public static final int solenoidBX = 1;
+	public static final int solenoidBY = 6;
 	
-	public static final int solenoid0CX = 2;
-	public static final int solenoid0CY = 5;
+	public static final int solenoidCX = 2;
+	public static final int solenoidCY = 5;
 	
 	
 	/*Secondary Pneumatic Controller Module*/
 	public static final int PCM1 = 1;
 	
-	public static final int solenoid1DX = 0;
-    public static final int solenoid1DY = 7;
+	public static final int solenoidDX = 0;
+    public static final int solenoidDY = 7;
     
-    public static final int solenoid1EX = 1;
-    public static final int solenoid1EY = 6;
+    public static final int solenoidEX = 1;
+    public static final int solenoidEY = 6;
     
-    public static final int solenoid1FX = 2;
-    public static final int solenoid1FY = 5;
+    public static final int solenoidFX = 2;
+    public static final int solenoidFY = 5;
 	
 }

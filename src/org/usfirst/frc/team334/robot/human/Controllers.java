@@ -37,22 +37,35 @@ public class Controllers {
         xBoxRightBump = xBox.getRawButton(6);
 
         /* Joystick Controllers Input */
-        leftJoyY = 0.5*leftJoy.getY();
+        leftJoyY = leftJoy.getY();
         rightJoyY = rightJoy.getY();
     }
 
     public void xBoxDrive() {
     	getControllers();
-    	robot.elevate.manualVicsElevator(xBoxLeftY);
-        //robot.drive.manualVicsDrive(xBoxLeftY, xBoxRightY);
-        // mech.tank.tankDrive(xBoxLeftY, xBoxRightY);
+    	//robot.drive.manualVicsDrive(-xBoxLeftY, -xBoxRightY);
+    	robot.drive.chasisDrive.tankDrive(-xBoxLeftY, -xBoxRightY);
     }
 
     //Negative input makes left victors drive forwards
     public void joystickDrive() {
     	getControllers();
-        robot.drive.manualVicsDrive(-leftJoyY, -rightJoyY);
-        // mech.tank.tankDrive(-leftJoyY, rightJoyY);
+        //robot.drive.manualVicsDrive(-leftJoyY, -rightJoyY);
+        robot.drive.chasisDrive.tankDrive(-leftJoyY, -rightJoyY);
+    }
+    
+    public void controlPist() {
+        getControllers();
+        
+        if (xBoxA) {
+            robot.air.pistForward();
+        }
+        else if (xBoxB) {
+            robot.air.pistReverse();
+        }
+        else if (xBoxX) {
+            robot.air.pistOff();
+        }
     }
 }
 
@@ -70,15 +83,14 @@ public class Controllers {
 
 The axis on the controller follow this mapping
 (all output is between -1 and 1)
-1: Left Stick X Axis
+0: Left Stick X Axis
 -Left:Negative ; Right: Positive
-2: Left Stick Y Axis
+1: Left Stick Y Axis
 -Up: Negative ; Down: Positive
-3: Triggers
+2: Triggers
 -Left: Positive ; Right: Negative
-4: Right Stick X Axis
+3: Right Stick X Axis
 -Left: Negative ; Right: Positive
-5: Right Stick Y Axis
+4: Right Stick Y Axis
 -Up: Negative ; Down: Positive
-6: Directional Pad (Not recommended, buggy)
 */

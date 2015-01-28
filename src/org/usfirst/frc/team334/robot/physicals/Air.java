@@ -3,44 +3,38 @@ package org.usfirst.frc.team334.robot.physicals;
 import org.usfirst.frc.team334.robot.Robot;
 
 import edu.wpi.first.wpilibj.Compressor;
-import edu.wpi.first.wpilibj.Solenoid;
-import edu.wpi.first.wpilibj.Timer;
+import edu.wpi.first.wpilibj.DoubleSolenoid;
 
 public class Air {
 
     Robot robot;
     
-    public Compressor compress;
+    Compressor compress;
     
-    Solenoid solAX, solAY, solBX, solBY, solCX, solCY, solDX, solDY, solEX, solEY, solFX, solFY;
-    
-    Timer time = new Timer();
+    DoubleSolenoid solA, solB, solC, solD ,solE, solF;
 
     public Air(Robot robot) {
         this.robot = robot;
         
         compress = new Compressor(Constants.PCM0);
         
-        solAX = new Solenoid(Constants.PCM0, Constants.solenoid0AX );
-        solAY = new Solenoid(Constants.PCM0, Constants.solenoid0AY);
+        /*
+         * Six solenoid modules: A,B,C,D,E,F
+         * Solenoids A,B,C are connected to pneumatic module 0. They operate at 60 psi
+         * Solenoids D,E,F are connected to pneumatic module 1. They operate at 30 psi
+         * Compressor is connected to pneumatic module 0
+        */
         
-        solBX = new Solenoid(Constants.PCM0, Constants.solenoid0BX);
-        solBY = new Solenoid(Constants.PCM0, Constants.solenoid0BY);
+        solA = new DoubleSolenoid(Constants.PCM0, Constants.solenoidAX, Constants.solenoidAY);
+        solB = new DoubleSolenoid(Constants.PCM0, Constants.solenoidBX, Constants.solenoidBY);
+        solC = new DoubleSolenoid(Constants.PCM0, Constants.solenoidCX, Constants.solenoidCY);
         
-        solCX = new Solenoid(Constants.PCM0, Constants.solenoid0CX);
-        solCY = new Solenoid(Constants.PCM0, Constants.solenoid0CY);
-        
-        solDX = new Solenoid(Constants.PCM1, Constants.solenoid1DX);
-        solDY = new Solenoid(Constants.PCM1, Constants.solenoid1DY);
-        
-        solEX = new Solenoid(Constants.PCM1, Constants.solenoid1EX);
-        solEY = new Solenoid(Constants.PCM1, Constants.solenoid1EY);
-        
-        solFX = new Solenoid(Constants.PCM1, Constants.solenoid1FX);
-        solFY = new Solenoid(Constants.PCM1, Constants.solenoid1FY);
+        solD = new DoubleSolenoid(Constants.PCM1, Constants.solenoidDX, Constants.solenoidDY);
+        solE = new DoubleSolenoid(Constants.PCM1, Constants.solenoidEX, Constants.solenoidEY);
+        solF = new DoubleSolenoid(Constants.PCM1, Constants.solenoidFX, Constants.solenoidFY);
     }
     
-    //Charge when pressure is low. True when pressure is low.
+    //Compressor will run if pressure is less than 120 psi. It will stop at 120 psi.
     public void chargeAir() {
         if (!compress.getPressureSwitchValue()) {
             compress.start();
@@ -50,51 +44,30 @@ public class Air {
         }
     }
     
-    public void testPist() {
-    	solAX.set(true);
-    	solAY.set(true);
-    	
-    	solBX.set(true);
-    	solBY.set(true);
-    	
-    	solCX.set(true);
-    	solCY.set(true);
-    	
-    	solDX.set(true);
-    	solDY.set(true);
-    	
-    	solEX.set(true);
-    	solEY.set(true);
-
-    	solFX.set(true);
-    	solFY.set(true);
-    	
-    	time.delay(1);
-    	
-    	solAX.set(false);
-    	solAY.set(false);
-    	
-    	solBX.set(false);
-    	solBY.set(false);
-    	
-    	solCX.set(false);
-    	solCY.set(false);
-    	
-    	solDX.set(false);
-    	solDY.set(false);
-    	
-    	solEX.set(false);
-    	solEY.set(false);
-
-    	solFX.set(false);
-    	solFY.set(false);
-    	
-    	time.delay(1);
+    public void lockDog() {
+        
     }
     
-    public void testPist2() {
-    	solFX.set(false);
-    	solFY.set(true);
+    public void releaseDog() {
+        
+    }
+
+    public void pistReverse() {
+        solD.set(DoubleSolenoid.Value.kReverse);
+        solE.set(DoubleSolenoid.Value.kReverse);
+        solF.set(DoubleSolenoid.Value.kReverse);
+    }
+    
+    public void pistForward() {
+        solD.set(DoubleSolenoid.Value.kForward);
+        solE.set(DoubleSolenoid.Value.kForward);
+        solF.set(DoubleSolenoid.Value.kForward);
+    }
+    
+    public void pistOff() {
+        solD.set(DoubleSolenoid.Value.kOff);
+        solE.set(DoubleSolenoid.Value.kOff);
+        solF.set(DoubleSolenoid.Value.kOff);
     }
 
 }
