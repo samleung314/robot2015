@@ -11,9 +11,22 @@ public class Smartdashboard {
         this.robot = robot;
     }
 
-    // Places PID object onto SmartDashboard
+    // Places PID objects onto SmartDashboard
     public void displayPIDs() {
-        SmartDashboard.putData("Straight PID", robot.drive.straightPID);
-        SmartDashboard.putData("Turn PID", robot.drive.turnPID);
+        SmartDashboard.putData("Ramping PID", robot.ramp.rampPID);
+        SmartDashboard.putData("Straight PID", robot.straight.straightPID);
+        SmartDashboard.putData("Turn PID", robot.turn.turnPID);
+        
+        //SmartDashboard.putData("Elevate PID", robot.elevate. );
     }
+    
+    // Places sensor values onto SmartDashboard
+    public void displaySensors() {
+        SmartDashboard.putNumber("Left Encoder", robot.encode.leftEnc.getDistance());
+        SmartDashboard.putNumber("Right Encoder", robot.encode.rightEnc.getDistance());
+        SmartDashboard.putNumber("Average Encoder", robot.encode.averageDist());
+        
+        SmartDashboard.putNumber("Elevtaor Pot", robot.elevate.elevatorPot.get());
+    }
+    
 }

@@ -1,9 +1,9 @@
-package org.usfirst.frc.team334.robot.physicals;
+package org.usfirst.frc.team334.robot;
 
 import edu.wpi.first.wpilibj.SpeedController;
 import edu.wpi.first.wpilibj.VictorSP;
 
-// This class was created to combine the two victors of each side of the robot into one victor object
+// This class was created to combine the two victor transmissions of the robot to act as one victor object
 public class DoubleVics implements SpeedController {
 
     private VictorSP vic1;

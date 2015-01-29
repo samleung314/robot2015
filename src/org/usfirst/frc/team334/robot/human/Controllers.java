@@ -1,31 +1,33 @@
 package org.usfirst.frc.team334.robot.human;
 
 import edu.wpi.first.wpilibj.Joystick;
-import org.usfirst.frc.team334.robot.Robot;
 
-import org.usfirst.frc.team334.robot.physicals.*;
+import org.usfirst.frc.team334.robot.*;
 
 public class Controllers {
 
     Robot robot;
 
+    //Creation of controller objects
     final Joystick xBox = new Joystick(Constants.xbox);
     final Joystick leftJoy = new Joystick(Constants.leftJoystick);
     final Joystick rightJoy = new Joystick(Constants.rightJoystick);
 
     /* xBox Controller Inputs */
-    double xBoxLeftY, xBoxRightY;
-    boolean xBoxA, xBoxB, xBoxX, xBoxY, xBoxLeftBump, xBoxRightBump;
+    double xBoxLeftY, xBoxRightY; //Joystick axes
+    boolean xBoxA, xBoxB, xBoxX, xBoxY, xBoxLeftBump, xBoxRightBump; //Buttons
 
     /* Joystick Controllers Input */
-    double leftJoyY, rightJoyY;
+    double leftJoyY, rightJoyY; //Joystick axes
 
     public Controllers(Robot robot) {
         this.robot = robot;
     }
     
+    //Updates the variables with the input of the controllers
     public void getControllers() {
-    	/* xBox Controller Inputs */
+    	/* xBox Controller Values */
+        //Pushing up returns negative values, pulling returns positive values
         xBoxLeftY = xBox.getRawAxis(1);
         xBoxRightY = xBox.getRawAxis(5);
 
@@ -36,35 +38,36 @@ public class Controllers {
         xBoxLeftBump = xBox.getRawButton(5);
         xBoxRightBump = xBox.getRawButton(6);
 
-        /* Joystick Controllers Input */
-        leftJoyY = leftJoy.getY();
+        /* Joystick Controllers Values */
+        //Pushing up returns negative values, pulling returns positive values
+        leftJoyY = leftJoy.getY(); 
         rightJoyY = rightJoy.getY();
     }
 
+    //Driving with the xBox controller
     public void xBoxDrive() {
     	getControllers();
-    	//robot.drive.manualVicsDrive(-xBoxLeftY, -xBoxRightY);
     	robot.drive.chasisDrive.tankDrive(-xBoxLeftY, -xBoxRightY);
     }
 
-    //Negative input makes left victors drive forwards
+    //Driving with the joystick controllers
     public void joystickDrive() {
     	getControllers();
-        //robot.drive.manualVicsDrive(-leftJoyY, -rightJoyY);
         robot.drive.chasisDrive.tankDrive(-leftJoyY, -rightJoyY);
     }
     
-    public void controlPist() {
+    //Used for testing solenoids
+    public void testSolenoids() {
         getControllers();
         
         if (xBoxA) {
-            robot.air.pistForward();
+            robot.air.testForward();
         }
         else if (xBoxB) {
-            robot.air.pistReverse();
+            robot.air.testReverse();
         }
         else if (xBoxX) {
-            robot.air.pistOff();
+            robot.air.testOff();
         }
     }
 }

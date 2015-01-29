@@ -1,4 +1,4 @@
-package org.usfirst.frc.team334.robot.physicals;
+package org.usfirst.frc.team334.robot;
 
 public class Constants {
 	
@@ -21,6 +21,12 @@ public class Constants {
 	
 	/*Digital I/O*/
 	public static final int gyroscope = 0;
+	
+	public static final int leftEncoderX = 0;
+	public static final int leftEncoderY = 1;
+	
+	public static final int rightEncoderX = 2;
+	public static final int rightEncoderY = 3;
 	
 	/*Analog*/
 	public static final int elevatorPot = 1;
@@ -50,4 +56,6 @@ public class Constants {
     public static final int solenoidFX = 2;
     public static final int solenoidFY = 5;
 	
+    /*ETC*/
+    public static final int encoderDistancePerPulse = 0;
 }

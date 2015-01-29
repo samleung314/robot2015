@@ -1,10 +1,22 @@
 package org.usfirst.frc.team334.robot.subsystems;
 
-import org.usfirst.frc.team334.robot.Robot;
+import org.usfirst.frc.team334.robot.*;
+
+import edu.wpi.first.wpilibj.VictorSP;
+import edu.wpi.first.wpilibj.AnalogPotentiometer;
+
 
 public class Elevator {
 
 	Robot robot;
+	
+	private final VictorSP elevatorVicA;
+    private final VictorSP elevatorVicB;
+    
+    public DoubleVics elevatorVics;
+    
+    public AnalogPotentiometer elevatorPot;
+    
 	boolean lock = false;
 	boolean moving = false;
 	double desiredpot = 1;
@@ -13,11 +25,18 @@ public class Elevator {
 
 	public Elevator(Robot robot) {
 		this.robot = robot;
+		
+		elevatorVicA = new VictorSP(Constants.elevatorVictorA);
+        elevatorVicB = new VictorSP(Constants.elevatorVictorB);
+        
+        elevatorVics = new DoubleVics(elevatorVicA, elevatorVicB);
+        
+        elevatorPot = new AnalogPotentiometer(Constants.elevatorPot);
 	}
 
 	public void elevatorStop() // Makes Elevator stay still
 	{
-		manualVicsElevator(0);
+		elevatorVics.set(0);
 	}
 
 	public void elevatorBreak() // Engages the Dog Break in elevator
@@ -35,8 +54,8 @@ public class Elevator {
 	}
 
 	public void elevatorUp() {
-		if (robot.sensors.elevatorPot.get() < desiredpot 
-		        && robot.sensors.elevatorPot.get() < maxpot 
+		if (elevatorPot.get() < desiredpot 
+		        && elevatorPot.get() < maxpot 
 		        && !lock) {
 			manualVicsElevator(-0.35);
 		}
@@ -44,8 +63,8 @@ public class Elevator {
 
 	public void elevatorDown() // Makes Elevator go down
 	{
-		if (robot.sensors.elevatorPot.get() > desiredpot 
-		        && robot.sensors.elevatorPot.get() > minpot
+		if (elevatorPot.get() > desiredpot 
+		        && elevatorPot.get() > minpot
 		        && !lock) {
 			manualVicsElevator(0.35);
 		}
@@ -57,7 +76,7 @@ public class Elevator {
 		} else {
 			moving = false;
 		}
-		robot.mech.elevatorVicA.set(speed);
-		robot.mech.elevatorVicB.set(speed);
+		elevatorVicA.set(speed);
+		elevatorVicB.set(speed);
 	}	
 }

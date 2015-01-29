@@ -1,53 +1,49 @@
 package org.usfirst.frc.team334.robot.subsystems;
 
-import edu.wpi.first.wpilibj.PIDController;
-import edu.wpi.first.wpilibj.PIDOutput;
 import edu.wpi.first.wpilibj.RobotDrive;
+import edu.wpi.first.wpilibj.VictorSP;
 
-import org.usfirst.frc.team334.robot.Robot;
+import org.usfirst.frc.team334.robot.*;
 
-public class Drivetrain implements PIDOutput {
+public class Drivetrain{
 
     Robot robot;
+    
+    private final VictorSP leftVicA;
+    private final VictorSP leftVicB;
 
-    public PIDController straightPID;
-    public PIDController turnPID;
-    public PIDController distancePID;
+    private final VictorSP rightVicA;
+    private final VictorSP rightVicB;
+    
+    public DoubleVics leftVics;
+    public DoubleVics rightVics;
     
     public RobotDrive chasisDrive;
-
-    public double sP, sI, sD, tP, tI, tD, turnSpeed;
 
     public Drivetrain(Robot robot) {
         this.robot = robot;
         
-        chasisDrive = new RobotDrive(robot.mech.leftVics, robot.mech.rightVics);
+        leftVicA = new VictorSP(Constants.leftVictorA);
+        leftVicB = new VictorSP(Constants.leftVictorB);
 
-        straightPID = new PIDController(sP, sI, sD, robot.sensors.gyro, robot.mech.leftVics);
-        turnPID = new PIDController(tP, tI, tD, robot.sensors.gyro, this);
+        rightVicA = new VictorSP(Constants.rightVictorA);
+        rightVicB = new VictorSP(Constants.rightVictorB);
+        
+        leftVics = new DoubleVics(leftVicA, leftVicB);
+        rightVics = new DoubleVics(rightVicA, rightVicB);
     }
     
     public void manualVicsDrive(double leftSpeed, double rightSpeed) {
-        robot.mech.leftVicA.set(leftSpeed);
-        robot.mech.leftVicB.set(leftSpeed);
+        leftVicA.set(leftSpeed);
+        leftVicB.set(leftSpeed);
 
-        robot.mech.rightVicA.set(-rightSpeed);
-        robot.mech.rightVicB.set(-rightSpeed);
+        rightVicA.set(-rightSpeed);
+        rightVicB.set(-rightSpeed);
     }
     
-    public void settingsStraightPID() {
-        straightPID.setContinuous();
-        straightPID.setOutputRange(-1, 1);
-        straightPID.setSetpoint(0);
-    }
-    
-    public void settingsTurnPID() {
-        turnPID.setContinuous();
-        turnPID.setOutputRange(-1, 1);
-    }
-
-    public void pidWrite(double output) {
-        this.turnSpeed = output;
+    public void doubleVicsDrive(double leftSpeed, double rightSpeed) {
+        leftVics.set(leftSpeed);
+        rightVics.set(rightSpeed);
     }
 
 }
