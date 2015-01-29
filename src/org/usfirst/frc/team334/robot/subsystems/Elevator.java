@@ -37,6 +37,7 @@ public class Elevator {
 		elevatorVics = new DoubleVics(elevatorVicA, elevatorVicB);
 
 		elevatorPot = new AnalogPotentiometer(Constants.elevatorPot);
+
 		elevatorPID = new PIDController(p, i, d, elevatorPot, elevatorVics);
 	}
 
