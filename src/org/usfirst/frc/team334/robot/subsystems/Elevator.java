@@ -32,6 +32,7 @@ public class Elevator {
         elevatorVics = new DoubleVics(elevatorVicA, elevatorVicB);
         
         elevatorPot = new AnalogPotentiometer(Constants.elevatorPot);
+        //10 Turns max on the pot, 9.6 turns max on the elevator 
 	}
 
 	public void elevatorStop() // Makes Elevator stay still
@@ -71,12 +72,12 @@ public class Elevator {
 	}
 
 	public void manualVicsElevator(double speed) {
-		if (speed != 0) {
+		if (speed != 0 && !lock) {
+			elevatorVicA.set(speed);
+			elevatorVicB.set(speed);
 			moving = true;
 		} else {
 			moving = false;
 		}
-		elevatorVicA.set(speed);
-		elevatorVicB.set(speed);
 	}	
 }

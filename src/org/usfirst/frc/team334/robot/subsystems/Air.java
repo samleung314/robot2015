@@ -10,7 +10,7 @@ public class Air {
 
     Robot robot;
     
-    Compressor compress;
+    public Compressor compress;
     
     DoubleSolenoid solA, solB, solC, solD ,solE, solF;
 
@@ -35,12 +35,14 @@ public class Air {
         solF = new DoubleSolenoid(Constants.PCM1, Constants.solenoidFX, Constants.solenoidFY);
     }
     
-    //Compressor will run if pressure is less than 120 psi. It will stop at 120 psi.
+    //Compressor will run if pressure is less than 120 psi. It will stop at 120 psi. False when pressure is low.
     public void chargeAir() {
         if (!compress.getPressureSwitchValue()) {
             compress.start();
+            System.out.println("Running Compress");
         }
         else {
+        	System.out.println("Stopping Compress");
             compress.stop();
         }
     }

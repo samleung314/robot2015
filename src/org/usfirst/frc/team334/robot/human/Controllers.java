@@ -47,7 +47,7 @@ public class Controllers {
     //Driving with the xBox controller
     public void xBoxDrive() {
     	getControllers();
-    	robot.drive.chasisDrive.tankDrive(-xBoxLeftY, -xBoxRightY);
+    	robot.elevate.elevatorVics.set(xBoxLeftY);
     }
 
     //Driving with the joystick controllers
@@ -68,6 +68,12 @@ public class Controllers {
         }
         else if (xBoxX) {
             robot.air.testOff();
+        }
+        else if (xBoxY) {
+        	robot.air.chargeAir();
+        }
+        else if (xBoxLeftBump) {
+        	robot.air.compress.stop();
         }
     }
 }

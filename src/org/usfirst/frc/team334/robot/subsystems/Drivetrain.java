@@ -31,6 +31,8 @@ public class Drivetrain{
         
         leftVics = new DoubleVics(leftVicA, leftVicB);
         rightVics = new DoubleVics(rightVicA, rightVicB);
+        
+        chasisDrive = new RobotDrive(leftVics, rightVics);
     }
     
     public void manualVicsDrive(double leftSpeed, double rightSpeed) {

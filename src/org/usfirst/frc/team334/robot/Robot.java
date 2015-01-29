@@ -1,6 +1,7 @@
 package org.usfirst.frc.team334.robot;
 
 import edu.wpi.first.wpilibj.IterativeRobot;
+import edu.wpi.first.wpilibj.smartdashboard.SmartDashboard;
 
 import org.usfirst.frc.team334.robot.human.*;
 import org.usfirst.frc.team334.robot.automaton.*;
