@@ -51,9 +51,7 @@ public class Air {
 	public void chargeAir() {
 		if (!compress.getPressureSwitchValue()) {
 			compress.start();
-			System.out.println("Running Compress");
 		} else {
-			System.out.println("Stopping Compress");
 			compress.stop();
 		}
 	}

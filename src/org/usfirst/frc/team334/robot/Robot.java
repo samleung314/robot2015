@@ -37,7 +37,7 @@ public class Robot extends IterativeRobot {
 	}
 
 	public void autonomousInit() {
-
+		elevate.elevatorRelease(); //Elevator starts unlocked
 	}
 
 	public void autonomousPeriodic() {
@@ -45,24 +45,24 @@ public class Robot extends IterativeRobot {
 	}
 
 	public void teleopInit() {
-		// Stop the PIDs
+		// Stop the PIDs here
+		elevate.elevatorRelease(); //Elevator starts unlocked
 	}
 
 	public void teleopPeriodic() {
-		control.getControllers();
-		//such lock much saftie
-		control.controlDoge();
 		control.controlElevator();
-		//very 254
+		SmartDashboard.putBoolean("Dog Locked?", elevate.locked);
+		SmartDashboard.putBoolean("Elevator Moving?", elevate.moving);
+		SmartDashboard.putNumber("Speed", control.xBoxLeftY);
+		
+		air.chargeAir();
 		// control.setElevatorLevel();
-		// SmartDashboard.putNumber("ELEVATOR TOTE LEVEL",
-		// control.elevatorLevel);
-		SmartDashboard.putNumber("ELEVATOR POT LEVEL",
-				elevate.elevatorPot.get());
+		// SmartDashboard.putNumber("ELEVATOR TOTE LEVEL", control.elevatorLevel);
+		// SmartDashboard.putNumber("ELEVATOR POT LEVEL", elevate.elevatorPot.get());
 	}
 
 	public void testPeriodic() {
-		// Generatlly not used
+		// Generally not used
 	}
 
 }

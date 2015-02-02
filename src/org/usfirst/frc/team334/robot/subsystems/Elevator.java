@@ -22,13 +22,11 @@ public class Elevator {
 
 	private final PIDController elevatorPID;
 
-	//private final DigitalInput highSwitch, lowSwitch;
+	private final DigitalInput highSwitch, lowSwitch;
 
-	boolean lock = false;
-	boolean moving = false;
-	double desiredpot = 1;
-	double maxpot = 2;
-	double minpot = 0;
+	public boolean locked, moving, highLimit, lowLimit;
+	public double minpot, maxpot, desiredpot;
+	
 	double p = 0, i = 0, d = 0;
 
 	public Elevator(Robot robot) {
@@ -44,64 +42,119 @@ public class Elevator {
 
 		elevatorPID = new PIDController(p, i, d, elevatorPot, elevatorVics);
 
-		//highSwitch = new DigitalInput(Constants.highSwitch);
-		//lowSwitch = new DigitalInput(Constants.lowSwitch);
+		highSwitch = new DigitalInput(Constants.highSwitch);
+		lowSwitch = new DigitalInput(Constants.lowSwitch);
+	}
+	
+	public boolean freeToMove() {
+		highLimit = highSwitch.get();
+		lowLimit = lowSwitch.get();
+		
+		if (highLimit || lowLimit || locked) { //If any are true, robot is not free to move
+			return false;
+		}
+		else {
+			return true;
+		}		
 	}
 
 	public void setElevator(double setpoint) {
-		if (!lock) {
+		if (freeToMove()) {
 			elevatorPID.setSetpoint(setpoint);
 			elevatorPID.enable();
 		}
 	}
 
-	public void elevatorStop() // Makes Elevator stay still
+	public void elevatorRelease() // Disengages the Dog Break in elevator
 	{
-		elevatorVics.set(0);
+		locked = false;
+		robot.air.releaseDog();
 	}
-
+	
 	public void elevatorBreak() // Engages the Dog Break in elevator
 	{
-		if (!moving) {
-			lock = true;
+		if (!moving) { //Only engage if elevator is not being moved
+			locked = true;
 			robot.air.lockDog();
 		}
 	}
 
-	public void elevatorRelease() // Disengages the Dog Break in elevator
-	{
-		if (!moving) {
-			lock = false;
-			robot.air.releaseDog();
-		}
-	}
-
 	public void elevatorUp() {
-		if (elevatorPot.get() < desiredpot && elevatorPot.get() < maxpot
-				&& !lock) {
-			manualVicsElevator(-0.35);
-		} else {
-			elevatorStop();
-		}
-	}
-
-	public void elevatorDown() // Makes Elevator go down
-	{
-		if (elevatorPot.get() > desiredpot && elevatorPot.get() > minpot
-				&& !lock) {
+		if (elevatorPot.get() < desiredpot 
+				&& elevatorPot.get() < maxpot
+				&& !locked) {
 			manualVicsElevator(0.35);
 		} else {
-			elevatorStop();
+			manualVicsElevator(0);
+		}
+	}
+
+	public void elevatorDown() { // Makes Elevator go down 
+		if (elevatorPot.get() > desiredpot 
+				&& elevatorPot.get() > minpot
+				&& !locked) {
+			manualVicsElevator(-0.35);
+		} else {
+			manualVicsElevator(0);
 		}
 	}
 
 	public void manualVicsElevator(double speed) {
-		if (speed != 0 && !lock) {
-			elevatorVicA.set(-speed);
-			elevatorVicB.set(-speed);
-			moving = true;
-		} else {
+		if (locked) { //Cannot move when Dog Gear is engaged
+			elevatorVicA.set(0);
+			elevatorVicB.set(0);
 			moving = false;
+		}
+		else if (highLimit) { //Can only move down when activated
+			if (speed < 0){
+				elevatorVicA.set(speed);
+				elevatorVicB.set(speed);
+			}
+		}
+		else if (lowLimit) { //Can only move up when activated
+			if (speed > 0){
+				elevatorVicA.set(speed);
+				elevatorVicB.set(speed);
+			}
+		}
+		else //Can move freely
+		{
+			elevatorVicA.set(speed);
+			elevatorVicB.set(speed);
+		}
+		
+		if (speed == 0) {
+			moving = false;
+		}
+		else {
+			moving = true;
+		}
+	}
+	
+	public void doubleVicsElevator(double speed) {
+		if (locked) { //Cannot move when Dog Gear is engaged
+			elevatorVics.set(0);
+			moving = false;
+		}
+		else if (highLimit) { //Can only move down when activated
+			if (speed < 0){
+				elevatorVics.set(speed);
+			}
+		}
+		else if (lowLimit) { //Can only move up when activated
+			if (speed > 0){
+				elevatorVics.set(speed);
+			}
+		}
+		else { //Can move freely 
+			elevatorVics.set(speed);
+		}
+		
+		if (speed == 0) {
+			moving = false;
+		}
+		else {
+			moving = true;
 		}
 	}
 

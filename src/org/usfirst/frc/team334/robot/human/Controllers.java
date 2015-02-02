@@ -14,83 +14,99 @@ public class Controllers {
 	final Joystick rightJoy = new Joystick(Constants.rightJoystick);
 
 	/* xBox Controller Inputs */
-	double xBoxLeftY, xBoxRightY; // Joystick axes
-	boolean xBoxA, xBoxB, xBoxX, xBoxY, xBoxLeftBump, xBoxRightBump; // Buttons
-	boolean leftTriggerClicked = false, rightTriggerClicked = false,
-			leftTrigger, rightTrigger;
+	// Pushing up returns negative values, pulling returns positive values
+	public double xBoxLeftY = xBox.getRawAxis(1), 
+		   xBoxRightY = xBox.getRawAxis(5); 
+	
+	boolean xBoxA = xBox.getRawButton(1), 
+			xBoxB = xBox.getRawButton(2), 
+			xBoxX = xBox.getRawButton(3), 
+		    xBoxY = xBox.getRawButton(4), 
+		    xBoxLeftBump = xBox.getRawButton(5), 
+		    xBoxRightBump = xBox.getRawButton(6);
+	
 	public int elevatorLevel = 0;
 
 	/* Joystick Controllers Input */
-	double leftJoyY, rightJoyY; // Joystick axes
+	// Pushing up returns negative values, pulling returns positive values
+	double leftJoyY = leftJoy.getY(), 
+		   rightJoyY = rightJoy.getY(); 
+	
+	boolean leftTrigger = leftJoy.getTrigger(), 
+			rightTrigger = rightJoy.getTrigger(),
+			leftTriggerClicked = false, rightTriggerClicked = false;
 
 	public Controllers(Robot robot) {
 		this.robot = robot;
 	}
-
-	// Updates the variables with the input of the controllers
+	
+	//Updates variables with controller inputs
 	public void getControllers() {
-		/* xBox Controller Values */
-		// Pushing up returns negative values, pulling returns positive values
+		//xBox Controller
 		xBoxLeftY = xBox.getRawAxis(1);
-		xBoxRightY = xBox.getRawAxis(5);
-
+	    xBoxRightY = xBox.getRawAxis(5); 
 		xBoxA = xBox.getRawButton(1);
 		xBoxB = xBox.getRawButton(2);
 		xBoxX = xBox.getRawButton(3);
-		xBoxY = xBox.getRawButton(4);
-		xBoxLeftBump = xBox.getRawButton(5);
-		xBoxRightBump = xBox.getRawButton(6);
-
-		/* Joystick Controllers Values */
-		// Pushing up returns negative values, pulling returns positive values
-		leftJoyY = leftJoy.getY();
-		rightJoyY = rightJoy.getY();
-
-		leftTrigger = leftJoy.getTrigger();
-		rightTrigger = rightJoy.getTrigger();
+	    xBoxY = xBox.getRawButton(4);
+	    xBoxLeftBump = xBox.getRawButton(5);
+	    xBoxRightBump = xBox.getRawButton(6);
+	    
+	    //Joysticks
+	    leftJoyY = leftJoy.getY();
+	    rightJoyY = rightJoy.getY();
+	    leftTrigger = leftJoy.getTrigger(); 
+	    rightTrigger = rightJoy.getTrigger();
 	}
 
 	// Driving with the xBox controller
 	public void xBoxDrive() {
-		getControllers();
-		robot.elevate.elevatorVics.set(xBoxLeftY);
+		robot.drive.chasisDrive.tankDrive(-xBoxLeftY, -xBoxRightY);
 	}
 
 	// Driving with the joystick controllers
 	public void joystickDrive() {
-		getControllers();
 		robot.drive.chasisDrive.tankDrive(-leftJoyY, -rightJoyY);
 	}
 
 	// Used for testing solenoids
 	public void testSolenoids() {
-		getControllers();
-
 		if (xBoxA) {
 			robot.air.lockDog();
 		} else if (xBoxB) {
 			robot.air.releaseDog();
 		} else if (xBoxX) {
-			robot.air.testOff();
+			robot.air.testForward();
 		} else if (xBoxY) {
-			robot.air.chargeAir();
+			robot.air.testReverse();
 		} else if (xBoxLeftBump) {
+			robot.air.compress.start();
+		} else if (xBoxRightBump) {
 			robot.air.compress.stop();
 		}
-
-		robot.drive.doubleVicsDrive(leftJoyY, -rightJoyY);
-	}
-
-	public void controlElevator() {
-		robot.elevate.manualVicsElevator(xBoxLeftY);
 	}
 	
-	public void controlDoge() {
+	//Mapping elevator functionality to controllers
+	public void controlElevator() {
+		robot.elevate.doubleVicsElevator(deadZone(xBoxLeftY));
+
+		//Controlling dog gear with joystick triggers
 		if(leftTrigger) {
 			robot.elevate.elevatorRelease();
+			System.out.println("Left Trig");
 		}
 		if(rightTrigger) {
 			robot.elevate.elevatorBreak();
+			System.out.println("Right Trig");
+		}
+	}
+	
+	public double deadZone(double input) {
+		if (input < 0.1 || input > -0.1) {
+			return 0;
+		}
+		else {
+			return input;
 		}
 	}
 
