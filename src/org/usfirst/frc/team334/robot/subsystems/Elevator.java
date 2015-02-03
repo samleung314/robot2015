@@ -47,15 +47,10 @@ public class Elevator {
 	}
 
 	public boolean freeToMove() {
-		highLimit = highSwitch.get();
-		lowLimit = lowSwitch.get();
+		highLimit = !highSwitch.get();
+		lowLimit = !lowSwitch.get();
 
-		if (highLimit || lowLimit || locked) { // If any are true, robot is not
-												// free to move
-			return false;
-		} else {
-			return true;
-		}
+		return (highLimit || lowLimit || locked);
 	}
 
 	public void setElevator(double setpoint) {
@@ -146,7 +141,6 @@ public class Elevator {
 		case 6:
 			elevatorPID.setSetpoint(100);
 			break;
-			
 		}
 
 	}
