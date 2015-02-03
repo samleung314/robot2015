@@ -125,25 +125,6 @@ public class Elevator {
 		}
 	}
 
-	public void doubleVicsElevator(double speed) {
-		highLimit = !highSwitch.get();
-		lowLimit = !lowSwitch.get();
-
-		if (!locked
-				&& (!highLimit && speed > 0 || !lowLimit && speed < 0 || speed == 0)) {
-			elevatorVics.set(speed);
-		} else {
-			elevatorVics.set(0);
-			moving = false;
-		}
-
-		if (speed == 0) {
-			moving = false;
-		} else {
-			moving = true;
-		}
-	}
-
 	public void setElevatorLevel(int level) {
 		switch (level) {
 		case 1:
