@@ -8,6 +8,7 @@ import edu.wpi.first.wpilibj.AnalogPotentiometer;
 import edu.wpi.first.wpilibj.DigitalInput;
 import edu.wpi.first.wpilibj.PIDController;
 import edu.wpi.first.wpilibj.VictorSP;
+import edu.wpi.first.wpilibj.smartdashboard.SmartDashboard;
 
 public class Elevator {
 
@@ -26,7 +27,7 @@ public class Elevator {
 
 	public boolean locked, moving, highLimit, lowLimit;
 	public double minpot, maxpot, desiredpot;
-	
+
 	double p = 0, i = 0, d = 0;
 
 	public Elevator(Robot robot) {
@@ -34,7 +35,7 @@ public class Elevator {
 
 		elevatorVicA = new VictorSP(Constants.elevatorVictorA);
 		elevatorVicB = new VictorSP(Constants.elevatorVictorB);
-		
+
 		elevatorVics = new DoubleVics(elevatorVicA, elevatorVicB);
 
 		elevatorPot = new AnalogPotentiometer(Constants.elevatorPot);
@@ -45,17 +46,17 @@ public class Elevator {
 		highSwitch = new DigitalInput(Constants.highSwitch);
 		lowSwitch = new DigitalInput(Constants.lowSwitch);
 	}
-	
+
 	public boolean freeToMove() {
 		highLimit = highSwitch.get();
 		lowLimit = lowSwitch.get();
-		
-		if (highLimit || lowLimit || locked) { //If any are true, robot is not free to move
+
+		if (highLimit || lowLimit || locked) { // If any are true, robot is not
+												// free to move
 			return false;
-		}
-		else {
+		} else {
 			return true;
-		}		
+		}
 	}
 
 	public void setElevator(double setpoint) {
@@ -70,18 +71,17 @@ public class Elevator {
 		locked = false;
 		robot.air.releaseDog();
 	}
-	
+
 	public void elevatorBreak() // Engages the Dog Break in elevator
 	{
-		if (!moving) { //Only engage if elevator is not being moved
+		if (!moving) { // Only engage if elevator is not being moved
 			locked = true;
 			robot.air.lockDog();
 		}
 	}
 
 	public void elevatorUp() {
-		if (elevatorPot.get() < desiredpot 
-				&& elevatorPot.get() < maxpot
+		if (elevatorPot.get() < desiredpot && elevatorPot.get() < maxpot
 				&& !locked) {
 			manualVicsElevator(0.35);
 		} else {
@@ -89,9 +89,8 @@ public class Elevator {
 		}
 	}
 
-	public void elevatorDown() { // Makes Elevator go down 
-		if (elevatorPot.get() > desiredpot 
-				&& elevatorPot.get() > minpot
+	public void elevatorDown() { // Makes Elevator go down
+		if (elevatorPot.get() > desiredpot && elevatorPot.get() > minpot
 				&& !locked) {
 			manualVicsElevator(-0.35);
 		} else {
@@ -99,61 +98,69 @@ public class Elevator {
 		}
 	}
 
+	public void goPot(double dPot, double tolerance) {
+
+		if (elevatorPot.get() < dPot-1) {
+			doubleVicsElevator(.35);
+		} else if (elevatorPot.get() > dPot+1) {
+			doubleVicsElevator(-.35);
+		}
+		else
+		{
+			doubleVicsElevator(0);
+		}
+
+	}
+
 	public void manualVicsElevator(double speed) {
-		if (locked) { //Cannot move when Dog Gear is engaged
+		if (locked) { // Cannot move when Dog Gear is engaged
 			elevatorVicA.set(0);
 			elevatorVicB.set(0);
 			moving = false;
-		}
-		else if (highLimit) { //Can only move down when activated
-			if (speed < 0){
+		} else if (highLimit) { // Can only move down when activated
+			if (speed < 0) {
 				elevatorVicA.set(speed);
 				elevatorVicB.set(speed);
 			}
-		}
-		else if (lowLimit) { //Can only move up when activated
-			if (speed > 0){
+		} else if (lowLimit) { // Can only move up when activated
+			if (speed > 0) {
 				elevatorVicA.set(speed);
 				elevatorVicB.set(speed);
 			}
-		}
-		else //Can move freely
+		} else // Can move freely
 		{
 			elevatorVicA.set(speed);
 			elevatorVicB.set(speed);
 		}
-		
+
 		if (speed == 0) {
 			moving = false;
-		}
-		else {
+		} else {
 			moving = true;
 		}
 	}
-	
+
 	public void doubleVicsElevator(double speed) {
-		if (locked) { //Cannot move when Dog Gear is engaged
+		highLimit = highSwitch.get();
+		lowLimit = lowSwitch.get();
+
+		if (!locked) {
+			if (highLimit && speed >= 0) {
+				elevatorVics.set(speed);
+			} else if (lowLimit && speed <= 0) {
+				elevatorVics.set(speed);
+			} else {
+				elevatorVics.set(0);
+				moving = false;
+			}
+		} else {
 			elevatorVics.set(0);
 			moving = false;
 		}
-		else if (highLimit) { //Can only move down when activated
-			if (speed < 0){
-				elevatorVics.set(speed);
-			}
-		}
-		else if (lowLimit) { //Can only move up when activated
-			if (speed > 0){
-				elevatorVics.set(speed);
-			}
-		}
-		else { //Can move freely 
-			elevatorVics.set(speed);
-		}
-		
+
 		if (speed == 0) {
 			moving = false;
-		}
-		else {
+		} else {
 			moving = true;
 		}
 	}

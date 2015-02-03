@@ -1,6 +1,7 @@
 package org.usfirst.frc.team334.robot.human;
 
 import edu.wpi.first.wpilibj.Joystick;
+import edu.wpi.first.wpilibj.smartdashboard.SmartDashboard;
 
 import org.usfirst.frc.team334.robot.*;
 
@@ -15,26 +16,15 @@ public class Controllers {
 
 	/* xBox Controller Inputs */
 	// Pushing up returns negative values, pulling returns positive values
-	public double xBoxLeftY = xBox.getRawAxis(1), 
-		   xBoxRightY = xBox.getRawAxis(5); 
-	
-	boolean xBoxA = xBox.getRawButton(1), 
-			xBoxB = xBox.getRawButton(2), 
-			xBoxX = xBox.getRawButton(3), 
-		    xBoxY = xBox.getRawButton(4), 
-		    xBoxLeftBump = xBox.getRawButton(5), 
-		    xBoxRightBump = xBox.getRawButton(6);
+	public double xBoxLeftY, xBoxRightY; 
+	boolean xBoxA, xBoxB, xBoxX, xBoxY, xBoxLeftBump, xBoxRightBump;
 	
 	public int elevatorLevel = 0;
 
 	/* Joystick Controllers Input */
 	// Pushing up returns negative values, pulling returns positive values
-	double leftJoyY = leftJoy.getY(), 
-		   rightJoyY = rightJoy.getY(); 
-	
-	boolean leftTrigger = leftJoy.getTrigger(), 
-			rightTrigger = rightJoy.getTrigger(),
-			leftTriggerClicked = false, rightTriggerClicked = false;
+	double leftJoyY, rightJoyY; 
+	boolean leftTrigger, rightTrigger, leftTriggerClicked = false, rightTriggerClicked = false;
 
 	public Controllers(Robot robot) {
 		this.robot = robot;
@@ -88,16 +78,16 @@ public class Controllers {
 	
 	//Mapping elevator functionality to controllers
 	public void controlElevator() {
-		robot.elevate.doubleVicsElevator(deadZone(xBoxLeftY));
-
+		robot.elevate.doubleVicsElevator(-0.3*xBoxLeftY);
+		
 		//Controlling dog gear with joystick triggers
 		if(leftTrigger) {
 			robot.elevate.elevatorRelease();
-			System.out.println("Left Trig");
+			//System.out.println("Left Trig");
 		}
 		if(rightTrigger) {
 			robot.elevate.elevatorBreak();
-			System.out.println("Right Trig");
+			//System.out.println("Right Trig");
 		}
 	}
 	
@@ -137,6 +127,8 @@ public class Controllers {
 
 		robot.elevate.setElevator(elevatorLevel);
 	}
+	
+	
 }
 
 /*

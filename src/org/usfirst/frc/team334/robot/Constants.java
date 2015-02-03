@@ -18,7 +18,7 @@ public class Constants {
 	public static final int rightJoystick = 2;
 	
 	/*Sensors*/
-	public static final int highSwitch = 0;
+	public static final int highSwitch = 1;
 	public static final int lowSwitch = 0;
 	
 	/*Digital I/O*/
