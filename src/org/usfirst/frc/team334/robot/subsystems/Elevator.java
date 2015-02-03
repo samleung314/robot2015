@@ -123,6 +123,7 @@ public class Elevator {
 		} else {
 			moving = true;
 		}
+		
 	}
 
 	public void setElevatorLevel(int level) {
@@ -145,6 +146,7 @@ public class Elevator {
 		case 6:
 			elevatorPID.setSetpoint(100);
 			break;
+			
 		}
 
 	}
