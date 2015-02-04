@@ -5,6 +5,7 @@ import org.usfirst.frc.team334.robot.DoubleVics;
 import org.usfirst.frc.team334.robot.Robot;
 
 import edu.wpi.first.wpilibj.AnalogPotentiometer;
+import edu.wpi.first.wpilibj.AnalogInput;
 import edu.wpi.first.wpilibj.DigitalInput;
 import edu.wpi.first.wpilibj.PIDController;
 import edu.wpi.first.wpilibj.VictorSP;
@@ -20,6 +21,7 @@ public class Elevator {
 	public DoubleVics elevatorVics;
 
 	public AnalogPotentiometer elevatorPot;
+	public AnalogInput channel1;
 
 	private final PIDController elevatorPID;
 

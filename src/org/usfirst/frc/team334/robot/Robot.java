@@ -50,12 +50,13 @@ public class Robot extends IterativeRobot {
 	}
 
 	public void teleopPeriodic() {
-		control.getControllers();
-		SmartDashboard.putBoolean("Dog Locked?", elevate.locked);
-		SmartDashboard.putBoolean("Elevator Moving?", elevate.moving);
-		SmartDashboard.putNumber("xBox Left Y", control.xBoxLeftY);
+		//control.getControllers();
+		//control.controlElevator();
+		//SmartDashboard.putBoolean("Dog Locked?", elevate.locked);
+		//SmartDashboard.putBoolean("Elevator Moving?", elevate.moving);
+		SmartDashboard.putNumber("Pot", elevate.elevatorPot.get());
 		
-		air.chargeAir();
+		//air.chargeAir();
 		// control.setElevatorLevel();
 		// SmartDashboard.putNumber("ELEVATOR TOTE LEVEL", control.elevatorLevel);
 		// SmartDashboard.putNumber("ELEVATOR POT LEVEL", elevate.elevatorPot.get());
