@@ -27,7 +27,7 @@ public class Elevator {
 
 	private final DigitalInput highSwitch, lowSwitch;
 
-	public boolean locked, moving, highLimit, lowLimit;
+	public boolean locked, moving = false, highLimit, lowLimit;
 	public double minpot, maxpot, desiredpot;
 
 	double p = 0, i = 0, d = 0;
@@ -95,11 +95,11 @@ public class Elevator {
 		}
 	}
 
-	public void goPot(double dPot, double tolerance) {
+	public void goPot(double dPot, double tol) {
 
-		if (elevatorPot.get() < dPot-1) {
+		if (elevatorPot.get() < dPot - tol) {
 			doubleVicsElevator(.35);
-		} else if (elevatorPot.get() > dPot+1) {
+		} else if (elevatorPot.get() > dPot + tol) {
 			doubleVicsElevator(-.35);
 		}
 		else
@@ -110,34 +110,38 @@ public class Elevator {
 	}
 
 	public void manualVicsElevator(double speed) {
-		if (locked) { // Cannot move when Dog Gear is engaged
-			elevatorVicA.set(0);
-			elevatorVicB.set(0);
-			moving = false;
-		} else if (highLimit) { // Can only move down when activated
-			if (speed < 0) {
+		// True when not pressed
+		highLimit = highSwitch.get();
+		lowLimit = lowSwitch.get();
+
+		if (!locked) {
+			if (highLimit && speed >= 0) {
 				elevatorVicA.set(speed);
 				elevatorVicB.set(speed);
-			}
-		} else if (lowLimit) { // Can only move up when activated
-			if (speed > 0) {
+			} else if (lowLimit && speed <= 0) {
 				elevatorVicA.set(speed);
 				elevatorVicB.set(speed);
+			} else {
+				elevatorVicA.set(0);
+				elevatorVicB.set(0);
+				// moving = false;
 			}
-		} else // Can move freely
-		{
-			elevatorVicA.set(speed);
-			elevatorVicB.set(speed);
+		} else {
+			elevatorVics.set(0);
+			// moving = false;
 		}
 
-		if (speed == 0) {
-			moving = false;
-		} else {
-			moving = true;
-		}
+		/*
+		 * if (speed == 0) { 
+		 *   moving = false; 
+		 * } else { 
+		 * 	  moving = true; 
+		 * }
+		 */
 	}
 
 	public void doubleVicsElevator(double speed) {
+		//True when not pressed
 		highLimit = highSwitch.get();
 		lowLimit = lowSwitch.get();
 
@@ -148,18 +152,23 @@ public class Elevator {
 				elevatorVics.set(speed);
 			} else {
 				elevatorVics.set(0);
-				moving = false;
+				//moving = false;
 			}
 		} else {
 			elevatorVics.set(0);
-			moving = false;
+			//moving = false;
 		}
 
-		if (speed == 0) {
+		/*if (speed == 0) {
 			moving = false;
 		} else {
 			moving = true;
-		}
+		}*/
+	}
+	
+	public void elevatorPIDset() {
+		SmartDashboard.putData("Elevator PID", elevatorPID);
+		elevatorPID.enable();
 	}
 
 	public void setElevatorLevel(int level) {

@@ -45,21 +45,20 @@ public class Robot extends IterativeRobot {
 	}
 
 	public void teleopInit() {
-		// Stop the PIDs here
-		elevate.elevatorRelease(); //Elevator starts unlocked
+		// Stop the auton PIDs here
+		//elevate.elevatorRelease(); //Elevator starts unlocked
 	}
 
 	public void teleopPeriodic() {
 		//control.getControllers();
 		//control.controlElevator();
-		//SmartDashboard.putBoolean("Dog Locked?", elevate.locked);
-		//SmartDashboard.putBoolean("Elevator Moving?", elevate.moving);
-		SmartDashboard.putNumber("Pot", elevate.elevatorPot.get());
+		//control.testSolenoids();
+		air.cycleThrough();
 		
+		SmartDashboard.putBoolean("Locked?", elevate.locked);
+		SmartDashboard.putNumber("Elevator Level", elevate.elevatorPot.get()); //Low limit = 0.045, High limit = 0.585
+		//elevate.elevatorPIDset();
 		//air.chargeAir();
-		// control.setElevatorLevel();
-		// SmartDashboard.putNumber("ELEVATOR TOTE LEVEL", control.elevatorLevel);
-		// SmartDashboard.putNumber("ELEVATOR POT LEVEL", elevate.elevatorPot.get());
 	}
 
 	public void testPeriodic() {

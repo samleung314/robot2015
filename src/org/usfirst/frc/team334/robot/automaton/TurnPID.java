@@ -53,6 +53,7 @@ public class TurnPID implements PIDOutput{
             }
             return false;
         } else {
+        	robot.drive.doubleVicsDrive(0, 0);
             robot.auton.gyro.reset();
             return true;
         }

@@ -1,7 +1,6 @@
 package org.usfirst.frc.team334.robot.human;
 
 import edu.wpi.first.wpilibj.Joystick;
-import edu.wpi.first.wpilibj.smartdashboard.SmartDashboard;
 
 import org.usfirst.frc.team334.robot.*;
 
@@ -30,7 +29,7 @@ public class Controllers {
 		this.robot = robot;
 	}
 	
-	//Updates variables with controller inputs
+	//Updates variables with controller inputs. Needs to be run periodically for any controller code to work
 	public void getControllers() {
 		//xBox Controller
 		xBoxLeftY = xBox.getRawAxis(1);
@@ -70,24 +69,24 @@ public class Controllers {
 		} else if (xBoxY) {
 			robot.air.testReverse();
 		} else if (xBoxLeftBump) {
-			robot.air.compress.start();
+			robot.air.chargeAir();
 		} else if (xBoxRightBump) {
 			robot.air.compress.stop();
 		}
 	}
 	
-	//Mapping elevator functionality to controllers
+	//Mapping elevator functionality to xBox
 	public void controlElevator() {
-		robot.elevate.doubleVicsElevator(-0.3*xBoxLeftY);
+		robot.elevate.doubleVicsElevator(-xBoxLeftY);
 		
-		//Controlling dog gear with joystick triggers
-		if(leftTrigger) {
+		//Controlling dog gear with xBox buttons
+		if(xBoxX) {
 			robot.elevate.elevatorRelease();
-			//System.out.println("Left Trig");
+			System.out.println("X Button");
 		}
-		if(rightTrigger) {
+		if(xBoxY) {
 			robot.elevate.elevatorBreak();
-			//System.out.println("Right Trig");
+			System.out.println("Y Button");
 		}
 	}
 	

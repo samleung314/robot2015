@@ -9,6 +9,7 @@ import org.usfirst.frc.team334.robot.Constants;
 import edu.wpi.first.wpilibj.Compressor;
 import edu.wpi.first.wpilibj.DoubleSolenoid;
 import edu.wpi.first.wpilibj.DoubleSolenoid.Value;
+import edu.wpi.first.wpilibj.Timer;
 
 public class Air {
 
@@ -17,9 +18,12 @@ public class Air {
 	public Compressor compress;
 
 	DoubleSolenoid solA, solB, solC, solD, solE, solF;
+	Timer time;
 
 	public Air(Robot robot) {
 		this.robot = robot;
+		
+		time = new Timer();
 
 		// Compressor is connected to pneumatic module 0
 		compress = new Compressor(Constants.PCM0);
@@ -91,5 +95,77 @@ public class Air {
 		solE.set(DoubleSolenoid.Value.kOff);
 		solF.set(DoubleSolenoid.Value.kOff);
 	}
+	
+	public void cycleThrough() {
+		int i;
+		for (i = 1; i < 13; i++) {
+			switch (i) {
+			case 1:
+				solA.set(DoubleSolenoid.Value.kForward);
+				time.delay(1);
+				break;
 
+			case 2:
+				solA.set(DoubleSolenoid.Value.kReverse);
+				time.delay(1);
+				solA.set(DoubleSolenoid.Value.kOff);
+				break;
+
+			case 3:
+				solB.set(DoubleSolenoid.Value.kForward);
+				time.delay(1);
+				break;
+
+			case 4:
+				solB.set(DoubleSolenoid.Value.kReverse);
+				time.delay(1);
+				solB.set(DoubleSolenoid.Value.kOff);
+				break;
+
+			case 5:
+				solC.set(DoubleSolenoid.Value.kForward);
+				time.delay(1);
+				break;
+
+			case 6:
+				solC.set(DoubleSolenoid.Value.kReverse);
+				time.delay(1);
+				solC.set(DoubleSolenoid.Value.kOff);
+				break;
+				
+			case 7:
+				solD.set(DoubleSolenoid.Value.kForward);
+				time.delay(1);
+				break;
+
+			case 8:
+				solD.set(DoubleSolenoid.Value.kReverse);
+				time.delay(1);
+				solD.set(DoubleSolenoid.Value.kOff);
+				break;
+
+			case 9:
+				solE.set(DoubleSolenoid.Value.kForward);
+				time.delay(1);
+				break;
+
+			case 10:
+				solE.set(DoubleSolenoid.Value.kReverse);
+				time.delay(1);
+				solE.set(DoubleSolenoid.Value.kOff);
+				break;
+
+			case 11:
+				solF.set(DoubleSolenoid.Value.kForward);
+				time.delay(1);
+				break;
+
+			case 12:
+				solF.set(DoubleSolenoid.Value.kReverse);
+				time.delay(1);
+				solF.set(DoubleSolenoid.Value.kOff);
+				break;
+			}
+		}
+	}
 }
