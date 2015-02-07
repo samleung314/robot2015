@@ -7,24 +7,24 @@ import edu.wpi.first.wpilibj.PIDController;
 public class StraightPID {
 
     Robot robot;
-    
+
     public PIDController straightPID;
     double sP, sI, sD;
-    
-    public StraightPID(Robot robot) {
-       this.robot = robot;
 
-       straightPID = new PIDController(sP, sI, sD, robot.auto.gyro, robot.drive.leftVics);
-       
-       straightPID.setContinuous();
-       straightPID.setOutputRange(-1, 1);
-       straightPID.setSetpoint(0);
+    public StraightPID(Robot robot) {
+        this.robot = robot;
+
+        straightPID = new PIDController(sP, sI, sD, robot.auto.gyro, robot.drive.leftVics);
+
+        straightPID.setContinuous();
+        straightPID.setOutputRange(-1, 1);
+        straightPID.setSetpoint(0);
     }
 
     public boolean travelDistance(double distance, double speed) {
         if (robot.encode.averageDist() < distance) { //If distance not reached
             straightPID.enable();
-            robot.drive.doubleVicsDrive(speed, speed);       
+            robot.drive.doubleVicsDrive(speed, speed);
             return false;
 
         } else if (robot.encode.averageDist() >= distance) { //Stop and disable when distance reached
@@ -32,7 +32,6 @@ public class StraightPID {
             straightPID.disable();
             robot.encode.resetEncoders();
             return true;
-        }
-        else return true;
+        } else return true;
     }
 }

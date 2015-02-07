@@ -6,128 +6,127 @@ import org.usfirst.frc.team334.robot.*;
 
 public class Controllers {
 
-	Robot robot;
+    Robot robot;
 
-	// Creation of controller objects
-	final Joystick xBox = new Joystick(Constants.xbox);
-	final Joystick leftJoy = new Joystick(Constants.leftJoystick);
-	final Joystick rightJoy = new Joystick(Constants.rightJoystick);
+    // Creation of controller objects
+    final Joystick xBox = new Joystick(Constants.xbox);
+    final Joystick leftJoy = new Joystick(Constants.leftJoystick);
+    final Joystick rightJoy = new Joystick(Constants.rightJoystick);
 
-	/* xBox Controller Inputs */
-	// Pushing up returns negative values, pulling returns positive values
-	public double xBoxLeftY, xBoxRightY; 
-	boolean xBoxA, xBoxB, xBoxX, xBoxY, xBoxLeftBump, xBoxRightBump;
-	
-	public int elevatorLevel = 0;
+    /* xBox Controller Inputs */
+    // Pushing up returns negative values, pulling returns positive values
+    public double xBoxLeftY, xBoxRightY;
+    boolean xBoxA, xBoxB, xBoxX, xBoxY, xBoxLeftBump, xBoxRightBump;
 
-	/* Joystick Controllers Input */
-	// Pushing up returns negative values, pulling returns positive values
-	double leftJoyY, rightJoyY; 
-	boolean leftTrigger, rightTrigger, leftTriggerClicked = false, rightTriggerClicked = false;
+    public int elevatorLevel = 0;
 
-	public Controllers(Robot robot) {
-		this.robot = robot;
-	}
-	
-	//Updates variables with controller inputs. Needs to be run periodically for any controller code to work
-	public void getControllers() {
-		//xBox Controller
-		xBoxLeftY = xBox.getRawAxis(1);
-	    xBoxRightY = xBox.getRawAxis(5); 
-		xBoxA = xBox.getRawButton(1);
-		xBoxB = xBox.getRawButton(2);
-		xBoxX = xBox.getRawButton(3);
-	    xBoxY = xBox.getRawButton(4);
-	    xBoxLeftBump = xBox.getRawButton(5);
-	    xBoxRightBump = xBox.getRawButton(6);
-	    
-	    //Joysticks
-	    leftJoyY = leftJoy.getY();
-	    rightJoyY = rightJoy.getY();
-	    leftTrigger = leftJoy.getTrigger(); 
-	    rightTrigger = rightJoy.getTrigger();
-	}
+    /* Joystick Controllers Input */
+    // Pushing up returns negative values, pulling returns positive values
+    double leftJoyY, rightJoyY;
+    boolean leftTrigger, rightTrigger, leftTriggerClicked = false, rightTriggerClicked = false;
 
-	// Driving with the xBox controller
-	public void xBoxDrive() {
-		robot.drive.chasisDrive.tankDrive(-xBoxLeftY, -xBoxRightY);
-	}
+    public Controllers(Robot robot) {
+        this.robot = robot;
+    }
 
-	// Driving with the joystick controllers
-	public void joystickDrive() {
-		robot.drive.chasisDrive.tankDrive(-leftJoyY, -rightJoyY);
-	}
+    //Updates variables with controller inputs. Needs to be run periodically for any controller code to work
+    public void getControllers() {
+        //xBox Controller
+        xBoxLeftY = xBox.getRawAxis(1);
+        xBoxRightY = xBox.getRawAxis(5);
+        xBoxA = xBox.getRawButton(1);
+        xBoxB = xBox.getRawButton(2);
+        xBoxX = xBox.getRawButton(3);
+        xBoxY = xBox.getRawButton(4);
+        xBoxLeftBump = xBox.getRawButton(5);
+        xBoxRightBump = xBox.getRawButton(6);
 
-	// Used for testing solenoids
-	public void testSolenoids() {
-		if (xBoxA) {
-			robot.air.lockDog();
-		} else if (xBoxB) {
-			robot.air.releaseDog();
-		} else if (xBoxX) {
-			robot.air.testForward();
-		} else if (xBoxY) {
-			robot.air.testReverse();
-		} else if (xBoxLeftBump) {
-			robot.air.chargeAir();
-		} else if (xBoxRightBump) {
-			robot.air.compress.stop();
-		}
-	}
-	
-	//Mapping elevator functionality to xBox
-	public void controlElevator() {
-		robot.elevate.doubleVicsElevator(-xBoxLeftY);
-		
-		//Controlling dog gear with xBox buttons
-		if(xBoxX) {
-			robot.elevate.elevatorRelease();
-			System.out.println("X Button");
-		}
-		if(xBoxY) {
-			robot.elevate.elevatorBreak();
-			System.out.println("Y Button");
-		}
-	}
-	
-	public double deadZone(double input) {
-		if (input < 0.1 || input > -0.1) {
-			return 0;
-		}
-		else {
-			return input;
-		}
-	}
+        //Joysticks
+        leftJoyY = leftJoy.getY();
+        rightJoyY = rightJoy.getY();
+        leftTrigger = leftJoy.getTrigger();
+        rightTrigger = rightJoy.getTrigger();
+    }
 
-	public void setElevatorLevel() {
-		if (leftTrigger) {
-			if (!leftTriggerClicked) {
-				leftTriggerClicked = true;
-				elevatorLevel--;
-				if (elevatorLevel < 1) {
-					elevatorLevel = 1;
-				}
-			}
-		} else {
-			leftTriggerClicked = false;
-		}
+    // Driving with the xBox controller
+    public void xBoxDrive() {
+        robot.drive.chasisDrive.tankDrive(-xBoxLeftY, -xBoxRightY);
+    }
 
-		if (rightTrigger) {
-			if (!rightTriggerClicked) {
-				rightTriggerClicked = true;
-				elevatorLevel++;
-				if (elevatorLevel > 6) {
-					elevatorLevel = 6;
-				}
-			}
-		} else {
-			rightTriggerClicked = false;
-		}
+    // Driving with the joystick controllers
+    public void joystickDrive() {
+        robot.drive.chasisDrive.tankDrive(-leftJoyY, -rightJoyY);
+    }
 
-		robot.elevate.setElevator(elevatorLevel);
-	}
-	
-	
+    // Used for testing solenoids
+    public void testSolenoids() {
+        if (xBoxA) {
+            robot.air.lockDog();
+        } else if (xBoxB) {
+            robot.air.releaseDog();
+        } else if (xBoxX) {
+            robot.air.testForward();
+        } else if (xBoxY) {
+            robot.air.testReverse();
+        } else if (xBoxLeftBump) {
+            robot.air.chargeAir();
+        } else if (xBoxRightBump) {
+            robot.air.compress.stop();
+        }
+    }
+
+    //Mapping elevator functionality to xBox
+    public void controlElevator() {
+        robot.elevate.doubleVicsElevator(-xBoxLeftY);
+
+        //Controlling dog gear with xBox buttons
+        if (xBoxX) {
+            robot.elevate.elevatorRelease();
+            System.out.println("X Button");
+        }
+        if (xBoxY) {
+            robot.elevate.elevatorBreak();
+            System.out.println("Y Button");
+        }
+    }
+
+    public double deadZone(double input) {
+        if (input < 0.1 || input > -0.1) {
+            return 0;
+        } else {
+            return input;
+        }
+    }
+
+    public void setElevatorLevel() {
+        if (leftTrigger) {
+            if (!leftTriggerClicked) {
+                leftTriggerClicked = true;
+                elevatorLevel--;
+                if (elevatorLevel < 1) {
+                    elevatorLevel = 1;
+                }
+            }
+        } else {
+            leftTriggerClicked = false;
+        }
+
+        if (rightTrigger) {
+            if (!rightTriggerClicked) {
+                rightTriggerClicked = true;
+                elevatorLevel++;
+                if (elevatorLevel > 6) {
+                    elevatorLevel = 6;
+                }
+            }
+        } else {
+            rightTriggerClicked = false;
+        }
+
+        robot.elevate.setElevator(elevatorLevel);
+    }
+
+
 }
 
 /*
