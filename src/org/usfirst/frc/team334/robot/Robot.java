@@ -1,13 +1,24 @@
 package org.usfirst.frc.team334.robot;
 
+import org.usfirst.frc.team334.robot.automaton.Auton;
+import org.usfirst.frc.team334.robot.automaton.Default;
+import org.usfirst.frc.team334.robot.automaton.RampPID;
+import org.usfirst.frc.team334.robot.automaton.StraightPID;
+import org.usfirst.frc.team334.robot.automaton.TurnPID;
+import org.usfirst.frc.team334.robot.human.Controllers;
+import org.usfirst.frc.team334.robot.human.Smartdashboard;
+import org.usfirst.frc.team334.robot.subsystems.Air;
+import org.usfirst.frc.team334.robot.subsystems.CycleAir;
+import org.usfirst.frc.team334.robot.subsystems.Drivetrain;
+import org.usfirst.frc.team334.robot.subsystems.Elevator;
+import org.usfirst.frc.team334.robot.subsystems.ElevatorPot;
+import org.usfirst.frc.team334.robot.subsystems.Encoders;
+
 import edu.wpi.first.wpilibj.IterativeRobot;
+import edu.wpi.first.wpilibj.command.Command;
+import edu.wpi.first.wpilibj.command.Scheduler;
 import edu.wpi.first.wpilibj.smartdashboard.SendableChooser;
 import edu.wpi.first.wpilibj.smartdashboard.SmartDashboard;
-import edu.wpi.first.wpilibj.command.Command;
-
-import org.usfirst.frc.team334.robot.human.*;
-import org.usfirst.frc.team334.robot.automaton.*;
-import org.usfirst.frc.team334.robot.subsystems.*;
 
 public class Robot extends IterativeRobot {
 
@@ -70,6 +81,7 @@ public class Robot extends IterativeRobot {
 		SmartDashboard.putData("Elevator PID", pot.elevatorPID);
 		SmartDashboard.putBoolean("Locked?", elevate.locked);
 		SmartDashboard.putNumber("Elevator Level", pot.elevatorPot.get());
+		Scheduler.getInstance().run();
 	}
 
 	public void teleopInit() {
