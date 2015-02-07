@@ -27,7 +27,6 @@ public class RampPID implements PIDOutput{
     @Override
     public void pidWrite(double output) {
         this.rampSpeed = output;
-        
     }
     
     //Ramps robot up to specified speed within specified seconds

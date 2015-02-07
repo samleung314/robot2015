@@ -14,7 +14,7 @@ public class StraightPID {
     public StraightPID(Robot robot) {
        this.robot = robot;
 
-       straightPID = new PIDController(sP, sI, sD, robot.auton.gyro, robot.drive.leftVics);
+       straightPID = new PIDController(sP, sI, sD, robot.auto.gyro, robot.drive.leftVics);
        
        straightPID.setContinuous();
        straightPID.setOutputRange(-1, 1);

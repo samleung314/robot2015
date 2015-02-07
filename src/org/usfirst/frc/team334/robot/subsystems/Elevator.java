@@ -23,7 +23,7 @@ public class Elevator {
 	public AnalogPotentiometer elevatorPot;
 	public AnalogInput channel1;
 
-	private final PIDController elevatorPID;
+	public final PIDController elevatorPID;
 
 	private final DigitalInput highSwitch, lowSwitch;
 
@@ -44,6 +44,7 @@ public class Elevator {
 		// 10 Turns max on the pot, 9.6 turns max on the elevator
 
 		elevatorPID = new PIDController(p, i, d, elevatorPot, elevatorVics);
+		elevatorPID.setOutputRange(-0.5, 0.5); //Limits the elevator speed so it doesn't go too fast
 
 		highSwitch = new DigitalInput(Constants.highSwitch);
 		lowSwitch = new DigitalInput(Constants.lowSwitch);
@@ -101,9 +102,7 @@ public class Elevator {
 			doubleVicsElevator(.35);
 		} else if (elevatorPot.get() > dPot + tol) {
 			doubleVicsElevator(-.35);
-		}
-		else
-		{
+		} else {
 			doubleVicsElevator(0);
 		}
 
@@ -168,7 +167,6 @@ public class Elevator {
 	
 	public void elevatorPIDset() {
 		SmartDashboard.putData("Elevator PID", elevatorPID);
-		elevatorPID.enable();
 	}
 
 	public void setElevatorLevel(int level) {

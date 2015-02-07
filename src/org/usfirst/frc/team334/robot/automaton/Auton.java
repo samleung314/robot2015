@@ -9,7 +9,7 @@ public class Auton{
 
     Robot robot;
     
-    Gyro gyro;
+    public Gyro gyro;
     
     boolean seg1, seg2, seg3, seg4, turn1, turn2, turn3, turn4;
     
@@ -51,6 +51,5 @@ public class Auton{
         	turn2 = robot.turn.turnDegrees(90, 0.5);
         }
     }
-
 
 }

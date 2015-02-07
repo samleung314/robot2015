@@ -15,7 +15,7 @@ public class TurnPID implements PIDOutput{
     public TurnPID(Robot robot) {
         this.robot = robot;
 
-        turnPID = new PIDController(tP, tI, tD, robot.auton.gyro, this);
+        turnPID = new PIDController(tP, tI, tD, robot.auto.gyro, this);
         turnPID.setContinuous();
         turnPID.setOutputRange(-1, 1);
     }
@@ -26,7 +26,7 @@ public class TurnPID implements PIDOutput{
     }
     
     public double gyroAngle() {
-        return robot.auton.gyro.getAngle();
+        return robot.auto.gyro.getAngle();
     }
     
     public boolean turnDegrees(double degrees, double turnSpeed) {
@@ -54,7 +54,7 @@ public class TurnPID implements PIDOutput{
             return false;
         } else {
         	robot.drive.doubleVicsDrive(0, 0);
-            robot.auton.gyro.reset();
+            robot.auto.gyro.reset();
             return true;
         }
     }

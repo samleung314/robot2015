@@ -59,5 +59,5 @@ public class Constants {
     public static final int solenoidFY = 5;
 	
     /*ETC*/
-    public static final int encoderDistancePerPulse = 0;
+    public static final double encoderDistancePerPulse = (4*Math.PI)/544;
 }
