@@ -9,7 +9,7 @@ import edu.wpi.first.wpilibj.VictorSP;
 
 public class Elevator {
 
-	Robot robot;
+    Robot robot;
 
 	private final VictorSP elevatorVicA;
 	private final VictorSP elevatorVicB;
@@ -105,39 +105,38 @@ public class Elevator {
 			elevatorVics.set(0);
 			// moving = false;
 		}
-
 		/*
-		 * if (speed == 0) { 
+         * if (speed == 0) {
 		 *   moving = false; 
 		 * } else { 
 		 * 	  moving = true; 
 		 * }
 		 */
-	}
+    }
 
-	public void doubleVicsElevator(double speed) {
-		//True when not pressed
-		highLimit = highSwitch.get();
-		lowLimit = lowSwitch.get();
+    public void doubleVicsElevator(double speed) {
+        //True when not pressed
+        highLimit = highSwitch.get();
+        lowLimit = lowSwitch.get();
 
-		if (!locked) {
-			if (highLimit && speed >= 0) {
-				elevatorVics.set(speed);
-			} else if (lowLimit && speed <= 0) {
-				elevatorVics.set(speed);
-			} else {
-				elevatorVics.set(0);
-				//moving = false;
-			}
-		} else {
-			elevatorVics.set(0);
-			//moving = false;
-		}
+        if (!locked) {
+            if (highLimit && speed >= 0) {
+                elevatorVics.set(speed);
+            } else if (lowLimit && speed <= 0) {
+                elevatorVics.set(speed);
+            } else {
+                elevatorVics.set(0);
+                //moving = false;
+            }
+        } else {
+            elevatorVics.set(0);
+            //moving = false;
+        }
 
 		/*if (speed == 0) {
 			moving = false;
 		} else {
 			moving = true;
 		}*/
-	}
+    }
 }

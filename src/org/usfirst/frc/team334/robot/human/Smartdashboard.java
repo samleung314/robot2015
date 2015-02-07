@@ -22,16 +22,16 @@ public class Smartdashboard {
         //SmartDashboard.putData("Turn PID", robot.turn.turnPID);      
         //SmartDashboard.putData("Elevate PID", robot.elevate.elevatorPID);
     }
-    
+
     // Places sensor values onto SmartDashboard
     public void displaySensors() {
         SmartDashboard.putNumber("Left Encoder", robot.encode.leftEnc.getDistance());
         SmartDashboard.putNumber("Right Encoder", robot.encode.rightEnc.getDistance());
         SmartDashboard.putNumber("Average Encoder", robot.encode.averageDist());
-        
+
         SmartDashboard.putNumber("Raw Elevator Pot", robot.pot.elevatorPot.get());
         SmartDashboard.putNumber("Scaled Elevator Pot", robot.pot.getLevel());
-        
+
         SmartDashboard.putNumber("Gyroscope", robot.auto.gyro.getAngle());
         
         SmartDashboard.putBoolean("Compressor Switch Value", robot.air.compress.getPressureSwitchValue());

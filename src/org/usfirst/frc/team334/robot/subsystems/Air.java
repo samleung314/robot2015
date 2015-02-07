@@ -10,23 +10,23 @@ import edu.wpi.first.wpilibj.Timer;
 
 public class Air {
 
-	Robot robot;
+    Robot robot;
 
-	public Compressor compress;
+    public Compressor compress;
 
-	DoubleSolenoid solA, solB, solC, solD, solE, solF;
-	Timer time;
+    DoubleSolenoid solA, solB, solC, solD, solE, solF;
+    Timer time;
 
-	public Air(Robot robot) {
-		this.robot = robot;
-		
-		time = new Timer();
+    public Air(Robot robot) {
+        this.robot = robot;
 
-		// Compressor is connected to pneumatic module 0
-		compress = new Compressor(Constants.PCM0);
+        time = new Timer();
+
+        // Compressor is connected to pneumatic module 0
+        compress = new Compressor(Constants.PCM0);
 
 		/*
-		 * Six solenoid modules: A,B,C,D,E,F Solenoids A,B,C are connected to
+         * Six solenoid modules: A,B,C,D,E,F Solenoids A,B,C are connected to
 		 * pneumatic module 0. They operate at 60 psi Solenoids D,E,F are
 		 * connected to pneumatic module 1. They operate at 30 psi
 		 */

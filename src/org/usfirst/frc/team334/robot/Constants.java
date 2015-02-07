@@ -48,16 +48,16 @@ public class Constants {
 	
 	/*Secondary Pneumatic Controller Module*/
 	public static final int PCM1 = 1;
-	
-	public static final int solenoidDX = 0;
+
+    public static final int solenoidDX = 0;
     public static final int solenoidDY = 7;
-    
+
     public static final int solenoidEX = 1;
     public static final int solenoidEY = 6;
-    
+
     public static final int solenoidFX = 2;
     public static final int solenoidFY = 5;
-	
+
     /*ETC*/
     public static final double encoderDistancePerPulse = ((double)9/1088) * Math.PI; //(18/34)*((4*Math.PI)/256);
     
@@ -68,5 +68,4 @@ public class Constants {
     
     //Length of movement on elevators is 64 1/8 inches
     //Difference of pot limits: 0.984 - 0.203 = 0.781
-    
 }

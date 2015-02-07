@@ -6,3 +6,7 @@ bin/
 # OS specific
 .DS_Store
 Thumbs.db
+
+# IntelliJ
+.idea
+*.iml
