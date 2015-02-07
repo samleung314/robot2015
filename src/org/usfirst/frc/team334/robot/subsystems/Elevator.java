@@ -4,12 +4,8 @@ import org.usfirst.frc.team334.robot.Constants;
 import org.usfirst.frc.team334.robot.DoubleVics;
 import org.usfirst.frc.team334.robot.Robot;
 
-import edu.wpi.first.wpilibj.AnalogPotentiometer;
-import edu.wpi.first.wpilibj.AnalogInput;
 import edu.wpi.first.wpilibj.DigitalInput;
-import edu.wpi.first.wpilibj.PIDController;
 import edu.wpi.first.wpilibj.VictorSP;
-import edu.wpi.first.wpilibj.smartdashboard.SmartDashboard;
 
 public class Elevator {
 
@@ -20,17 +16,10 @@ public class Elevator {
 
 	public DoubleVics elevatorVics;
 
-	public AnalogPotentiometer elevatorPot;
-	public AnalogInput channel1;
-
-	public final PIDController elevatorPID;
-
 	private final DigitalInput highSwitch, lowSwitch;
 
 	public boolean locked, moving = false, highLimit, lowLimit;
 	public double minpot, maxpot, desiredpot;
-
-	double p = 0, i = 0, d = 0;
 
 	public Elevator(Robot robot) {
 		this.robot = robot;
@@ -40,28 +29,15 @@ public class Elevator {
 
 		elevatorVics = new DoubleVics(elevatorVicA, elevatorVicB);
 
-		elevatorPot = new AnalogPotentiometer(Constants.elevatorPot);
-		// 10 Turns max on the pot, 9.6 turns max on the elevator
-
-		elevatorPID = new PIDController(p, i, d, elevatorPot, elevatorVics);
-		elevatorPID.setOutputRange(-0.5, 0.5); //Limits the elevator speed so it doesn't go too fast
-
 		highSwitch = new DigitalInput(Constants.highSwitch);
 		lowSwitch = new DigitalInput(Constants.lowSwitch);
 	}
-
+	
 	public boolean freeToMove() {
 		highLimit = !highSwitch.get();
 		lowLimit = !lowSwitch.get();
 
 		return (highLimit || lowLimit || locked);
-	}
-
-	public void setElevator(double setpoint) {
-		if (freeToMove()) {
-			elevatorPID.setSetpoint(setpoint);
-			elevatorPID.enable();
-		}
 	}
 
 	public void elevatorRelease() // Disengages the Dog Break in elevator
@@ -79,7 +55,7 @@ public class Elevator {
 	}
 
 	public void elevatorUp() {
-		if (elevatorPot.get() < desiredpot && elevatorPot.get() < maxpot
+		if (robot.pot.elevatorPot.get() < desiredpot && robot.pot.elevatorPot.get() < maxpot
 				&& !locked) {
 			manualVicsElevator(0.35);
 		} else {
@@ -88,7 +64,7 @@ public class Elevator {
 	}
 
 	public void elevatorDown() { // Makes Elevator go down
-		if (elevatorPot.get() > desiredpot && elevatorPot.get() > minpot
+		if (robot.pot.elevatorPot.get() > desiredpot && robot.pot.elevatorPot.get() > minpot
 				&& !locked) {
 			manualVicsElevator(-0.35);
 		} else {
@@ -98,9 +74,9 @@ public class Elevator {
 
 	public void goPot(double dPot, double tol) {
 
-		if (elevatorPot.get() < dPot - tol) {
+		if (robot.pot.elevatorPot.get() < dPot - tol) {
 			doubleVicsElevator(.35);
-		} else if (elevatorPot.get() > dPot + tol) {
+		} else if (robot.pot.elevatorPot.get() > dPot + tol) {
 			doubleVicsElevator(-.35);
 		} else {
 			doubleVicsElevator(0);
@@ -163,33 +139,5 @@ public class Elevator {
 		} else {
 			moving = true;
 		}*/
-	}
-	
-	public void elevatorPIDset() {
-		SmartDashboard.putData("Elevator PID", elevatorPID);
-	}
-
-	public void setElevatorLevel(int level) {
-		switch (level) {
-		case 1:
-			elevatorPID.setSetpoint(100);
-			break;
-		case 2:
-			elevatorPID.setSetpoint(100);
-			break;
-		case 3:
-			elevatorPID.setSetpoint(100);
-			break;
-		case 4:
-			elevatorPID.setSetpoint(100);
-			break;
-		case 5:
-			elevatorPID.setSetpoint(100);
-			break;
-		case 6:
-			elevatorPID.setSetpoint(100);
-			break;
-		}
-
 	}
 }

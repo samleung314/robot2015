@@ -1,6 +1,7 @@
 package org.usfirst.frc.team334.robot;
 
 import edu.wpi.first.wpilibj.IterativeRobot;
+import edu.wpi.first.wpilibj.smartdashboard.SendableChooser;
 import edu.wpi.first.wpilibj.smartdashboard.SmartDashboard;
 import edu.wpi.first.wpilibj.command.Command;
 
@@ -17,66 +18,91 @@ public class Robot extends IterativeRobot {
 	public Controllers control;
 	public Drivetrain drive;
 	public Elevator elevate;
+	public ElevatorPot pot;
 	public Encoders encode;
 	public RampPID ramp;
 	public StraightPID straight;
 	public TurnPID turn;
 	public Smartdashboard smart;
+	
+	public Command autoCommand, testCommand;
+	public SendableChooser autoChoose, testChoose; 
 
 	public void robotInit() {
 
 		air = new Air(this);
 		drive = new Drivetrain(this);
-		//encode = new Encoders(this);
-		// auto = new Auto(this);
+		encode = new Encoders(this);
+		auto = new Auton(this);
 		// ramp = new RampPID(this);
-		// straight = new StraightPID(this);
+		straight = new StraightPID(this);
 		// turn = new TurnPID(this);
 		control = new Controllers(this);
 		elevate = new Elevator(this);
+		pot = new ElevatorPot(this);
 		smart = new Smartdashboard(this);
+		
+		/*Sendable Chooser Setup*/
+		
+		//Add objects to the SendableChooser for autonomous 
+        autoChoose = new SendableChooser();
+        autoChoose.addDefault("Do Nothing", new Default());
+        autoChoose.addObject("Ramping PID", ramp);  
+        SmartDashboard.putData("Choose Auton Mode", autoChoose);
+        
+        //Add objects to the SendableChooser for testing
+        testChoose = new SendableChooser();
+        testChoose.addDefault("Do Nothing", new Default());
+        testChoose.addObject("Cycle Solenoids", new CycleAir(this));   
+        SmartDashboard.putData("Choose Test Mode", testChoose);
+		
 	}
 
 	public void autonomousInit() {
 		elevate.elevatorRelease(); //Elevator starts unlocked
-		elevate.elevatorPID.enable();
 		
-		smart.autoCommand = (Command) smart.autoChoose.getSelected();
-		smart.autoCommand.start();
+		//autoCommand = (Command) autoChoose.getSelected();
+		//autoCommand.start();
 	}
 
 	public void autonomousPeriodic() {
 		//air.chargeAir();
-		SmartDashboard.putData("Elevator PID", elevate.elevatorPID);
+		SmartDashboard.putData("Elevator PID", pot.elevatorPID);
 		SmartDashboard.putBoolean("Locked?", elevate.locked);
-		SmartDashboard.putNumber("Elevator Level", elevate.elevatorPot.get());
+		SmartDashboard.putNumber("Elevator Level", pot.elevatorPot.get());
 	}
 
 	public void teleopInit() {
-		// Stop the auton PIDs here
+		// Remember to stop auton PIDs
 		elevate.elevatorRelease(); //Elevator starts unlocked
-		elevate.elevatorPID.disable();
+		encode.resetEncoders();
+		auto.gyro.reset();
+		//straight.straightPID.enable();
 	}
 
 	public void teleopPeriodic() {
 		control.getControllers();
 		//control.controlElevator();
-		//control.joystickDrive();
-		control.testSolenoids();
+		control.joystickDrive();
+		//control.testSolenoids();
 		//air.cycleThrough();
+		air.compress.stop();
 		
-		SmartDashboard.putBoolean("Locked?", elevate.locked);
-		SmartDashboard.putNumber("Elevator Level", elevate.elevatorPot.get()); //Raw Pot: Low limit = , High limit = 
-		//elevate.elevatorPIDset();
+		smart.displaySensors();
+		//smart.displayPIDs();
+		//drive.doubleVicsDrive(0.5, 0.5);
 	}
 	
 	public void testInit() {
+		// Remember to stop auton and teleop PIDs
+		//elevate.elevatorRelease(); //Elevator starts unlocked
 		
+		testCommand = (Command) testChoose.getSelected();
+		testCommand.start();
 	}
 
 	public void testPeriodic() {
 		// Used for testing code
-
 	}
 
 }

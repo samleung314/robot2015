@@ -1,8 +1,5 @@
 package org.usfirst.frc.team334.robot.subsystems;
 
-import java.util.ArrayList;
-import java.util.Arrays;
-
 import org.usfirst.frc.team334.robot.Robot;
 import org.usfirst.frc.team334.robot.Constants;
 
@@ -47,7 +44,6 @@ public class Air {
 				Constants.solenoidEY);
 		solF = new DoubleSolenoid(Constants.PCM1, Constants.solenoidFX,
 				Constants.solenoidFY);
-
 	}
 
 	// Compressor will run if pressure is less than 120 psi. It will stop at 120

@@ -15,7 +15,7 @@ public class Encoders implements PIDSource{
     public Encoders(Robot robot) {
         this.robot = robot;
         
-        leftEnc = new Encoder(Constants.leftEncoderX, Constants.leftEncoderY);
+        leftEnc = new Encoder(Constants.leftEncoderX, Constants.leftEncoderY); 
         rightEnc = new Encoder(Constants.rightEncoderX, Constants.rightEncoderY);
         
         leftEnc.setDistancePerPulse(Constants.encoderDistancePerPulse);

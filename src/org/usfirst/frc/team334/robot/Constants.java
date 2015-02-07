@@ -18,8 +18,8 @@ public class Constants {
 	public static final int rightJoystick = 2;
 	
 	/*Sensors*/
-	public static final int highSwitch = 1;
-	public static final int lowSwitch = 0;
+	public static final int highSwitch = 4;
+	public static final int lowSwitch = 5;
 	
 	/*Digital I/O*/
 	public static final int gyroscope = 0;
@@ -59,5 +59,14 @@ public class Constants {
     public static final int solenoidFY = 5;
 	
     /*ETC*/
-    public static final double encoderDistancePerPulse = (4*Math.PI)/544;
+    public static final double encoderDistancePerPulse = ((double)9/1088) * Math.PI; //(18/34)*((4*Math.PI)/256);
+    
+    public static final double elevatorPotLOWLimit = 0.984;
+    public static final double elevatorPotHIGHLimit = 0.203;
+    public static final double elevatorRawLength = 0.781;
+    public static final double elevatorMovementLength = 64 + 1/8; //Inches
+    
+    //Length of movement on elevators is 64 1/8 inches
+    //Difference of pot limits: 0.984 - 0.203 = 0.781
+    
 }

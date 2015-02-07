@@ -124,7 +124,7 @@ public class Controllers {
 			rightTriggerClicked = false;
 		}
 
-		robot.elevate.setElevator(elevatorLevel);
+		robot.pot.setElevatorLevel(elevatorLevel);
 	}
 	
 	

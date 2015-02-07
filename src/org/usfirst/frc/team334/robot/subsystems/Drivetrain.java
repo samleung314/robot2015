@@ -45,7 +45,7 @@ public class Drivetrain{
     
     public void doubleVicsDrive(double leftSpeed, double rightSpeed) {
         leftVics.set(leftSpeed);
-        rightVics.set(rightSpeed);
+        rightVics.set(-rightSpeed);
     }
 
 }
