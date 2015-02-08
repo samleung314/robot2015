@@ -22,8 +22,6 @@ public class Constants {
 	public static final int lowSwitch = 5;
 	
 	/*Digital I/O*/
-	public static final int gyroscope = 0;
-	
 	public static final int leftEncoderX = 0;
 	public static final int leftEncoderY = 1;
 	
@@ -31,6 +29,8 @@ public class Constants {
 	public static final int rightEncoderY = 3;
 	
 	/*Analog*/
+	//Note: Analog ports 0,1 are reserved for accumulator sensors such as the gyroscope
+	public static final int gyroscope = 0;
 	public static final int elevatorPot = 1;
 	
 	/*Main Pneumatic Controller Module*/

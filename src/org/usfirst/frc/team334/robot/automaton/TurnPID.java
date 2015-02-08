@@ -29,7 +29,7 @@ public class TurnPID implements PIDOutput {
         return robot.auto.gyro.getAngle();
     }
 
-    public boolean turnDegrees(double degrees, double turnSpeed) {
+    public boolean turnDegrees(double degrees, double turnSpeed) { //Method for making robot turn a number of degrees at a turnSpeed
 
         if (gyroAngle() < degrees - 2 || gyroAngle() > degrees + 2) { //+- 2 degree tolerance
 
@@ -54,7 +54,7 @@ public class TurnPID implements PIDOutput {
         }
     }
 
-    public void PIDturnDegrees(double degrees) {
+    public void PIDturnDegrees(double degrees) { //Method for making robot turn a number of degrees using a PID controller
         turnPID.setSetpoint(degrees);
         turnPID.enable();
         robot.drive.doubleVicsDrive(turnOutput, -turnOutput);

@@ -40,18 +40,15 @@ public class Elevator {
 		return (highLimit || lowLimit || locked);
 	}
 
-	public void elevatorRelease() // Disengages the Dog Break in elevator
-	{
+	public void elevatorRelease() { // Releases the elevator break
 		locked = false;
 		robot.air.releaseDog();
 	}
 
-	public void elevatorBreak() // Engages the Dog Break in elevator
-	{
-		if (!moving) { // Only engage if elevator is not being moved
-			locked = true;
-			robot.air.lockDog();
-		}
+	public void elevatorBreak() { // Locks the elevator in place and stops elevator motors
+		locked = true;
+		elevatorVics.set(0);
+		robot.air.lockDog();
 	}
 
 	public void elevatorUp() {

@@ -22,19 +22,17 @@ public class Air {
 		// Compressor is connected to pneumatic module 0
 		compress = new Compressor(Constants.PCM0);
 
-		/*
-		 * Six solenoid modules: A,B,C,D,E,F Solenoids A,B,C are connected to
-		 * pneumatic module 0. They operate at 60 psi Solenoids D,E,F are
-		 * connected to pneumatic module 1. They operate at 30 psi
-		 */
-
+		/*Six solenoid modules: A,B,C,D,E,F*/
+		
+		/*Solenoids A,B,C are connected to pneumatic module 0. They operate at 60 psi*/
 		solA = new DoubleSolenoid(Constants.PCM0, Constants.solenoidAX,
 				Constants.solenoidAY);
 		solB = new DoubleSolenoid(Constants.PCM0, Constants.solenoidBX,
 				Constants.solenoidBY);
 		solC = new DoubleSolenoid(Constants.PCM0, Constants.solenoidCX,
 				Constants.solenoidCY);
-
+		
+		/*Solenoids D,E,F are connected to pneumatic module 1. They operate at 30 psi*/
 		solD = new DoubleSolenoid(Constants.PCM1, Constants.solenoidDX,
 				Constants.solenoidDY);
 		solE = new DoubleSolenoid(Constants.PCM1, Constants.solenoidEX,
@@ -53,12 +51,11 @@ public class Air {
 		}
 	}
 
-	public void lockDog() {
+	public void lockDog() { //Engages the Dog Gear piston
 		solF.set(Value.kForward);
-		robot.elevate.manualVicsElevator(0);
 	}
 
-	public void releaseDog() {
+	public void releaseDog() { //Disengages the Dog Gear piston
 		solF.set(Value.kReverse);
 	}
 
@@ -89,7 +86,7 @@ public class Air {
 		solF.set(DoubleSolenoid.Value.kOff);
 	}
 
-	public void cycleThrough() {
+	public void cycleThrough() { //Cycles through the forward, reverse, and off states of each solenoid for testing
 		for (int i = 1; i < 13; i++) {
 			switch (i) {
 			case 1:

@@ -1,18 +1,8 @@
 package org.usfirst.frc.team334.robot;
 
-import org.usfirst.frc.team334.robot.automaton.Auton;
-import org.usfirst.frc.team334.robot.automaton.Default;
-import org.usfirst.frc.team334.robot.automaton.RampPID;
-import org.usfirst.frc.team334.robot.automaton.StraightPID;
-import org.usfirst.frc.team334.robot.automaton.TurnPID;
-import org.usfirst.frc.team334.robot.human.Controllers;
-import org.usfirst.frc.team334.robot.human.Smartdashboard;
-import org.usfirst.frc.team334.robot.subsystems.Air;
-import org.usfirst.frc.team334.robot.subsystems.CycleAir;
-import org.usfirst.frc.team334.robot.subsystems.Drivetrain;
-import org.usfirst.frc.team334.robot.subsystems.Elevator;
-import org.usfirst.frc.team334.robot.subsystems.ElevatorPot;
-import org.usfirst.frc.team334.robot.subsystems.Encoders;
+import org.usfirst.frc.team334.robot.automaton.*;
+import org.usfirst.frc.team334.robot.human.*;
+import org.usfirst.frc.team334.robot.subsystems.*;
 
 import edu.wpi.first.wpilibj.IterativeRobot;
 import edu.wpi.first.wpilibj.command.Command;
@@ -71,17 +61,15 @@ public class Robot extends IterativeRobot {
 
 	public void autonomousInit() {
 		elevate.elevatorRelease(); //Elevator starts unlocked
-		
+		auto.gyro.reset();
+		encode.resetEncoders();
 		//autoCommand = (Command) autoChoose.getSelected();
 		//autoCommand.start();
 	}
 
 	public void autonomousPeriodic() {
-		//air.chargeAir();
-		SmartDashboard.putData("Elevator PID", pot.elevatorPID);
-		SmartDashboard.putBoolean("Locked?", elevate.locked);
-		SmartDashboard.putNumber("Elevator Level", pot.elevatorPot.get());
-		Scheduler.getInstance().run();
+		smart.displaySensors();
+		//Scheduler.getInstance().run();
 	}
 
 	public void teleopInit() {
@@ -89,7 +77,6 @@ public class Robot extends IterativeRobot {
 		elevate.elevatorRelease(); //Elevator starts unlocked
 		encode.resetEncoders();
 		auto.gyro.reset();
-		//straight.straightPID.enable();
 	}
 
 	public void teleopPeriodic() {
@@ -97,17 +84,16 @@ public class Robot extends IterativeRobot {
 		//control.controlElevator();
 		control.joystickDrive();
 		//control.testSolenoids();
+		
 		//air.cycleThrough();
 		air.compress.stop();
 		
 		smart.displaySensors();
-		//smart.displayPIDs();
-		//drive.doubleVicsDrive(0.5, 0.5);
 	}
 	
 	public void testInit() {
 		// Remember to stop auton and teleop PIDs
-		//elevate.elevatorRelease(); //Elevator starts unlocked
+		elevate.elevatorRelease(); //Elevator starts unlocked
 		
 		testCommand = (Command) testChoose.getSelected();
 		testCommand.start();
@@ -115,6 +101,7 @@ public class Robot extends IterativeRobot {
 
 	public void testPeriodic() {
 		// Used for testing code
+		Scheduler.getInstance().run();
 	}
 
 }

@@ -25,37 +25,36 @@ public class ElevatorPot implements PIDSource{
 		elevatorPID.setOutputRange(-0.5, 0.5); //Limits the elevator speed so it doesn't go too fast
 	}
 	
-	public double getLevel() {	
+	public double getLevel() {	//Converts raw potentiometer units to inches
 		double zeroedPot = Constants.elevatorPotLOWLimit - elevatorPot.get(); //Maps the low limit to 0 and has a range from 0 to 0.984
 		return zeroedPot * (Constants.elevatorMovementLength/Constants.elevatorRawLength);
+	}
+	
+	public void setElevatorLevel(int level) { //Used for moving elevator to 6 predetermined levels
+		switch (level) {
+		case 1:
+			elevatorPID.setSetpoint(0);
+			break;
+		case 2:
+			elevatorPID.setSetpoint(0);
+			break;
+		case 3:
+			elevatorPID.setSetpoint(0);
+			break;
+		case 4:
+			elevatorPID.setSetpoint(0);
+			break;
+		case 5:
+			elevatorPID.setSetpoint(0);
+			break;
+		case 6:
+			elevatorPID.setSetpoint(0);
+			break;
+		}
 	}
 
 	@Override
 	public double pidGet() {
 		return getLevel();
 	}
-	
-	public void setElevatorLevel(int level) {
-		switch (level) {
-		case 1:
-			elevatorPID.setSetpoint(100);
-			break;
-		case 2:
-			elevatorPID.setSetpoint(100);
-			break;
-		case 3:
-			elevatorPID.setSetpoint(100);
-			break;
-		case 4:
-			elevatorPID.setSetpoint(100);
-			break;
-		case 5:
-			elevatorPID.setSetpoint(100);
-			break;
-		case 6:
-			elevatorPID.setSetpoint(100);
-			break;
-		}
-	}
-
 }

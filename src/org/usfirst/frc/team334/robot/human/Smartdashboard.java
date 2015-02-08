@@ -25,16 +25,17 @@ public class Smartdashboard {
 
     // Places sensor values onto SmartDashboard
     public void displaySensors() {
-        SmartDashboard.putNumber("Left Encoder", robot.encode.leftEnc.getDistance());
-        SmartDashboard.putNumber("Right Encoder", robot.encode.rightEnc.getDistance());
-        SmartDashboard.putNumber("Average Encoder", robot.encode.averageDist());
+        SmartDashboard.putNumber("Left Encoder Distance", robot.encode.leftEnc.getDistance());
+        SmartDashboard.putNumber("Right Encoder Distance", robot.encode.rightEnc.getDistance());
+        SmartDashboard.putNumber("Average Encoder Distance", robot.encode.averageDist());
 
-        SmartDashboard.putNumber("Raw Elevator Pot", robot.pot.elevatorPot.get());
-        SmartDashboard.putNumber("Scaled Elevator Pot", robot.pot.getLevel());
+        SmartDashboard.putNumber("Raw elevator level", robot.pot.elevatorPot.get());
+        SmartDashboard.putNumber("Elevator level", robot.pot.getLevel());
 
         SmartDashboard.putNumber("Gyroscope", robot.auto.gyro.getAngle());
         
-        SmartDashboard.putBoolean("Compressor Switch Value", robot.air.compress.getPressureSwitchValue());
+        SmartDashboard.putBoolean("At full pressure?", robot.air.compress.getPressureSwitchValue());
+        SmartDashboard.putBoolean("Elevator brake engaged?", robot.elevate.locked);
     }
     
     public void getPrefs() {
