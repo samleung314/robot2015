@@ -38,6 +38,10 @@ public class Smartdashboard {
         SmartDashboard.putBoolean("Elevator brake engaged?", robot.elevate.locked);
     }
     
+    public void displayAuton() {
+    	SmartDashboard.putString("Robot State", robot.auto.currentState);
+    }
+    
     public void getPrefs() {
     	//pref.getDouble(key, backup);
     }
