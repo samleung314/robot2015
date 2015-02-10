@@ -16,7 +16,7 @@ public class Elevator {
 
 	public DoubleVics elevatorVics;
 
-	private final DigitalInput highSwitch, lowSwitch;
+	//private final DigitalInput highSwitch, lowSwitch;
 
 	public boolean locked, moving = false, highLimit, lowLimit;
 	public double minpot, maxpot, desiredpot;
@@ -29,16 +29,16 @@ public class Elevator {
 
 		elevatorVics = new DoubleVics(elevatorVicA, elevatorVicB);
 
-		highSwitch = new DigitalInput(Constants.highSwitch);
-		lowSwitch = new DigitalInput(Constants.lowSwitch);
+		//highSwitch = new DigitalInput(Constants.highSwitch);
+		//lowSwitch = new DigitalInput(Constants.lowSwitch);
 	}
 	
-	public boolean freeToMove() {
+	/*public boolean freeToMove() {
 		highLimit = !highSwitch.get();
 		lowLimit = !lowSwitch.get();
 
 		return (highLimit || lowLimit || locked);
-	}
+	}*/
 
 	public void elevatorRelease() { // Releases the elevator break
 		locked = false;
@@ -83,8 +83,8 @@ public class Elevator {
 
 	public void manualVicsElevator(double speed) {
 		// True when not pressed
-		highLimit = highSwitch.get();
-		lowLimit = lowSwitch.get();
+		/*highLimit = highSwitch.get();
+		lowLimit = lowSwitch.get();*/
 
 		if (!locked) {
 			if (highLimit && speed >= 0) {
@@ -113,8 +113,8 @@ public class Elevator {
 
     public void doubleVicsElevator(double speed) {
         //True when not pressed
-        highLimit = highSwitch.get();
-        lowLimit = lowSwitch.get();
+        /*highLimit = highSwitch.get();
+        lowLimit = lowSwitch.get();*/
 
         if (!locked) {
             if (highLimit && speed >= 0) {

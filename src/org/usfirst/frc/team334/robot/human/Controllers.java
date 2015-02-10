@@ -42,8 +42,8 @@ public class Controllers {
 	    xBoxRightBump = xBox.getRawButton(6);
 	    
 	    //Joysticks
-	    leftJoyY = leftJoy.getY();
-	    rightJoyY = rightJoy.getY();
+	    leftJoyY = 0.4*leftJoy.getY();
+	    rightJoyY = 0.4*rightJoy.getY();
 	    leftTrigger = leftJoy.getTrigger(); 
 	    rightTrigger = rightJoy.getTrigger();
 	}

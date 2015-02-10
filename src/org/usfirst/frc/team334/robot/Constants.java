@@ -22,11 +22,11 @@ public class Constants {
 	public static final int lowSwitch = 5;
 	
 	/*Digital I/O*/
-	public static final int leftEncoderX = 0;
-	public static final int leftEncoderY = 1;
+	public static final int leftEncoderX = 4;
+	public static final int leftEncoderY = 5;
 	
-	public static final int rightEncoderX = 2;
-	public static final int rightEncoderY = 3;
+	public static final int rightEncoderX = 3;
+	public static final int rightEncoderY = 2;
 	
 	/*Analog*/
 	//Note: Analog ports 0,1 are reserved for accumulator sensors such as the gyroscope

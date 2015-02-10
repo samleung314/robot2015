@@ -1,17 +1,12 @@
 package org.usfirst.frc.team334.robot.automaton;
 
-import org.usfirst.frc.team334.robot.Constants;
 import org.usfirst.frc.team334.robot.Robot;
-
-import edu.wpi.first.wpilibj.Gyro;
 
 public class Auton {
 
     Robot robot;
 
-    public Gyro gyro;
-
-    boolean seg1 = false, 
+    public boolean seg1 = false, 
     		seg2 = false, 
     		seg3 = false, 
     		seg4 = false, 
@@ -24,7 +19,6 @@ public class Auton {
 
     public Auton(Robot robot) {
         this.robot = robot;
-        gyro = new Gyro(Constants.gyroscope);
     }
 
     public void squareSequence(double speed) { //Makes the robot drive in a 38x38 square at a specified speed
