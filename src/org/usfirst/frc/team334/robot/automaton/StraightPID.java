@@ -9,12 +9,12 @@ public class StraightPID {
     Robot robot;
 
     public PIDController straightPID;
-    double sP, sI, sD;
+    double sKp, sKi, sKd;
 
     public StraightPID(Robot robot) {
         this.robot = robot;
 
-        straightPID = new PIDController(sP, sI, sD, robot.turn.gyro, robot.drive.leftVics);
+        straightPID = new PIDController(sKp, sKi, sKd, robot.turn.gyro, robot.drive.leftVics);
 
         straightPID.setContinuous(); //Tells PID that 360 degrees is the same as 0 degrees
         straightPID.setOutputRange(-1, 1); //Limits the victors' speed from a range of -1 to 1

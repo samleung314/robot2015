@@ -24,6 +24,7 @@ public class Robot extends IterativeRobot {
 	public Encoders encode;
 	public RampPID ramp;
 	public StraightPID straight;
+	public StraightRampPID straightRamp;
 	public TurnPID turn;
 	public Smartdashboard smart;
 	
@@ -34,17 +35,21 @@ public class Robot extends IterativeRobot {
 
 	public void robotInit() {
 
+		/*Create objects*/
 		air = new Air(this);
 		drive = new Drivetrain(this);
 		encode = new Encoders(this);
 		auto = new Auton(this);
-		// ramp = new RampPID(this);
+		ramp = new RampPID(this);
 		turn = new TurnPID(this);
 		straight = new StraightPID(this);
+		straightRamp = new StraightRampPID(this);
 		control = new Controllers(this);
 		elevate = new Elevator(this);
 		pot = new ElevatorPot(this);
 		smart = new Smartdashboard(this);
+		
+		smart.getPrefs();
 		
 		/*Sendable Chooser Setup
 		
@@ -63,8 +68,8 @@ public class Robot extends IterativeRobot {
 	}
 
 	public void autonomousInit() {
-		smart.getPrefs();
 		elevate.elevatorRelease(); //Elevator starts unlocked
+		smart.getPrefs();
 		encode.resetEncoders();
 		turn.gyro.reset();
 		air.compress.stop();
@@ -96,12 +101,15 @@ public class Robot extends IterativeRobot {
 	}
 
 	public void teleopInit() {
-		// Remember to stop auton PIDs
-		straight.straightPID.disable();
-		turn.turnPID.disable();
 		elevate.elevatorRelease(); //Elevator starts unlocked
 		encode.resetEncoders();
 		turn.gyro.reset();
+		
+		/*Disable the PIDs*/
+		straight.straightPID.disable();
+		turn.turnPID.disable();
+		straightRamp.keepStraightPID.disable();
+		ramp.rampPID.disable();
 	}
 
 	public void teleopPeriodic() {
@@ -117,15 +125,23 @@ public class Robot extends IterativeRobot {
 	}
 	
 	public void testInit() {
-		// Remember to stop auton and teleop PIDs
-		//elevate.elevatorRelease(); //Elevator starts unlocked
+		elevate.elevatorRelease(); //Elevator starts unlocked
+		smart.getPrefs();
+		encode.resetEncoders();
+		turn.gyro.reset();
+		air.compress.stop();
 		
 		//testCommand = (Command) testChoose.getSelected();
 		//testCommand.start();
 	}
 
 	public void testPeriodic() {
-		// Used for testing code
+		straightRamp.rampStraight(smart.autoDist);
+		
+		SmartDashboard.putData("KeepStraight PID", straightRamp.keepStraightPID);
+		SmartDashboard.putData("Ramp PID", ramp.rampPID);
+		
+		smart.displaySensors();
 		//Scheduler.getInstance().run();
 	}
 

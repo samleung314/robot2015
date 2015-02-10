@@ -27,9 +27,9 @@ public class Smartdashboard {
 
     // Places sensor values onto SmartDashboard
     public void displaySensors() {
+    	SmartDashboard.putNumber("Average Encoder Distance", robot.encode.averageDist());
         SmartDashboard.putNumber("Left Encoder Distance", robot.encode.leftEnc.getDistance());
         SmartDashboard.putNumber("Right Encoder Distance", robot.encode.rightEnc.getDistance());
-        SmartDashboard.putNumber("Average Encoder Distance", robot.encode.averageDist());
 
         SmartDashboard.putNumber("Raw elevator level", robot.pot.elevatorPot.get());
         SmartDashboard.putNumber("Scaled Elevator level", robot.pot.getLevel());
@@ -45,9 +45,15 @@ public class Smartdashboard {
     }
     
     public void getPrefs() {
+    	/*
     	autoDist = pref.getDouble("Distance", 0);
     	autoSpeed = pref.getDouble("Speed", 0);
     	autoDegrees = pref.getDouble("Degrees", 0);
     	pref.save();
+    	*/
+    	
+    	autoDist = SmartDashboard.getNumber("Distance", 0);
+    	autoSpeed = SmartDashboard.getNumber("Speed", 0);
+    	autoDegrees = SmartDashboard.getNumber("Degrees", 0);
     }
 }

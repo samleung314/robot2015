@@ -11,7 +11,7 @@ public class RampPID implements PIDOutput {
     Robot robot;
 
     public PIDController rampPID;
-    double dP, dI, dD, rampSpeed;
+    double rampKp, rampKi, rampKd, rampSpeed;
 
     Timer rampUpTime, rampDownTime;
 
@@ -21,7 +21,8 @@ public class RampPID implements PIDOutput {
         rampUpTime = new Timer();
         rampDownTime = new Timer();
 
-        rampPID = new PIDController(dP, dI, dD, robot.encode, this);
+        rampPID = new PIDController(rampKp, rampKi, rampKd, robot.encode, this);
+        rampPID.setOutputRange(-0.5, 0.5); //Limits the speed to 60% on the victors
     }
 
     @Override
