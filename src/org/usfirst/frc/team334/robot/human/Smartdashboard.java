@@ -20,7 +20,7 @@ public class Smartdashboard {
     // Places PID objects onto SmartDashboard
     public void displayPIDs() {
         //SmartDashboard.putData("Ramping PID", robot.ramp.rampPID);
-        SmartDashboard.putData("Straight PID", robot.straight.straightPID);
+        //SmartDashboard.putData("Straight PID", robot.straight.straightPID);
         //SmartDashboard.putData("Turn PID", robot.turn.turnPID);      
         //SmartDashboard.putData("Elevate PID", robot.elevate.elevatorPID);
     }
@@ -45,15 +45,9 @@ public class Smartdashboard {
     }
     
     public void getPrefs() {
-    	/*
     	autoDist = pref.getDouble("Distance", 0);
     	autoSpeed = pref.getDouble("Speed", 0);
     	autoDegrees = pref.getDouble("Degrees", 0);
     	pref.save();
-    	*/
-    	
-    	autoDist = SmartDashboard.getNumber("Distance", 0);
-    	autoSpeed = SmartDashboard.getNumber("Speed", 0);
-    	autoDegrees = SmartDashboard.getNumber("Degrees", 0);
     }
 }

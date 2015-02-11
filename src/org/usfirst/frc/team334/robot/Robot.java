@@ -49,8 +49,6 @@ public class Robot extends IterativeRobot {
 		pot = new ElevatorPot(this);
 		smart = new Smartdashboard(this);
 		
-		smart.getPrefs();
-		
 		/*Sendable Chooser Setup
 		
 		//Add objects to the SendableChooser for autonomous 
@@ -78,7 +76,6 @@ public class Robot extends IterativeRobot {
 		
 		testStraight = false;
 		testTurn = false;
-		Timer.delay(0.1);
 	}
 
 	public void autonomousPeriodic() {
@@ -93,10 +90,10 @@ public class Robot extends IterativeRobot {
 		/*if(!testTurn) {
 			testTurn = turn.turnDegrees(smart.autoDegrees, smart.autoSpeed);
 		}*/
+		//SmartDashboard.putData("Turn PID", turn.turnPID);
 		
-		turn.PIDturnDegrees(90);
+		//turn.PIDturnDegrees(smart.autoDist);
 		
-		SmartDashboard.putData("Turn PID", turn.turnPID);
 		//Scheduler.getInstance().run();
 	}
 
@@ -104,6 +101,8 @@ public class Robot extends IterativeRobot {
 		elevate.elevatorRelease(); //Elevator starts unlocked
 		encode.resetEncoders();
 		turn.gyro.reset();
+		
+		air.compress.stop();
 		
 		/*Disable the PIDs*/
 		straight.straightPID.disable();
@@ -119,7 +118,6 @@ public class Robot extends IterativeRobot {
 		//control.testSolenoids();
 		
 		//air.cycleThrough();
-		air.compress.stop();
 		
 		smart.displaySensors();
 	}
