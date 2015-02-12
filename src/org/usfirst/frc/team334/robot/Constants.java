@@ -17,9 +17,14 @@ public class Constants {
 	public static final int leftJoystick = 1;
 	public static final int rightJoystick = 2;
 	
+	public static final double driveMuliplier = 0.55;
+	
 	/*Sensors*/
-	public static final int highSwitch = 4;
-	public static final int lowSwitch = 5;
+	public static final int highSwitchLeft = 4;
+	public static final int lowSwitchLeft = 5;
+	
+	public static final int highSwitchRight = 4;
+	public static final int lowSwitchRight = 5;
 	
 	/*Digital I/O*/
 	public static final int leftEncoderX = 4;
@@ -65,6 +70,9 @@ public class Constants {
     public static final double elevatorPotHIGHLimit = 0.203;
     public static final double elevatorRawLength = 0.781;
     public static final double elevatorMovementLength = 64 + 1/8; //Inches
+    
+    public static final double turnPIDTolerance = 1;
+    public static final double distancePIDTolerance = 0.5;
     
     //Length of movement on elevators is 64 1/8 inches
     //Difference of pot limits: 0.984 - 0.203 = 0.781

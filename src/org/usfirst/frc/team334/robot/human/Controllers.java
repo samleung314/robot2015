@@ -32,7 +32,7 @@ public class Controllers {
 	//Updates variables with controller inputs. Needs to be run periodically for any controller code to work
 	public void getControllers() {
 		//xBox Controller
-		xBoxLeftY = xBox.getRawAxis(1);
+		xBoxLeftY = -xBox.getRawAxis(1);
 	    xBoxRightY = xBox.getRawAxis(5); 
 		xBoxA = xBox.getRawButton(1);
 		xBoxB = xBox.getRawButton(2);
@@ -42,8 +42,8 @@ public class Controllers {
 	    xBoxRightBump = xBox.getRawButton(6);
 	    
 	    //Joysticks
-	    leftJoyY = 0.4*leftJoy.getY();
-	    rightJoyY = 0.4*rightJoy.getY();
+	    leftJoyY = -Constants.driveMuliplier*leftJoy.getY();
+	    rightJoyY = -Constants.driveMuliplier*rightJoy.getY();
 	    leftTrigger = leftJoy.getTrigger(); 
 	    rightTrigger = rightJoy.getTrigger();
 	}
@@ -55,15 +55,15 @@ public class Controllers {
 
 	// Driving with the joystick controllers
 	public void joystickDrive() {
-		robot.drive.chasisDrive.tankDrive(-leftJoyY, -rightJoyY);
+		robot.drive.chasisDrive.tankDrive(leftJoyY, rightJoyY);
 	}
 
 	// Used for testing solenoids
 	public void testSolenoids() {
 		if (xBoxA) {
-			robot.air.lockDog();
+			robot.air.dogLock();
 		} else if (xBoxB) {
-			robot.air.releaseDog();
+			robot.air.dogRelease();
 		} else if (xBoxX) {
 			robot.air.testForward();
 		} else if (xBoxY) {

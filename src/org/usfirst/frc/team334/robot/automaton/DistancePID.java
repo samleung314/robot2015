@@ -1,12 +1,13 @@
 package org.usfirst.frc.team334.robot.automaton;
 
+import org.usfirst.frc.team334.robot.Constants;
 import org.usfirst.frc.team334.robot.Robot;
 
 import edu.wpi.first.wpilibj.PIDController;
 import edu.wpi.first.wpilibj.PIDOutput;
 import edu.wpi.first.wpilibj.Timer;
 
-public class RampPID implements PIDOutput {
+public class DistancePID implements PIDOutput {
 
     Robot robot;
 
@@ -15,7 +16,7 @@ public class RampPID implements PIDOutput {
 
     Timer rampUpTime, rampDownTime;
 
-    public RampPID(Robot robot) {
+    public DistancePID(Robot robot) {
         this.robot = robot;
 
         rampUpTime = new Timer();
@@ -23,6 +24,7 @@ public class RampPID implements PIDOutput {
 
         rampPID = new PIDController(rampKp, rampKi, rampKd, robot.encode, this);
         rampPID.setOutputRange(-0.5, 0.5); //Limits the speed to 60% on the victors
+        rampPID.setAbsoluteTolerance(Constants.distancePIDTolerance);
     }
 
     @Override

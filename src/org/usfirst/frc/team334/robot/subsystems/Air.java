@@ -14,7 +14,7 @@ public class Air {
 
 	public Compressor compress;
 
-	DoubleSolenoid solA, solB, solC, solD, solE, solF;
+	public DoubleSolenoid solA, solB, solC, solD, solE, solF;
 
 	public Air(Robot robot) {
 		this.robot = robot;
@@ -50,12 +50,28 @@ public class Air {
 			compress.stop();
 		}
 	}
+	
+	public void armsExtend() { //Extends grabbers
+		solA.set(Value.kForward);
+	}
+	
+	public void armsRetract() { //Retracts grabbers
+		solA.set(Value.kReverse);
+	}
+	
+	public void flippersUp() {
+		solB.set(Value.kForward);
+	}
+	
+	public void flippersDown() {
+		solB.set(Value.kReverse);
+	}
 
-	public void lockDog() { //Engages the Dog Gear piston
+	public void dogLock() { //Engages the Dog Gear piston
 		solF.set(Value.kForward);
 	}
 
-	public void releaseDog() { //Disengages the Dog Gear piston
+	public void dogRelease() { //Disengages the Dog Gear piston
 		solF.set(Value.kReverse);
 	}
 

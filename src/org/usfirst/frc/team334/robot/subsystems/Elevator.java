@@ -16,7 +16,7 @@ public class Elevator {
 
 	public DoubleVics elevatorVics;
 
-	//private final DigitalInput highSwitch, lowSwitch;
+	private final DigitalInput highSwitchLeft, lowSwitchLeft, highSwitchRight, lowSwitchRight;
 
 	public boolean locked, moving = false, highLimit, lowLimit;
 	public double minpot, maxpot, desiredpot;
@@ -28,27 +28,26 @@ public class Elevator {
 		elevatorVicB = new VictorSP(Constants.elevatorVictorB);
 
 		elevatorVics = new DoubleVics(elevatorVicA, elevatorVicB);
-
-		//highSwitch = new DigitalInput(Constants.highSwitch);
-		//lowSwitch = new DigitalInput(Constants.lowSwitch);
+		
+		//Limit switches return raw value of false when pressed
+		highSwitchLeft = new DigitalInput(Constants.highSwitchLeft);
+		lowSwitchLeft = new DigitalInput(Constants.lowSwitchLeft);
+		
+		highSwitchRight = new DigitalInput(Constants.highSwitchRight);
+	    lowSwitchRight = new DigitalInput(Constants.lowSwitchRight);
 	}
-	
-	/*public boolean freeToMove() {
-		highLimit = !highSwitch.get();
-		lowLimit = !lowSwitch.get();
 
-		return (highLimit || lowLimit || locked);
-	}*/
-
-	public void elevatorRelease() { // Releases the elevator break
+	public boolean elevatorRelease() { // Releases the elevator break
 		locked = false;
-		robot.air.releaseDog();
+		robot.air.dogRelease();
+		return true;
 	}
 
-	public void elevatorBreak() { // Locks the elevator in place and stops elevator motors
+	public boolean elevatorBreak() { // Locks the elevator in place and stops elevator motors
 		locked = true;
 		elevatorVics.set(0);
-		robot.air.lockDog();
+		robot.air.dogLock();
+		return true;
 	}
 
 	public void elevatorUp() {
@@ -68,72 +67,67 @@ public class Elevator {
 			manualVicsElevator(0);
 		}
 	}
-
-	public void goPot(double dPot, double tol) {
-
-		if (robot.pot.elevatorPot.get() < dPot - tol) {
-			doubleVicsElevator(.35);
-		} else if (robot.pot.elevatorPot.get() > dPot + tol) {
-			doubleVicsElevator(-.35);
-		} else {
-			doubleVicsElevator(0);
-		}
-
+	
+	public boolean topOut() { //Returns true if either left/right limit switch pressed
+		return (!highSwitchLeft.get() || !highSwitchRight.get());
+	}
+	
+	public boolean bottomOut() { //Returns true if either left/right limit switch pressed
+		return (!lowSwitchLeft.get() || !lowSwitchRight.get());
 	}
 
-	public void manualVicsElevator(double speed) {
-		// True when not pressed
-		/*highLimit = highSwitch.get();
-		lowLimit = lowSwitch.get();*/
+	public boolean elevatorHeight(double height) {
 
+		if (robot.pot.getLevel() < height - 0.5) {
+			doubleVicsElevator(.35);
+			return false;
+		} else if (robot.pot.getLevel() > height + 0.5) {
+			doubleVicsElevator(-.35);
+			return false;
+		} else {
+			doubleVicsElevator(0);
+			return true;
+		}
+	}
+
+    public void doubleVicsElevator(double speed) {
+        if (!locked) {
+            if (!topOut() && speed >= 0) {
+                elevatorVics.set(speed);
+            } else if (!bottomOut() && speed <= 0) {
+                elevatorVics.set(speed);
+            } else {
+                elevatorVics.set(0);
+            }
+        } else {
+            elevatorVics.set(0);
+        }
+    }
+    
+    public void manualVicsElevator(double speed) {
 		if (!locked) {
-			if (highLimit && speed >= 0) {
+			if (!topOut() && speed >= 0) {
 				elevatorVicA.set(speed);
 				elevatorVicB.set(speed);
-			} else if (lowLimit && speed <= 0) {
+			} else if (!bottomOut() && speed <= 0) {
 				elevatorVicA.set(speed);
 				elevatorVicB.set(speed);
 			} else {
 				elevatorVicA.set(0);
 				elevatorVicB.set(0);
-				// moving = false;
 			}
 		} else {
-			elevatorVics.set(0);
-			// moving = false;
+			elevatorVicA.set(0);
+			elevatorVicB.set(0);
 		}
-		/*
-         * if (speed == 0) {
-		 *   moving = false; 
-		 * } else { 
-		 * 	  moving = true; 
-		 * }
-		 */
     }
-
-    public void doubleVicsElevator(double speed) {
-        //True when not pressed
-        /*highLimit = highSwitch.get();
-        lowLimit = lowSwitch.get();*/
-
-        if (!locked) {
-            if (highLimit && speed >= 0) {
-                elevatorVics.set(speed);
-            } else if (lowLimit && speed <= 0) {
-                elevatorVics.set(speed);
-            } else {
-                elevatorVics.set(0);
-                //moving = false;
-            }
-        } else {
-            elevatorVics.set(0);
-            //moving = false;
-        }
-
-		/*if (speed == 0) {
-			moving = false;
-		} else {
-			moving = true;
-		}*/
+    
+    public void noSafety(double speed) { //USE ONLY FOR TESTING. ENSURE IT'S SAFE
+    	if (!locked) {
+    		elevatorVics.set(speed);
+    	}
+    	else {
+    		elevatorVics.set(0);
+    	}
     }
 }

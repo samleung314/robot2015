@@ -32,7 +32,7 @@ public class StraightRampPID implements PIDOutput{
 		this.straightSpeed = output;
 	}
 	
-	public void rampStraight(double distance) {
+	public boolean rampStraight(double distance) {
 		robot.ramp.rampPID.setSetpoint(distance);
 		keepStraightPID.enable();
 		robot.ramp.rampPID.enable();
@@ -41,5 +41,7 @@ public class StraightRampPID implements PIDOutput{
 		double rightOutput = robot.ramp.rampSpeed - straightSpeed;
 		
 		robot.drive.doubleVicsDrive(leftOutput, rightOutput);
-	}
+		
+		return robot.ramp.rampPID.onTarget(); //Returns true when robot is within target
+		}
 }

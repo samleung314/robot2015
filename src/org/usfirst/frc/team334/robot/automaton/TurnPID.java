@@ -25,6 +25,7 @@ public class TurnPID implements PIDOutput {
         turnPID.setInputRange(-360, 360);
         turnPID.setContinuous();
         turnPID.setOutputRange(-0.5, 0.5);
+        turnPID.setAbsoluteTolerance(Constants.turnPIDTolerance);
         
         /*Experimental*/
         doubleTurnPIDA = new PIDController(dtP, dtI, dtD, gyro, robot.drive.leftVics);
@@ -79,10 +80,12 @@ public class TurnPID implements PIDOutput {
     	}
     }
 
-    public void PIDturnDegrees(double degrees) { //Method for making robot turn a number of degrees using a PID controller
+    public boolean PIDturnDegrees(double degrees) { //Method for making robot turn a number of degrees using a PID controller
         turnPID.setSetpoint(degrees);
         turnPID.enable();
         robot.drive.doubleVicsDrive(turnOutput, -turnOutput);
+        
+        return turnPID.onTarget();
     }
     
     /*Experimental*/

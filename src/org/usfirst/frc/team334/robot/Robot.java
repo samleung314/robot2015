@@ -1,6 +1,7 @@
 package org.usfirst.frc.team334.robot;
 
 import org.usfirst.frc.team334.robot.automaton.*;
+import org.usfirst.frc.team334.robot.autoscenarios.*;
 import org.usfirst.frc.team334.robot.human.*;
 import org.usfirst.frc.team334.robot.subsystems.*;
 
@@ -22,17 +23,21 @@ public class Robot extends IterativeRobot {
 	public Elevator elevate;
 	public ElevatorPot pot;
 	public Encoders encode;
-	public RampPID ramp;
+	public DistancePID ramp;
 	public StraightPID straight;
 	public StraightRampPID straightRamp;
 	public TurnPID turn;
 	public Smartdashboard smart;
 	
+	public AutonOne auto1;
+	public AutonTwo auto2;
+	public AutonThree auto3;
+	
 	public Command autoCommand, testCommand;
 	public SendableChooser autoChoose, testChoose; 
 	
 	boolean testStraight, testTurn;
-
+	
 	public void robotInit() {
 
 		/*Create objects*/
@@ -40,7 +45,7 @@ public class Robot extends IterativeRobot {
 		drive = new Drivetrain(this);
 		encode = new Encoders(this);
 		auto = new Auton(this);
-		ramp = new RampPID(this);
+		ramp = new DistancePID(this);
 		turn = new TurnPID(this);
 		straight = new StraightPID(this);
 		straightRamp = new StraightRampPID(this);
@@ -49,15 +54,20 @@ public class Robot extends IterativeRobot {
 		pot = new ElevatorPot(this);
 		smart = new Smartdashboard(this);
 		
-		/*Sendable Chooser Setup
+		auto1 = new AutonOne(this);
+		auto2 = new AutonTwo(this);
+		auto3 = new AutonThree(this);
+		
+		/*Sendable Chooser Setup*/
 		
 		//Add objects to the SendableChooser for autonomous 
         autoChoose = new SendableChooser();
-        autoChoose.addDefault("Do Nothing", new Default());
-        autoChoose.addObject("Ramping PID", ramp);  
+        autoChoose.addDefault("Auton One", auto1);
+        autoChoose.addObject("Auton Two", auto2);  
+        autoChoose.addObject("Auton Three", auto3);  
         SmartDashboard.putData("Choose Auton Mode", autoChoose);
         
-        //Add objects to the SendableChooser for testing
+        /*//Add objects to the SendableChooser for testing
         testChoose = new SendableChooser();
         testChoose.addDefault("Do Nothing", new Default());
         testChoose.addObject("Cycle Solenoids", new CycleAir(this));   
@@ -71,15 +81,17 @@ public class Robot extends IterativeRobot {
 		encode.resetEncoders();
 		turn.gyro.reset();
 		air.compress.stop();
-		//autoCommand = (Command) autoChoose.getSelected();
-		//autoCommand.start();
 		
-		testStraight = false;
-		testTurn = false;
+		Scheduler.getInstance().removeAll(); //Need to clear previously selected commands so one a single command runs
+		
+		autoCommand = (Command) autoChoose.getSelected();
+		autoCommand.start();
 	}
 
 	public void autonomousPeriodic() {
-		smart.displaySensors();
+		Scheduler.getInstance().run();
+		
+		//smart.displaySensors();
 		
 		/*if (!testStraight) {
 			testStraight = straight.travelDistance(smart.autoDist, smart.autoSpeed);
@@ -113,7 +125,7 @@ public class Robot extends IterativeRobot {
 
 	public void teleopPeriodic() {
 		control.getControllers();
-		control.controlElevator();
+		elevate.noSafety(control.xBoxLeftY); //Use only for testing
 		control.joystickDrive();
 		//control.testSolenoids();
 		
