@@ -25,7 +25,7 @@ public class Robot extends IterativeRobot {
 	public Elevator elevate;
 	public ElevatorPot pot;
 	public Encoders encode;
-	public DistancePID ramp;
+	public DistancePID distance;
 	public StraightPID straight;
 	public StraightRampPID straightRamp;
 	public TurnPID turn;
@@ -47,7 +47,7 @@ public class Robot extends IterativeRobot {
 		drive = new Drivetrain(this);
 		encode = new Encoders(this);
 		auto = new Auton(this);
-		ramp = new DistancePID(this);
+		distance = new DistancePID(this);
 		turn = new TurnPID(this);
 		straight = new StraightPID(this);
 		straightRamp = new StraightRampPID(this);
@@ -122,7 +122,7 @@ public class Robot extends IterativeRobot {
 		straight.straightPID.disable();
 		turn.turnPID.disable();
 		straightRamp.keepStraightPID.disable();
-		ramp.rampPID.disable();
+		distance.rampPID.disable();
 	}
 
 	public void teleopPeriodic() {
@@ -151,7 +151,7 @@ public class Robot extends IterativeRobot {
 		straightRamp.rampStraight(smart.autoDist);
 		
 		SmartDashboard.putData("KeepStraight PID", straightRamp.keepStraightPID);
-		SmartDashboard.putData("Ramp PID", ramp.rampPID);
+		SmartDashboard.putData("Ramp PID", distance.rampPID);
 		
 		smart.displaySensors();
 		//Scheduler.getInstance().run();

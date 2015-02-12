@@ -33,15 +33,15 @@ public class StraightRampPID implements PIDOutput{
 	}
 	
 	public boolean rampStraight(double distance) {
-		robot.ramp.rampPID.setSetpoint(distance);
+		robot.distance.rampPID.setSetpoint(distance);
 		keepStraightPID.enable();
-		robot.ramp.rampPID.enable();
+		robot.distance.rampPID.enable();
 		
-		double leftOutput = robot.ramp.rampSpeed + straightSpeed;
-		double rightOutput = robot.ramp.rampSpeed - straightSpeed;
+		double leftOutput = robot.distance.rampSpeed + straightSpeed;
+		double rightOutput = robot.distance.rampSpeed - straightSpeed;
 		
 		robot.drive.doubleVicsDrive(leftOutput, rightOutput);
 		
-		return robot.ramp.rampPID.onTarget(); //Returns true when robot is within target
+		return robot.distance.rampPID.onTarget(); //Returns true when robot is within target
 		}
 }
