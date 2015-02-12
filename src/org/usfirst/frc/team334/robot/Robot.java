@@ -1,7 +1,9 @@
 package org.usfirst.frc.team334.robot;
 
 import org.usfirst.frc.team334.robot.automaton.*;
-import org.usfirst.frc.team334.robot.autoscenarios.*;
+import org.usfirst.frc.team334.robot.autoscenarios.AutonOne;
+import org.usfirst.frc.team334.robot.autoscenarios.AutonThree;
+import org.usfirst.frc.team334.robot.autoscenarios.AutonTwo;
 import org.usfirst.frc.team334.robot.human.*;
 import org.usfirst.frc.team334.robot.subsystems.*;
 
