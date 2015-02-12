@@ -62,7 +62,6 @@ public class Controllers {
 	}
 
 	public void forestDrive() {
-		getControllers();
 		if (leftTrigger && rightTrigger) {
 			robot.drive.chasisDrive.tankDrive(Constants.highGearSpeed
 					* leftJoyY, Constants.highGearSpeed * rightJoyY);
