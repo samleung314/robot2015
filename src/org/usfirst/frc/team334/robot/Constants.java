@@ -18,6 +18,8 @@ public class Constants {
 	public static final int rightJoystick = 2;
 	
 	public static final double driveMuliplier = 0.55;
+	public static final double highGearSpeed = 0.65;
+	public static final double lowGearSpeed = 0.45;
 	
 	/*Sensors*/
 	public static final int highSwitchLeft = 4;

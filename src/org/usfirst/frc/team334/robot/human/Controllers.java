@@ -1,8 +1,9 @@
 package org.usfirst.frc.team334.robot.human;
 
-import edu.wpi.first.wpilibj.Joystick;
+import org.usfirst.frc.team334.robot.Constants;
+import org.usfirst.frc.team334.robot.Robot;
 
-import org.usfirst.frc.team334.robot.*;
+import edu.wpi.first.wpilibj.Joystick;
 
 public class Controllers {
 
@@ -15,37 +16,39 @@ public class Controllers {
 
 	/* xBox Controller Inputs */
 	// Pushing up returns negative values, pulling returns positive values
-	public double xBoxLeftY, xBoxRightY; 
+	public double xBoxLeftY, xBoxRightY;
 	boolean xBoxA, xBoxB, xBoxX, xBoxY, xBoxLeftBump, xBoxRightBump;
-	
+
 	public int elevatorLevel = 0;
 
 	/* Joystick Controllers Input */
 	// Pushing up returns negative values, pulling returns positive values
-	double leftJoyY, rightJoyY; 
-	boolean leftTrigger, rightTrigger, leftTriggerClicked = false, rightTriggerClicked = false;
+	double leftJoyY, rightJoyY;
+	boolean leftTrigger, rightTrigger, leftTriggerClicked = false,
+			rightTriggerClicked = false;
 
 	public Controllers(Robot robot) {
 		this.robot = robot;
 	}
-	
-	//Updates variables with controller inputs. Needs to be run periodically for any controller code to work
+
+	// Updates variables with controller inputs. Needs to be run periodically
+	// for any controller code to work
 	public void getControllers() {
-		//xBox Controller
+		// xBox Controller
 		xBoxLeftY = -xBox.getRawAxis(1);
-	    xBoxRightY = xBox.getRawAxis(5); 
+		xBoxRightY = xBox.getRawAxis(5);
 		xBoxA = xBox.getRawButton(1);
 		xBoxB = xBox.getRawButton(2);
 		xBoxX = xBox.getRawButton(3);
-	    xBoxY = xBox.getRawButton(4);
-	    xBoxLeftBump = xBox.getRawButton(5);
-	    xBoxRightBump = xBox.getRawButton(6);
-	    
-	    //Joysticks
-	    leftJoyY = -Constants.driveMuliplier*leftJoy.getY();
-	    rightJoyY = -Constants.driveMuliplier*rightJoy.getY();
-	    leftTrigger = leftJoy.getTrigger(); 
-	    rightTrigger = rightJoy.getTrigger();
+		xBoxY = xBox.getRawButton(4);
+		xBoxLeftBump = xBox.getRawButton(5);
+		xBoxRightBump = xBox.getRawButton(6);
+
+		// Joysticks
+		leftJoyY = -Constants.driveMuliplier * leftJoy.getY();
+		rightJoyY = -Constants.driveMuliplier * rightJoy.getY();
+		leftTrigger = leftJoy.getTrigger();
+		rightTrigger = rightJoy.getTrigger();
 	}
 
 	// Driving with the xBox controller
@@ -56,6 +59,18 @@ public class Controllers {
 	// Driving with the joystick controllers
 	public void joystickDrive() {
 		robot.drive.chasisDrive.tankDrive(leftJoyY, rightJoyY);
+	}
+
+	public void forestDrive() {
+		getControllers();
+		if (leftTrigger && rightTrigger) {
+			robot.drive.chasisDrive.tankDrive(Constants.highGearSpeed
+					* leftJoyY, Constants.highGearSpeed * rightJoyY);
+		} else if (!leftTrigger && !rightTrigger) {
+			robot.drive.chasisDrive.tankDrive(
+					Constants.lowGearSpeed * leftJoyY, Constants.lowGearSpeed
+							* rightJoyY);
+		}
 	}
 
 	// Used for testing solenoids
@@ -74,27 +89,26 @@ public class Controllers {
 			robot.air.compress.stop();
 		}
 	}
-	
-	//Mapping elevator functionality to xBox
+
+	// Mapping elevator functionality to xBox
 	public void controlElevator() {
 		robot.elevate.doubleVicsElevator(-xBoxLeftY);
-		
-		//Controlling dog gear with xBox buttons
-		if(xBoxX) {
+
+		// Controlling dog gear with xBox buttons
+		if (xBoxX) {
 			robot.elevate.elevatorRelease();
 			System.out.println("X Button");
 		}
-		if(xBoxY) {
+		if (xBoxY) {
 			robot.elevate.elevatorBreak();
 			System.out.println("Y Button");
 		}
 	}
-	
+
 	public double deadZone(double input) {
 		if (input < 0.1 || input > -0.1) {
 			return 0;
-		}
-		else {
+		} else {
 			return input;
 		}
 	}
@@ -126,6 +140,7 @@ public class Controllers {
 
 		robot.pot.setElevatorLevel(elevatorLevel);
 	}
+
 }
 
 /*
