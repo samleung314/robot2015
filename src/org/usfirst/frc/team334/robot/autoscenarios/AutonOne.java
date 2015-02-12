@@ -14,10 +14,10 @@ public class AutonOne extends Command {
 	
 	//Booleans are false when not completed. Will be true once completed.
 	boolean autonDone,
-			liftContainer,
-			elevatorBrake,
-			turnNinety,
-			travelForward;
+			elevateUpA,
+			elevatorBrakeA,
+			turnA,
+			forwardA;
 	
 	double liftHeight = 5, 
 		   turnDegrees= 90,
@@ -25,7 +25,7 @@ public class AutonOne extends Command {
 	
     public AutonOne(Robot robot) {
     	this.robot = robot;
-    	autonDone = liftContainer = elevatorBrake = turnNinety = travelForward = false;
+    	autonDone = elevateUpA = elevatorBrakeA = turnA = forwardA = false;
     }
     // Called just before this Command runs the first time
     protected void initialize() {
@@ -36,19 +36,19 @@ public class AutonOne extends Command {
     	SmartDashboard.putString("Mode", "Auto One");
     	System.out.println("Auton One");
     	
-    	if(!liftContainer) {
-    		liftContainer = robot.elevate.elevatorHeight(liftHeight);
+    	if(!elevateUpA) {
+    		elevateUpA = robot.elevate.elevatorHeight(liftHeight);
     	}
-    	if(liftContainer && !elevatorBrake) {
-    		elevatorBrake = robot.elevate.elevatorBreak();
+    	if(elevateUpA && !elevatorBrakeA) {
+    		elevatorBrakeA = robot.elevate.elevatorBreak();
     	}
-    	if (elevatorBrake && !turnNinety) {
+    	if (elevatorBrakeA && !turnA) {
     		robot.turn.PIDturnDegrees(turnDegrees);
     	}
-    	if(turnNinety && !travelForward) {
-    		travelForward = robot.straightRamp.rampStraight(travelDistance);
+    	if(turnA && !forwardA) {
+    		forwardA = robot.straightRamp.rampStraight(travelDistance);
     	}
-    	if(travelForward) {
+    	if(forwardA) {
     		autonDone = true;
     	}
     }
