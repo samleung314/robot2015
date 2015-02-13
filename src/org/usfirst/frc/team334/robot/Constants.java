@@ -73,8 +73,8 @@ public class Constants {
     public static final double elevatorRawLength = 0.781;
     public static final double elevatorMovementLength = 64 + 1/8; //Inches
     
-    public static final double turnPIDTolerance = 1;
-    public static final double distancePIDTolerance = 0.5;
+    public static final double turnPIDTolerance = 1; //+-1 degree tolerance from target
+    public static final double distancePIDTolerance = 0.5; //+- 0.5 inch from target
     
     //Length of movement on elevators is 64 1/8 inches
     //Difference of pot limits: 0.984 - 0.203 = 0.781

@@ -42,6 +42,12 @@ public class StraightRampPID implements PIDOutput{
 		
 		robot.drive.doubleVicsDrive(leftOutput, rightOutput);
 		
-		return robot.distance.rampPID.onTarget(); //Returns true when robot is within target
+		if(robot.distance.rampPID.onTarget()){ //Returns true when robot is within tolerance
+			robot.drive.doubleVicsDrive(0, 0);
+			return true;
+		} 
+		else {
+			return false;
 		}
+	}
 }
