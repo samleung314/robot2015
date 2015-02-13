@@ -31,15 +31,12 @@ public class AutonTwo extends Command {
 	
 	double liftHeightA, liftHeightB, dropHeightA, dropHeightB, forwardDistA, backDistA, backDistB, backDistC, turnDegA, turnDegB;
 			
-	int step = 1;
+	int step;
 	
-	String currentStep = "Not started";
+	String currentStep;
 	
     public AutonTwo(Robot robot) {
         this.robot = robot;
-        
-        autonDone = elevateUpA = elevatorBrakeA = turnA = backwardA = elevatorUnlockA = elevatorDownA = 
-        backwardB = turnB = forwardA = elevatorUpB = elevatorBrakeB = backwardC = elevatorUnlockB = elevatorDownB = false;
         
         liftHeightA = 0;
         liftHeightB = 0;
@@ -55,6 +52,12 @@ public class AutonTwo extends Command {
 
     // Called just before this Command runs the first time
     protected void initialize() {
+    	step = 1;
+    	
+    	autonDone = elevateUpA = elevatorBrakeA = turnA = backwardA = elevatorUnlockA = elevatorDownA = 
+    	backwardB = turnB = forwardA = elevatorUpB = elevatorBrakeB = backwardC = elevatorUnlockB = elevatorDownB = false;
+    	
+    	currentStep = "Not started";
     }
 
     // Called repeatedly when this Command is scheduled to run

@@ -1,9 +1,7 @@
 package org.usfirst.frc.team334.robot;
 
 import org.usfirst.frc.team334.robot.automaton.*;
-import org.usfirst.frc.team334.robot.autoscenarios.AutonOne;
-import org.usfirst.frc.team334.robot.autoscenarios.AutonThree;
-import org.usfirst.frc.team334.robot.autoscenarios.AutonTwo;
+import org.usfirst.frc.team334.robot.autoscenarios.*;
 import org.usfirst.frc.team334.robot.human.*;
 import org.usfirst.frc.team334.robot.subsystems.*;
 
@@ -34,6 +32,7 @@ public class Robot extends IterativeRobot {
 	public AutonOne oneContainer;
 	public AutonTwo twoContainer;
 	public AutonThree threeTotes;
+	public AutonTest autonTest;
 	
 	public Command autoCommand;
 	public SendableChooser autoChoose;
@@ -59,6 +58,8 @@ public class Robot extends IterativeRobot {
 		oneContainer = new AutonOne(this);
 		twoContainer = new AutonTwo(this);
 		threeTotes = new AutonThree(this);
+		autonTest = new AutonTest(this);
+		
 		
 		/*Sendable Chooser Setup*/
 		
@@ -67,6 +68,7 @@ public class Robot extends IterativeRobot {
         autoChoose.addDefault("ONE Container", oneContainer);
         autoChoose.addObject("TWO Containers", twoContainer);  
         autoChoose.addObject("THREE Totes", threeTotes);  
+        autoChoose.addObject("TESTING", autonTest);  
         SmartDashboard.putData("Choose Auton Mode", autoChoose); 
         
 	}

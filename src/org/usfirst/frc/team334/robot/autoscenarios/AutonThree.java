@@ -44,9 +44,9 @@ public class AutonThree extends Command {
 	       forwardDistC = 117.5, //to dump zone
 		   turnDegreesA= 90;
 	
-	int step = 1;
+	int step;
 	
-	String currentStep = "Not started";
+	String currentStep;
 	
     public AutonThree(Robot robot) {
         this.robot = robot;
@@ -54,6 +54,14 @@ public class AutonThree extends Command {
 
     // Called just before this Command runs the first time
     protected void initialize() {
+    	currentStep = "Not started";
+    	
+    	step = 1;
+    	
+    	liftToteA = elevatorBrakeA = travelForwardA = elevatorReleaseA = elevateDownA = liftToteB =
+        elevatorBrakeB = travelForwardB = elevatorReleaseB = elevateDownB = liftToteC = elevatorBrakeC =
+        turnA = travelForwardC = elevatorReleaseC = elevateDownC = false;
+    	
     }
 
     // Called repeatedly when this Command is scheduled to run

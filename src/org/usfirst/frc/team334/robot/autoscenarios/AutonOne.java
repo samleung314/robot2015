@@ -25,17 +25,18 @@ public class AutonOne extends Command {
 		   forwardDistA = 117.5,
 		   dropHeightA = -5;
 	
-	int step = 1;
+	int step;
 	
 	String currentStep = "Not started";
 	
     public AutonOne(Robot robot) {
     	this.robot = robot;
-    	autonDone = elevatorUpA = elevatorBrakeA = turnA = forwardA = elevatorDownA = false;
     }
     
     // Called just before this Command runs the first time
     protected void initialize() {
+    	step = 1;
+    	autonDone = elevatorUpA = elevatorBrakeA = turnA = forwardA = elevatorDownA = false;
     }
 
     // Called repeatedly when this Command is scheduled to run
@@ -68,6 +69,7 @@ public class AutonOne extends Command {
     		case 5: elevatorDownA = robot.elevate.elevatorHeight(dropHeightA);
     				nextStep(elevatorDownA);
     				currentStep = "Dropping container";
+    				break;
 					
     		case 6: autonDone = true;
 					break;	
