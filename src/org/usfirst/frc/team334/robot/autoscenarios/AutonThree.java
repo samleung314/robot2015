@@ -60,7 +60,7 @@ public class AutonThree extends Command {
     		liftToteA = robot.elevate.elevatorHeight(liftHeightA);
     	}
     	if(!travelForwardA && liftToteA) {
-    		travelForwardA = robot.straightRamp.rampStraight(travelDistanceA);
+    		travelForwardA = robot.straightRamp.rampStraight(travelDistanceA);   //not engaging elevator clamp
     	}
     	if(!liftToteB && travelForwardA) {
     		liftToteB = robot.elevate.elevatorHeight(liftHeightB);
@@ -72,6 +72,15 @@ public class AutonThree extends Command {
     		liftToteC = robot.elevate.elevatorHeight(liftHeightC);
     	}
     	
+    	if(!turnNinety && liftToteC)
+    	{
+    		robot.turn.PIDturnDegrees(turnDegreesA);
+    	}
+    	
+    	if(!travelForwardC && turnNinety)
+    	{
+    		
+    	}
     	
     	if(liftTote && !elevatorBrake) {
     		elevatorBrake = robot.elevate.elevatorBreak();
