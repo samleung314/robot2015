@@ -14,42 +14,89 @@ public class AutonOne extends Command {
 	
 	//Booleans are false when not completed. Will be true once completed.
 	boolean autonDone,
-			liftContainer,
-			elevatorBrake,
-			turnNinety,
-			travelForward;
+			elevatorUpA,
+			elevatorBrakeA,
+			turnA,
+			forwardA,
+			elevatorDownA;
 	
-	double liftHeight = 5, 
-		   turnDegrees= 90,
-		   travelDistance = 117.5;
+	double liftHeightA = 5, 
+		   turnDegA = -90,
+		   forwardDistA = 117.5,
+		   dropHeightA = -5;
+	
+	int step = 1;
+	
+	String currentStep = "Not started";
 	
     public AutonOne(Robot robot) {
     	this.robot = robot;
-    	autonDone = liftContainer = elevatorBrake = turnNinety = travelForward = false;
+    	autonDone = elevatorUpA = elevatorBrakeA = turnA = forwardA = elevatorDownA = false;
     }
+    
     // Called just before this Command runs the first time
     protected void initialize() {
     }
 
     // Called repeatedly when this Command is scheduled to run
     protected void execute() {
-    	SmartDashboard.putString("Mode", "Auto One");
+    	SmartDashboard.putString("Mode", "Running Auto One");
+    	SmartDashboard.putString("Current step", currentStep);
     	System.out.println("Auton One");
+    	System.out.println(currentStep);
     	
-    	if(!liftContainer) {
-    		liftContainer = robot.elevate.elevatorHeight(liftHeight);
+    	switch (step) {
+    		case 1: elevatorUpA = robot.elevate.elevatorHeight(liftHeightA);
+    				nextStep(elevatorUpA);
+    				currentStep = "Lifting container";
+    				break;
+    				
+    		case 2: elevatorBrakeA = robot.elevate.elevatorBreak();
+    				nextStep(elevatorBrakeA);
+    				currentStep = "Braking the elevator";
+    				break;
+    				
+    		case 3: turnA = robot.turn.PIDturnDegrees(turnDegA);
+					nextStep(turnA);
+					currentStep = "Turning 90 degrees counter-clockwise";
+					break;
+					
+    		case 4: forwardA = robot.straightRamp.rampStraight(forwardDistA);
+					nextStep(forwardA);
+					currentStep = "Moving to the landmark";
+					break;
+			
+    		case 5: elevatorDownA = robot.elevate.elevatorHeight(dropHeightA);
+    				nextStep(elevatorDownA);
+    				currentStep = "Dropping container";
+					
+    		case 6: autonDone = true;
+					break;	
+					
+			default: System.out.println("Auton One is defaulting");
+					break;
     	}
-    	if(liftContainer && !elevatorBrake) {
-    		elevatorBrake = robot.elevate.elevatorBreak();
-    	}
-    	if (elevatorBrake && !turnNinety) {
-    		robot.turn.PIDturnDegrees(turnDegrees);
-    	}
-    	if(turnNinety && !travelForward) {
-    		travelForward = robot.straightRamp.rampStraight(travelDistance);
-    	}
-    	if(travelForward) {
-    		autonDone = true;
+    	
+    	/*if(!elevatorUpA) {
+		elevatorUpA = robot.elevate.elevatorHeight(liftHeight);
+		}
+		if(elevatorUpA && !elevatorBrakeA) {
+			elevatorBrakeA = robot.elevate.elevatorBreak();
+		}
+		if (elevatorBrakeA && !turnA) {
+			robot.turn.PIDturnDegrees(turnDegrees);
+		}
+		if(turnA && !forwardA) {
+			forwardA = robot.straightRamp.rampStraight(travelDistance);
+		}
+		if(forwardA) {
+			autonDone = true;
+		}*/
+    }
+    
+    private void nextStep(boolean action) {
+    	if (action) {
+    		step++;
     	}
     }
 
