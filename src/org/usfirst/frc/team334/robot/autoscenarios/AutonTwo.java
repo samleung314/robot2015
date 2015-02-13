@@ -61,8 +61,7 @@ public class AutonTwo extends Command {
     protected void execute() {
     	SmartDashboard.putString("Mode", "Running Auto Two");
     	SmartDashboard.putString("Current Step", currentStep);
-    	System.out.println("Auton Two");
-    	System.out.println("----------> currentStep");
+    	System.out.println("------------> " + currentStep);
     	
 		switch (step) {
 			case 1:
@@ -84,7 +83,7 @@ public class AutonTwo extends Command {
 				break;
 				
 			case 4:
-				backwardA = robot.straightRamp.rampStraight(backDistA);
+				backwardA = robot.straightDist.driveDistance(backDistA);
 				nextStep(backwardA);
 				currentStep = "Moving backwards to landmark";
 				break;
@@ -102,7 +101,7 @@ public class AutonTwo extends Command {
 				break;
 				
 			case 7:
-				backwardB = robot.straightRamp.rampStraight(backDistB);
+				backwardB = robot.straightDist.driveDistance(backDistB);
 				nextStep(backwardB);
 				currentStep = "Backing up clear of the containter";
 				break;
@@ -114,7 +113,7 @@ public class AutonTwo extends Command {
 				break;
 				
 			case 9:
-				forwardA = robot.straightRamp.rampStraight(forwardDistA);
+				forwardA = robot.straightDist.driveDistance(forwardDistA);
 				nextStep(forwardA);
 				currentStep = "Driving forwards to second container";
 				break;
@@ -132,7 +131,7 @@ public class AutonTwo extends Command {
 				break;
 				
 			case 12:
-				backwardC = robot.straightRamp.rampStraight(backDistC);
+				backwardC = robot.straightDist.driveDistance(backDistC);
 				nextStep(backwardC);
 				currentStep = "Moving backwards into the autozone";
 				break;

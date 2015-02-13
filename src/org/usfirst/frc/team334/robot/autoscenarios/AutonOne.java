@@ -42,8 +42,7 @@ public class AutonOne extends Command {
     protected void execute() {
     	SmartDashboard.putString("Mode", "Running Auto One");
     	SmartDashboard.putString("Current step", currentStep);
-    	System.out.println("Auton One");
-    	System.out.println(currentStep);
+    	System.out.println("------------> " + currentStep);
     	
     	switch (step) {
     		case 1: elevatorUpA = robot.elevate.elevatorHeight(liftHeightA);
@@ -61,7 +60,7 @@ public class AutonOne extends Command {
 					currentStep = "Turning 90 degrees counter-clockwise";
 					break;
 					
-    		case 4: forwardA = robot.straightRamp.rampStraight(forwardDistA);
+    		case 4: forwardA = robot.straightDist.driveDistance(forwardDistA);
 					nextStep(forwardA);
 					currentStep = "Moving to the landmark";
 					break;

@@ -23,6 +23,7 @@ public class ElevatorPot implements PIDSource{
 		
 		elevatorPID = new PIDController(p, i, d, this, robot.elevate.elevatorVics);
 		elevatorPID.setOutputRange(-0.5, 0.5); //Limits the elevator speed so it doesn't go too fast
+		elevatorPID.setAbsoluteTolerance(Constants.elevatorPIDTolerance);
 	}
 	
 	public double getLevel() {	//Converts raw potentiometer units to inches
@@ -30,25 +31,39 @@ public class ElevatorPot implements PIDSource{
 		return zeroedPot * (Constants.elevatorMovementLength/Constants.elevatorRawLength);
 	}
 	
+	public boolean elevatorHeightPID(double height) {
+		elevatorPID.setSetpoint(height);
+		elevatorPID.enable();
+		
+		if(elevatorPID.onTarget()) {
+			elevatorPID.disable();
+			robot.elevate.elevatorVics.set(0);
+			return true;
+		}
+		else {
+			return false;
+		}
+	}
+	
 	public void setElevatorLevel(int level) { //Used for moving elevator to 6 predetermined levels
 		switch (level) {
 		case 1:
-			elevatorPID.setSetpoint(0);
+			elevatorPID.setSetpoint(Constants.elevatorLevelOne);
 			break;
 		case 2:
-			elevatorPID.setSetpoint(0);
+			elevatorPID.setSetpoint(Constants.elevatorLevelTwo);
 			break;
 		case 3:
-			elevatorPID.setSetpoint(0);
+			elevatorPID.setSetpoint(Constants.elevatorLevelThree);
 			break;
 		case 4:
-			elevatorPID.setSetpoint(0);
+			elevatorPID.setSetpoint(Constants.elevatorLevelFour);
 			break;
 		case 5:
-			elevatorPID.setSetpoint(0);
+			elevatorPID.setSetpoint(Constants.elevatorLevelFive);
 			break;
 		case 6:
-			elevatorPID.setSetpoint(0);
+			elevatorPID.setSetpoint(Constants.elevatorLevelSix);
 			break;
 		}
 	}

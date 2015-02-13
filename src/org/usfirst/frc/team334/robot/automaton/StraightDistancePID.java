@@ -9,7 +9,7 @@ import edu.wpi.first.wpilibj.PIDOutput;
  * both the keepStraightPID and rampPID will allow the robot to slow down as it 
  * approaches a set distance all while maintaining a straight line of movement.
 */
-public class StraightRampPID implements PIDOutput{
+public class StraightDistancePID implements PIDOutput{
 
 	Robot robot;
 	
@@ -17,7 +17,7 @@ public class StraightRampPID implements PIDOutput{
 	
 	double straightKp, straightKi, straightKd, straightSpeed;
 	
-	public StraightRampPID(Robot robot) {
+	public StraightDistancePID(Robot robot) {
 		this.robot = robot;
 		
 		keepStraightPID = new PIDController(straightKp, straightKi, straightKd, robot.turn.gyro, this);
@@ -32,7 +32,7 @@ public class StraightRampPID implements PIDOutput{
 		this.straightSpeed = output;
 	}
 	
-	public boolean rampStraight(double distance) {
+	public boolean driveDistance(double distance) {
 		robot.distance.rampPID.setSetpoint(distance);
 		keepStraightPID.enable();
 		robot.distance.rampPID.enable();
@@ -43,6 +43,7 @@ public class StraightRampPID implements PIDOutput{
 		robot.drive.doubleVicsDrive(leftOutput, rightOutput);
 		
 		if(robot.distance.rampPID.onTarget()){ //Returns true when robot is within tolerance
+			robot.distance.rampPID.disable();
 			robot.drive.doubleVicsDrive(0, 0);
 			return true;
 		} 
