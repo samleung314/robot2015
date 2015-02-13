@@ -85,7 +85,14 @@ public class TurnPID implements PIDOutput {
         turnPID.enable();
         robot.drive.doubleVicsDrive(turnOutput, -turnOutput);
         
-        return turnPID.onTarget();
+        if(turnPID.onTarget()) {//Returns true when robot is within tolerance
+        	turnPID.disable();
+        	robot.drive.doubleVicsDrive(0, 0);
+        	return true;
+        }
+        else {
+        	return false;
+        }
     }
     
     /*Experimental*/
