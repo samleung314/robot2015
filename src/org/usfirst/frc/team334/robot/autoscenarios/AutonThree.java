@@ -14,32 +14,42 @@ public class AutonThree extends Command {
 	
 	boolean autonDone,
 	        liftToteA,
+	        elevatorBrakeA,
+	        travelForwardA,
+	        elevatorReleaseA,
+	        
+	        elevateDownA,
 	        liftToteB,
-	        liftToteC,
-        	elevatorBrake,
-        	turnNinety,
-        	turnTheta,
-        	travelForwardA,
+	        elevatorBrakeB,
 	        travelForwardB,
+	        elevatorReleaseB,
+	        
+	        elevateDownB,
+	        liftToteC,
+	        elevatorBrakeC,
+	        
+        	turnA,
 	        travelForwardC,
-	        travelForwardD,
-	        travelForwardE;
+	        elevatorReleaseC,
+	        elevateDownC;
 	
-	double liftHeightA = 5, //tote 1 lift
-		   liftHeightB = 5, //tote 2 lift 
-		   liftHeightC = 5, //tote 3 lift
-		   turnDegreesA= 90,
-	       turnDegreesB= 90,
-		   travelDistanceA = 117.5, //to second tote
-           travelDistanceB = 117.5, //to last tote
-           travelDistanceC = 117.5, //to dump zone
-           travelDistanceE = 117.5; //****Starting Move**** May be used in the future do not delete
+	double liftHeightA = 0, //tote 1 lift
+		   liftHeightB = 0, //tote 2 lift 
+		   liftHeightC = 0, //tote 3 lift
+		   dropHeightA = 0,
+	       dropHeightB = 0,
+	       dropHeightC = 0,
+		   forwardDistA = 117.5, //to second tote
+		   forwardDistB = 117.5, //to last tote
+	       forwardDistC = 117.5, //to dump zone
+		   turnDegreesA= 90;
+	
+	int step = 1;
+	
+	String currentStep = "Not started";
 	
     public AutonThree(Robot robot) {
         this.robot = robot;
-        
-        autonDone = liftToteA = liftToteB = liftToteC = elevatorBrake = turnNinety = 
-        turnTheta = travelForwardA = travelForwardB = travelForwardC = travelForwardD = travelForwardE =  false;
     }
 
     // Called just before this Command runs the first time
@@ -48,11 +58,118 @@ public class AutonThree extends Command {
 
     // Called repeatedly when this Command is scheduled to run
     protected void execute() {
-    	SmartDashboard.putString("Mode", "Auto Three");
-    	System.out.println("Auton Three");
+    	SmartDashboard.putString("Mode", "Running Auto Three");
+    	SmartDashboard.putString("Current Step", currentStep);
+    	System.out.println("---------->" + currentStep);
     	
+    	switch (step) {
+		case 1:
+			liftToteA = robot.elevate.elevatorHeight(liftHeightA);
+			nextStep(liftToteA);
+			currentStep = "Lifting first tote";
+			break;
+			
+		case 2:
+			elevatorBrakeA = robot.elevate.elevatorBreak();
+			nextStep(elevatorBrakeA);
+			currentStep = "Braking elevator A";
+			break;
+			
+		case 3:
+			travelForwardA = robot.straightDist.driveDistance(forwardDistA);
+			nextStep(travelForwardA);
+			currentStep = "Moving to second tote";
+			break;
+			
+		case 4:
+			elevatorReleaseA = robot.elevate.elevatorRelease();
+			nextStep(elevatorReleaseA);
+			currentStep = "Releasing elevator A";
+			break;
+			
+		case 5: 
+			elevateDownA = robot.elevate.elevatorHeight(dropHeightA);
+			nextStep(elevateDownA);
+			currentStep = "Dropping elevator A";
+			break;
+				
+		case 6:
+			liftToteB = robot.elevate.elevatorHeight(liftHeightB);
+			nextStep(liftToteB);
+			currentStep = "Lifting second tote";
+			break;
+			
+		case 7:
+			elevatorBrakeB = robot.elevate.elevatorBreak();
+			nextStep(elevatorBrakeB);
+			currentStep = "Braking elevator";
+			break;
+			
+		case 8:
+			travelForwardB = robot.straightDist.driveDistance(forwardDistB);
+			nextStep(travelForwardB);
+			currentStep = "Moving to third tote";
+			break;
+			
+		case 9:
+			elevatorReleaseB = robot.elevate.elevatorRelease();
+			nextStep(elevatorReleaseB);
+			currentStep = "Releasing elevator";
+			break;
+			
+		case 10:
+			elevateDownB = robot.elevate.elevatorHeight(dropHeightB);
+			nextStep(elevateDownB);
+			currentStep = "Dropping elevator B";
+			break;
+			
+		case 11:
+			liftToteC = robot.elevate.elevatorHeight(liftHeightC);
+			nextStep(liftToteC);
+			currentStep = "Lifting third tote";
+			break;
+			
+		case 12:
+			elevatorBrakeC = robot.elevate.elevatorBreak();
+			nextStep(elevatorBrakeC);
+			currentStep = "Braking elevator";
+			break;
+			
+		case 13:
+			turnA = robot.turn.PIDturnDegrees(turnDegreesA);
+			nextStep(turnA);
+			currentStep = "Turning towards autozone";
+			break;
+		
+		case 14:
+			travelForwardC = robot.straightDist.driveDistance(forwardDistC);
+			nextStep(travelForwardC);
+			currentStep = "Driving into autozone";
+			break;
+		
+		case 15:
+			elevatorReleaseC = robot.elevate.elevatorRelease();
+			nextStep(elevatorReleaseC);
+			currentStep = "Releasing elevator C";
+			break;
+			
+		case 16: 
+			elevateDownC = robot.elevate.elevatorHeight(dropHeightC);
+			nextStep(elevateDownC);
+			currentStep = "Dropping off tote stack";
+			break;
+			
+		case 17:
+			autonDone = true;
+			currentStep = "Autonomous Three Done";
+			break;
+			
+		default:
+			System.out.println("Auton Three is defaulting");
+			break;
+    	}
     	
-    	//moving and picking up Totes
+    	/*//moving and picking up Totes
     	if(!travelForwardE) {
     		travelForwardE = robot.straightRamp.rampStraight(travelDistanceE);
     	}
@@ -93,6 +210,13 @@ public class AutonThree extends Command {
     	}
     	if(travelForward) {
     		autonDone = true;
+    		*/
+    }
+    
+    private void nextStep(boolean action) {
+    	if(action) {
+    		step++;
+    	}
     }
 
     // Make this return true when this Command no longer needs to run execute()
