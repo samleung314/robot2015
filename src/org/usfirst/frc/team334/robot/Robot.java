@@ -67,7 +67,7 @@ public class Robot extends IterativeRobot {
         autoChoose.addDefault("ONE Container", oneContainer);
         autoChoose.addObject("TWO Containers", twoContainer);  
         autoChoose.addObject("THREE Totes", threeTotes);  
-        SmartDashboard.putData("Choose Auton Mode", autoChoose);
+        SmartDashboard.putData("Choose Auton Mode", autoChoose); 
         
 	}
 

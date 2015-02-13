@@ -1,0 +1,271 @@
+[33mcommit 6550065b425d97bd9f02f0562464533b7d6ca66e[m
+Author: samn122 <samsonleung97@gmail.com>
+Date:   Fri Feb 13 01:32:42 2015 -0500
+
+    Revising code, looking for errors, cleanup, polish
+
+[33mcommit 73e84ee3ddbe144ab506ccf9c5c26bee5862864a[m
+Merge: fb0b084 d22b673
+Author: samn122 <samsonleung97@gmail.com>
+Date:   Fri Feb 13 01:04:47 2015 -0500
+
+    Merge branch 'AutonTwo'
+
+[33mcommit d22b673b48cb6df2c2846245de1a04eb54d9d2d2[m
+Author: samn122 <samsonleung97@gmail.com>
+Date:   Fri Feb 13 01:04:22 2015 -0500
+
+    Coded AutonTwo
+
+[33mcommit fb0b084f7e1fc17d82124e093057254448474894[m
+Merge: 8ced692 e49ffa6
+Author: samn122 <samsonleung97@gmail.com>
+Date:   Fri Feb 13 00:14:16 2015 -0500
+
+    Merge branch 'AutonOne'
+    
+    Conflicts:
+    	src/org/usfirst/frc/team334/robot/autoscenarios/AutonOne.java
+
+[33mcommit e49ffa6b6c039ddf858f699b8854990f437a5b3a[m
+Author: samn122 <samsonleung97@gmail.com>
+Date:   Fri Feb 13 00:11:50 2015 -0500
+
+    Replaced if statements with switch statement
+
+[33mcommit f4ba322bf2bee01d8deb424328bf01d4db687119[m
+Author: Samson <samn12samn1@gmail.comgit config --global user.email samn12samn1@gmail.com>
+Date:   Thu Feb 12 19:34:22 2015 -0500
+
+    Working on AutonTwo code by Samson
+
+[33mcommit 8ced6929a6de16e9bc777e4849f48cfc468cd7fe[m
+Author: Samson <samn12samn1@gmail.comgit config --global user.email samn12samn1@gmail.com>
+Date:   Thu Feb 12 18:52:13 2015 -0500
+
+    Added conventions
+
+[33mcommit 289acad90ead03366e3deb45b4e6083dd37c9e46[m
+Author: Samson <samn12samn1@gmail.comgit config --global user.email samn12samn1@gmail.com>
+Date:   Thu Feb 12 18:39:25 2015 -0500
+
+    AutonThree in progress
+
+[33mcommit e7063a973e9390f664f0ebb400c41beb9fad2ec5[m
+Author: Kevin <kevtehpro35@gmail.com>
+Date:   Thu Feb 12 16:40:32 2015 -0500
+
+    Fixed imports
+
+[33mcommit 5544576eb92f8db90b3f4fadf9f284e59b1dd224[m
+Author: Kevin <kevtehpro35@gmail.com>
+Date:   Thu Feb 12 16:35:38 2015 -0500
+
+    Removed getController from ForestDrive
+
+[33mcommit 8be86cfeb6e252302bd8501a1f9bab10087f2149[m
+Author: Kevin <kevtehpro35@gmail.com>
+Date:   Thu Feb 12 16:26:33 2015 -0500
+
+    Finished Forest Drive
+
+[33mcommit 29638198487f7d3b3d13941bc31d7359433f95eb[m
+Author: Samson <samn12samn1@gmail.comgit config --global user.email samn12samn1@gmail.com>
+Date:   Thu Feb 12 14:01:04 2015 -0500
+
+    Working on AutonOne
+
+[33mcommit c00878aed80bebe5d10a14be1feeb92187b3010a[m
+Author: techrobotadmin <techrobot2015@gmail.com>
+Date:   Wed Feb 11 18:59:33 2015 -0500
+
+    Autonmous modes
+
+[33mcommit d35b219a247972c582704245c59dc36f9188fd12[m
+Author: samn122 <samsonleung97@gmail.com>
+Date:   Tue Feb 10 21:48:44 2015 -0500
+
+    Added file
+
+[33mcommit 53810c362e87f64e6668474d528a35b010113fb0[m
+Author: samn122 <samsonleung97@gmail.com>
+Date:   Mon Feb 9 22:30:57 2015 -0500
+
+    Added straightRamping code and polishing
+
+[33mcommit 1ae26a2a7dcabc3d0112c55bde35f41dd7232a4f[m
+Author: Samson <samn12samn1@gmail.comgit config --global user.email samn12samn1@gmail.com>
+Date:   Mon Feb 9 19:33:19 2015 -0500
+
+    PID test success
+
+[33mcommit 295334c5d156cad0378a4836e9d3d810d50b240d[m
+Author: samn122 <samsonleung97@gmail.com>
+Date:   Sun Feb 8 20:58:28 2015 -0500
+
+    Working on auton states
+
+[33mcommit 81d4ff44890317992428d419c30ff24391f401f2[m
+Author: samn122 <samsonleung97@gmail.com>
+Date:   Sun Feb 8 14:08:34 2015 -0500
+
+    Commented and polished code
+
+[33mcommit d18240dbbecc33294733271dae09a424b6caf4d5[m
+Author: Kevin <kevtehpro35@gmail.com>
+Date:   Sat Feb 7 18:41:24 2015 -0500
+
+    Added functionality to SendableChooser
+
+[33mcommit d11e194e86ec2d908fe5fc6218ec05e4c00df319[m
+Merge: ec175b0 07f385a
+Author: samn122 <samsonleung97@gmail.com>
+Date:   Sat Feb 7 17:57:20 2015 -0500
+
+    Merge branch 'master' of https://github.com/techrobotadmin/robot2015
+    
+    Conflicts:
+    	src/org/usfirst/frc/team334/robot/Constants.java
+    	src/org/usfirst/frc/team334/robot/Robot.java
+    	src/org/usfirst/frc/team334/robot/human/Controllers.java
+    	src/org/usfirst/frc/team334/robot/human/Smartdashboard.java
+    	src/org/usfirst/frc/team334/robot/subsystems/Air.java
+    	src/org/usfirst/frc/team334/robot/subsystems/Elevator.java
+    	src/org/usfirst/frc/team334/robot/subsystems/Encoders.java
+
+[33mcommit ec175b0f207542bbd59e186162e8cfec36794af4[m
+Author: samn122 <samsonleung97@gmail.com>
+Date:   Sat Feb 7 17:49:05 2015 -0500
+
+    adding default command
+
+[33mcommit 84ac9f7c1fbc643138cdc165cdc633126e7c58e0[m
+Author: samn122 <samsonleung97@gmail.com>
+Date:   Sat Feb 7 17:48:14 2015 -0500
+
+    Added sendable choosers and added working encoders,gyros.
+
+[33mcommit 07f385a558ef1585c374778c53d30b34f3cf9ddc[m
+Author: August <augustt198@gmail.com>
+Date:   Sat Feb 7 14:34:14 2015 -0500
+
+    Add README
+
+[33mcommit 21264e4ee7e8c3413e57d60c0a387f2061119016[m
+Author: August <augustt198@gmail.com>
+Date:   Sat Feb 7 14:21:01 2015 -0500
+
+    Format everything
+
+[33mcommit 49e0b977628eaf4c22b2760760170de0c5ed53cc[m
+Author: August <augustt198@gmail.com>
+Date:   Sat Feb 7 14:12:47 2015 -0500
+
+    Update .gitignore
+
+[33mcommit 10a04d3111790f69872a78e1dc5faffd73c6002c[m
+Author: Samson <samn12samn1@gmail.comgit config --global user.email samn12samn1@gmail.com>
+Date:   Fri Feb 6 19:38:52 2015 -0500
+
+    Added sendable choosers
+
+[33mcommit 3096e128c5109ac1d90110eac98160b095dc0148[m
+Author: Samson <samn12samn1@gmail.comgit config --global user.email samn12samn1@gmail.com>
+Date:   Thu Feb 5 19:26:48 2015 -0500
+
+    Solenoid testing
+
+[33mcommit 484619032c30b1b42b0660dae96637e31d1ddbe2[m
+Author: techrobotadmin <techrobot2015@gmail.com>
+Date:   Wed Feb 4 16:03:56 2015 -0500
+
+    Testing pots
+
+[33mcommit 4c6ab171b19f519a5209b75ca171824a0d22bdb0[m
+Merge: 32750f2 8c9fe5a
+Author: techrobotadmin <techrobot2015@gmail.com>
+Date:   Tue Feb 3 18:30:59 2015 -0500
+
+    Merge branch 'master' of https://github.com/techrobotadmin/robot2015
+    
+    Conflicts:
+    	src/org/usfirst/frc/team334/robot/subsystems/Elevator.java
+
+[33mcommit 32750f212bb6091ea70ce70de487273d59ef28ac[m
+Author: techrobotadmin <techrobot2015@gmail.com>
+Date:   Tue Feb 3 18:28:44 2015 -0500
+
+    Added elevator limit switch brakes
+
+[33mcommit 8c9fe5a31cdd680c90b00d2dfa60282df84a5d61[m
+Author: Kevin <kevtehpro35@gmail.com>
+Date:   Tue Feb 3 15:44:43 2015 -0500
+
+    blah
+
+[33mcommit ff741598e0caf62df901bc5d70b12aeb316ce732[m
+Author: Kevin <kevtehpro35@gmail.com>
+Date:   Tue Feb 3 15:39:03 2015 -0500
+
+    Fail
+
+[33mcommit 73a57636ee23e4bd547484eb0aeb5a8bbd3d4cf2[m
+Author: Kevin <kevtehpro35@gmail.com>
+Date:   Tue Feb 3 15:37:43 2015 -0500
+
+    Fail
+
+[33mcommit 0ccbde4552333be244e5bc244a337a8ddb217236[m
+Author: Kevin <kevtehpro35@gmail.com>
+Date:   Tue Feb 3 14:00:07 2015 -0500
+
+    Fixed high limit and low limit on elevator
+
+[33mcommit ff324abb13f327e5ebce927ff87f4b406c4a9b46[m
+Author: techrobotadmin <techrobot2015@gmail.com>
+Date:   Mon Feb 2 15:39:02 2015 -0500
+
+    Added limit switches and elevator safety
+
+[33mcommit 57161762aaa786498b532e0ad2a49caf766d6337[m
+Author: Kevin <kevtehpro35@gmail.com>
+Date:   Mon Feb 2 09:16:31 2015 -0500
+
+    Kevin's First Commit | Elevator Methods
+
+[33mcommit 7f7fa203870bbd3e7148aa9e37caddb672445ebf[m
+Merge: bab10ca 76c94fd
+Author: Kevin <kevtehpro35@gmail.com>
+Date:   Thu Jan 29 12:30:27 2015 -0500
+
+    Merge branch 'elevator-pid'
+    
+    Conflicts:
+    	src/org/usfirst/frc/team334/robot/subsystems/Elevator.java
+
+[33mcommit bab10ca706688f246bfe499e8f3e0e4d1447585d[m
+Author: techrobotadmin <techrobot2015@gmail.com>
+Date:   Thu Jan 29 12:25:20 2015 -0500
+
+    Testing pneumatics
+
+[33mcommit 76c94fd042d31ad48e2ee8326db0ba637e5d2e58[m
+Author: Kevin <kevtehpro35@gmail.com>
+Date:   Thu Jan 29 12:22:44 2015 -0500
+
+    Elevator Changes
+
+[33mcommit dc14013514bce78850c93bdf6c29034a3182648b[m
+Author: Kevin <kevtehpro35@gmail.com>
+Date:   Thu Jan 29 12:20:06 2015 -0500
+
+    Elevator Changes
+
+[33mcommit 52d7f6ff6dcef7a3156cbc36960270038c40d91b[m
+Author: samn122 <samsonleung97@gmail.com>
+Date:   Wed Jan 28 23:39:35 2015 -0500
+
+    Restructured code, added PID classes, added encoders
+
+[33mcommit 0dd0197890004457011f0daaa8476a81c3b5be9b[m
+Author: samn122 <samsonleung
