@@ -21,6 +21,7 @@ public class UltrasonicPID implements PIDOutput {
 	double p, i, d, output;
     
 	private double rampVal,rawDist;
+	private boolean inPosition;
 	
 	public UltrasonicPID(Robot robot) {
 		this.robot = robot;
@@ -58,17 +59,19 @@ public class UltrasonicPID implements PIDOutput {
 		this.output = output;
 	}
 	
-	public double UltraRamp(double rampDist) {
-		
-		rawDist = ultrasonic.getRangeInches();
-		
+	public double UltraRampTele(double rampDist) {
+
+		rawDist = RawDist();
+
 		if (rawDist < Constants.ultraZeroPoint) {
 			rawDist = Constants.ultraZeroPoint;
 		}
-		
+
 		if (rawDist < rampDist) {
 			// $\frac{\left(\cos \left(x+\pi \right)+1\right)}{2}$ for DESMOS
-			rampVal = ((Math.cos((((rawDist - Constants.ultraZeroPoint) / (rampDist - Constants.ultraZeroPoint)) * Math.PI)  + Math.PI) + 1) / 2);
+			rampVal = ((Math
+					.cos((((rawDist - Constants.ultraZeroPoint) / (rampDist - Constants.ultraZeroPoint)) * Math.PI)
+							+ Math.PI) + 1) / 2);
 		} else {
 			rampVal = 1;
 		}
@@ -76,8 +79,42 @@ public class UltrasonicPID implements PIDOutput {
 		if (rampVal < .1) {
 			rampVal = .1;
 		}
-		
+
 		return rampVal;
 	}
-	
+
+	public boolean UltraRampAuto(double rampDist, double tolerance) {
+
+		rawDist = RawDist();
+
+		if (rawDist < Constants.ultraZeroPoint) {
+			rawDist = Constants.ultraZeroPoint;
+		}
+
+		if (rawDist < rampDist) {
+			// $\frac{\left(\cos \left(x+\pi \right)+1\right)}{2}$ for DESMOS
+			rampVal = ((Math.cos((((rawDist - Constants.ultraZeroPoint) / 
+						(rampDist - Constants.ultraZeroPoint)) * Math.PI)
+							+ Math.PI) + 1) / 2);
+		} else {
+			rampVal = 1;
+		}
+
+		if (rampVal < .1) {
+			rampVal = .1;
+		}
+
+		robot.drive.doubleVicsDrive(rampVal, rampVal);
+		inPosition = (Constants.ultraZeroPoint + tolerance > RawDist());
+
+		if (inPosition) {
+			robot.drive.doubleVicsDrive(0, 0);
+		}
+		return inPosition;
+	}
+
+	public double RawDist() {
+		return (ultrasonic.getRangeInches());
+
+	}
 }
