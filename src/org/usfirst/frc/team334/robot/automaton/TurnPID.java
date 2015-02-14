@@ -8,7 +8,7 @@ import edu.wpi.first.wpilibj.PIDController;
 import edu.wpi.first.wpilibj.PIDOutput;
 
 public class TurnPID implements PIDOutput {
-
+	
     Robot robot;
     
     public Gyro gyro;
@@ -109,5 +109,4 @@ public class TurnPID implements PIDOutput {
     public void pidWrite(double output) {
         this.turnOutput = output;
     }
-
 }

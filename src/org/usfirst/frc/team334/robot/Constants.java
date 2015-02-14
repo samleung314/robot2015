@@ -39,6 +39,8 @@ public class Constants {
 	//Note: Analog ports 0,1 are reserved for accumulator sensors such as the gyroscope
 	public static final int gyroscope = 0;
 	public static final int elevatorPot = 1;
+	public static final int ultrasonicA = 3;
+	public static final int ultrasonicB = 4;
 	
 	/*Main Pneumatic Controller Module*/
 	public static final int PCM0 = 0;
@@ -76,6 +78,7 @@ public class Constants {
     public static final double distancePIDTolerance = 0.5; //+- 0.5 inch from target
     public static final double elevatorPIDTolerance = 0.5; //+- 0.5 inch from target
     public static final double turnPIDTolerance = 1; //+-1 degree tolerance from target
+    public static final double ultraSonicPIDTolerance = 1;
     
     //Length of movement on elevators is 64 1/8 inches
     //Difference of pot limits: 0.984 - 0.203 = 0.781
