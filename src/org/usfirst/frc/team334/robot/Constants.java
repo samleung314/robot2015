@@ -78,6 +78,8 @@ public class Constants {
     public static final double elevatorRawLength = 0.781;
     public static final double elevatorMovementLength = 64 + 1/8; //Inches
     
+    public static final double teleopRampDist = 20;
+    
     public static final double distancePIDTolerance = 0.5; //+- 0.5 inch from target
     public static final double elevatorPIDTolerance = 0.5; //+- 0.5 inch from target
     public static final double turnPIDTolerance = 1; //+-1 degree tolerance from target

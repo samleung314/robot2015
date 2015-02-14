@@ -18,7 +18,7 @@ public class Controllers {
 	/* xBox Controller Inputs */
 	// Pushing up returns negative values, pulling returns positive values
 	public double xBoxLeftY, xBoxRightY;
-	boolean xBoxA, xBoxB, xBoxX, xBoxY, xBoxLeftBump, xBoxRightBump;
+	boolean xBoxA, xBoxB, xBoxX, xBoxY, xBoxLeftBump, xBoxRightBump, rightJoyThree;
 
 	public int elevatorLevel = 0;
 
@@ -28,6 +28,8 @@ public class Controllers {
 	boolean leftTrigger, rightTrigger, xBoxYClicked = false,
 			xBoxAClicked = false;
 
+	private double mult;
+	
 	public Controllers(Robot robot) {
 		this.robot = robot;
 	}
@@ -50,6 +52,7 @@ public class Controllers {
 		leftJoyY = -Constants.driveMuliplier * leftJoy.getY();
 		rightJoyY = -Constants.driveMuliplier * rightJoy.getY();
 		leftTrigger = leftJoy.getTrigger();
+		rightJoyThree = rightJoy.getRawButton(3);
 		rightTrigger = rightJoy.getTrigger();
 	}
 
@@ -73,11 +76,35 @@ public class Controllers {
 							* rightJoyY);
 		}
 	}
-
+ 
 	public void ultraSonicDrive() {
-
+		
+		mult = robot.ultrasonic.UltraRampTele(Constants.teleopRampDist);
+		
+		if (leftTrigger && rightTrigger) {
+			
+			robot.drive.chasisDrive.tankDrive(Constants.highGearSpeed
+					* leftJoyY, Constants.highGearSpeed * rightJoyY * mult);
+			
+		} else if (!leftTrigger && !rightTrigger) {
+			
+			robot.drive.chasisDrive.tankDrive(
+					Constants.lowGearSpeed * leftJoyY, Constants.lowGearSpeed
+							* rightJoyY* mult);
+			
+		}
 	}
-
+	
+    public void dynamicDrive()
+    {
+    	if(rightJoyThree) {
+    		ultraSonicDrive();
+    	}
+    	else {
+    		joystickDrive();
+    	}
+    	
+    }
 	// Used for testing solenoids
 	public void testSolenoids() {
 		if (xBoxA) {
