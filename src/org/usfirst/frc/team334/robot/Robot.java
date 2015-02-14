@@ -80,7 +80,7 @@ public class Robot extends IterativeRobot {
 		turn.gyro.reset();
 		air.compress.stop();
 		
-		Scheduler.getInstance().removeAll(); //Need to clear previously selected commands so one a single command runs
+		Scheduler.getInstance().removeAll(); //Need to clear previously selected commands so only a single command runs
 		
 		autoCommand = (Command) autoChoose.getSelected();
 		autoCommand.start();
