@@ -10,7 +10,8 @@ public class BenTest extends Command {
 
 	int step = 1;
 	Robot robot;
-	boolean back = false;
+	boolean back, turn, forward, autonDone;
+	double moveBack = -10, angle = 90, moveForward = 150;
 
 	public BenTest() {
 		this.robot = robot;
@@ -19,22 +20,32 @@ public class BenTest extends Command {
 	// Called just before this Command runs the first time
 	protected void initialize() {
 		step = 1;
+		back = false;
 	}
 
 	// Called repeatedly when this Command is scheduled to run
 	protected void execute() {
 		switch (step) {
 		case 1:
-			back = robot.straightDist.driveDistance(-10);
+			back = robot.straightDist.driveDistance(moveBack);
 			nextStep(back);
 			break;
-
+		case 2:
+			turn = robot.turn.PIDturnDegrees(angle);
+			nextStep(turn);
+			break;
+		case 3:
+			forward = robot.straightDist.driveDistance(moveForward);
+			nextStep(forward);
+			break;
+		case 4:
+			
 		}
 	}
 
 	// Make this return true when this Command no longer needs to run execute()
 	protected boolean isFinished() {
-		return false;
+		return autonDone;
 	}
 
 	// Called once after isFinished returns true
