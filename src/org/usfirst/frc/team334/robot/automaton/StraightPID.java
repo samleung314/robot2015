@@ -6,33 +6,41 @@ import edu.wpi.first.wpilibj.PIDController;
 
 public class StraightPID {
 
-    Robot robot;
+	Robot robot;
 
-    public PIDController straightPID;
-    double sKp, sKi, sKd;
+	public PIDController straightPID;
+	double sKp, sKi, sKd;
 
-    public StraightPID(Robot robot) {
-        this.robot = robot;
+	public StraightPID(Robot robot) {
+		this.robot = robot;
 
-        straightPID = new PIDController(sKp, sKi, sKd, robot.turn.gyro, robot.drive.leftVics);
+		straightPID = new PIDController(sKp, sKi, sKd, robot.turn.gyro,
+				robot.drive.leftVics);
 
-        straightPID.setContinuous(); //Tells PID that 360 degrees is the same as 0 degrees
-        straightPID.setOutputRange(-1, 1); //Limits the victors' speed from a range of -1 to 1
-        straightPID.setSetpoint(0); //PID will cause robot to achieve an orientation of 0 degrees making it drive straight
-    }
+		straightPID.setContinuous(); // Tells PID that 360 degrees is the same
+										// as 0 degrees
+		straightPID.setOutputRange(-1, 1); // Limits the victors' speed from a
+											// range of -1 to 1
+		straightPID.setSetpoint(0); // PID will cause robot to achieve an
+									// orientation of 0 degrees making it drive
+									// straight
+	}
 
-    public boolean travelDistance(double distance, double speed) {
-        if (robot.encode.averageDist() < distance) { //If distance not reached, keep moving
-            straightPID.enable();
-            robot.drive.doubleVicsDrive(speed, speed);
-            return false;
+	public boolean travelDistance(double distance, double speed) {
+		if (robot.encode.averageDist() < distance) { // If distance not reached,
+														// keep moving
+			straightPID.enable();
+			robot.drive.doubleVicsDrive(speed, speed);
+			return false;
 
-        } else if (robot.encode.averageDist() >= distance) { //Stop and disable when distance reached
-            robot.drive.doubleVicsDrive(0, 0);
-            straightPID.disable();
-            robot.encode.resetEncoders();
-            return true;
-            
-        } else return true;
-    }
+		} else if (robot.encode.averageDist() >= distance) { // Stop and disable
+																// when distance
+																// reached
+			robot.drive.doubleVicsDrive(0, 0);
+			straightPID.disable();
+			robot.encode.resetEncoders();
+			return true;
+		} else
+			return false;
+	}
 }
