@@ -67,10 +67,10 @@ public class Controllers {
 	}
 
 	public void forestDrive() {
-		if (leftTrigger && rightTrigger) {
+		if (!leftTrigger && !rightTrigger) {
 			robot.drive.chasisDrive.tankDrive(Constants.highGearSpeed
 					* leftJoyY, Constants.highGearSpeed * rightJoyY);
-		} else if (!leftTrigger && !rightTrigger) {
+		} else  {
 			robot.drive.chasisDrive.tankDrive(
 					Constants.lowGearSpeed * leftJoyY, Constants.lowGearSpeed
 							* rightJoyY);
@@ -81,15 +81,15 @@ public class Controllers {
 		
 		mult = robot.ultrasonic.UltraRampTele(Constants.teleopRampDist);
 		
-		if (leftTrigger && rightTrigger) {
+		if (!leftTrigger && !rightTrigger) {
 			
 			robot.drive.chasisDrive.tankDrive(Constants.highGearSpeed
-					* leftJoyY, Constants.highGearSpeed * rightJoyY * mult);
+					* leftJoyY * mult, Constants.highGearSpeed * rightJoyY * mult);
 			
-		} else if (!leftTrigger && !rightTrigger) {
+		} else {
 			
 			robot.drive.chasisDrive.tankDrive(
-					Constants.lowGearSpeed * leftJoyY, Constants.lowGearSpeed
+					Constants.lowGearSpeed * leftJoyY * mult, Constants.lowGearSpeed
 							* rightJoyY* mult);
 			
 		}
@@ -101,7 +101,7 @@ public class Controllers {
     		ultraSonicDrive();
     	}
     	else {
-    		joystickDrive();
+    		forestDrive();
     	}
     	
     }

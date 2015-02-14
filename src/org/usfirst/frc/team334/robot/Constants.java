@@ -37,8 +37,8 @@ public class Constants {
 	public static final int rightEncoderX = 3;
 	public static final int rightEncoderY = 2;
 	
-	public static final int ultrasonicInput = 1;
-	public static final int ultrasonicOutput = 0;
+	public static final int ultrasonicInput = 0;
+	public static final int ultrasonicOutput = 1;
 	
 	/*Analog*/
 	//Note: Analog ports 0,1 are reserved for accumulator sensors such as the gyroscope
