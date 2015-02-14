@@ -3,6 +3,7 @@ package org.usfirst.frc.team334.robot.human;
 import org.usfirst.frc.team334.robot.Constants;
 import org.usfirst.frc.team334.robot.Robot;
 
+import edu.wpi.first.wpilibj.GenericHID.Hand;
 import edu.wpi.first.wpilibj.Joystick;
 
 public class Controllers {
@@ -24,8 +25,8 @@ public class Controllers {
 	/* Joystick Controllers Input */
 	// Pushing up returns negative values, pulling returns positive values
 	double leftJoyY, rightJoyY;
-	boolean leftTrigger, rightTrigger, leftTriggerClicked = false,
-			rightTriggerClicked = false;
+	boolean leftTrigger, rightTrigger, xBoxYClicked = false,
+			xBoxAClicked = false;
 
 	public Controllers(Robot robot) {
 		this.robot = robot;
@@ -43,6 +44,7 @@ public class Controllers {
 		xBoxY = xBox.getRawButton(4);
 		xBoxLeftBump = xBox.getRawButton(5);
 		xBoxRightBump = xBox.getRawButton(6);
+		
 
 		// Joysticks
 		leftJoyY = -Constants.driveMuliplier * leftJoy.getY();
@@ -70,6 +72,10 @@ public class Controllers {
 					Constants.lowGearSpeed * leftJoyY, Constants.lowGearSpeed
 							* rightJoyY);
 		}
+	}
+
+	public void ultraSonicDrive() {
+
 	}
 
 	// Used for testing solenoids
@@ -112,34 +118,40 @@ public class Controllers {
 		}
 	}
 
-	public void setElevatorLevel() {
-		if (leftTrigger) {
-			if (!leftTriggerClicked) {
-				leftTriggerClicked = true;
-				elevatorLevel--;
-				if (elevatorLevel < 1) {
-					elevatorLevel = 1;
-				}
+	public void operatorControl() {
+		if (xBoxLeftBump) {
+			robot.air.armsExtend();
+		}
+		if (xBoxRightBump) {
+			robot.air.armsRetract();
+		}
+		if (xBoxY) {
+			if (!xBoxYClicked) {
+				xBoxYClicked = true;
+				elevatorLevel = elevatorLevel + 1 > 6 ? 6 : elevatorLevel + 1;
+				robot.pot.setElevatorLevel(elevatorLevel);
 			}
 		} else {
-			leftTriggerClicked = false;
+			xBoxYClicked = false;
 		}
-
-		if (rightTrigger) {
-			if (!rightTriggerClicked) {
-				rightTriggerClicked = true;
-				elevatorLevel++;
-				if (elevatorLevel > 6) {
-					elevatorLevel = 6;
-				}
+		if (xBoxA) {
+			if (!xBoxAClicked) {
+				xBoxAClicked = true;
+				elevatorLevel = elevatorLevel - 1 < 0 ? 0 : elevatorLevel - 1;
+				robot.pot.setElevatorLevel(elevatorLevel);
 			}
 		} else {
-			rightTriggerClicked = false;
+			xBoxAClicked = false;
+		}
+		if (deadZone(xBoxLeftY) != 0 && deadZone(xBoxRightY) == 0) {
+			robot.elevate.doubleVicsElevator(xBoxLeftY * .60);
+		} else if (deadZone(xBoxRightY) != 0 && deadZone(xBoxLeftY) == 0) {
+			robot.elevate.doubleVicsElevator(xBoxRightY * .30);
+		} else {
+			robot.elevate.doubleVicsElevator(0);
 		}
 
-		robot.pot.setElevatorLevel(elevatorLevel);
 	}
-
 }
 
 /*

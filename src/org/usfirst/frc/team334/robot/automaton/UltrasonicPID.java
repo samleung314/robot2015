@@ -3,6 +3,8 @@ package org.usfirst.frc.team334.robot.automaton;
 import org.usfirst.frc.team334.robot.Constants;
 import org.usfirst.frc.team334.robot.Robot;
 
+import edu.wpi.first.wpilibj.DigitalInput;
+import edu.wpi.first.wpilibj.DigitalOutput;
 import edu.wpi.first.wpilibj.PIDController;
 import edu.wpi.first.wpilibj.PIDOutput;
 import edu.wpi.first.wpilibj.Ultrasonic;
@@ -19,8 +21,8 @@ public class UltrasonicPID implements PIDOutput {
 	public UltrasonicPID(Robot robot) {
 		this.robot = robot;
 
-		ultrasonic = new Ultrasonic(Constants.ultrasonicA,
-				Constants.ultrasonicB);
+		ultrasonic = new Ultrasonic(new DigitalOutput(Constants.ultrasonicA),
+				new DigitalInput(Constants.ultrasonicB));
 		ultrasonicPID = new PIDController(p, i, d, ultrasonic, this);
 		ultrasonicPID.setContinuous();
 		ultrasonicPID.setAbsoluteTolerance(Constants.ultraSonicPIDTolerance);
