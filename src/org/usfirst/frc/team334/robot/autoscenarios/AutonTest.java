@@ -11,7 +11,9 @@ public class AutonTest extends Command {
 
 	Robot robot;
 	
-	boolean truth = true, autonDone;
+	boolean distA, turnA, autonDone;
+	
+	double dist, deg;
 	
 	int step;
 	
@@ -23,11 +25,28 @@ public class AutonTest extends Command {
     protected void initialize() {
     	step = 1;
     	autonDone = false;
+    	
+    	dist = 24;
+    	deg = 90;
     }
 
     // Called repeatedly when this Command is scheduled to run
     protected void execute() {
-    	
+    	switch(step) {
+	    	case 1: distA = robot.straightDist.driveDistance(dist);
+	    			nextStep(distA);
+		    		break;
+		    		
+	    	case 2: turnA = robot.turn.PIDturnDegrees(deg);
+					nextStep(turnA);
+		    		break;
+		    		
+	    	case 3: autonDone = true;
+	    			break;
+	    			
+			default: System.out.println("Test Auton is defaulting");
+					 break;	
+    	}
     }
     
     private void nextStep(boolean action) {

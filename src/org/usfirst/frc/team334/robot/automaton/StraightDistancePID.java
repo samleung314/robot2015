@@ -47,6 +47,7 @@ public class StraightDistancePID implements PIDOutput {
 													// within tolerance
 			robot.distance.rampPID.disable();
 			robot.drive.doubleVicsDrive(0, 0);
+			robot.encode.resetEncoders();
 			return true;
 		}
 		return false;
