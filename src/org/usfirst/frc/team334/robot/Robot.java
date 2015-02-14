@@ -26,6 +26,7 @@ public class Robot extends IterativeRobot {
 	public StraightPID straight;
 	public StraightDistancePID straightDist;
 	public TurnPID turn;
+	public UltrasonicPID ultra;
 	public Smartdashboard smart;
 	
 	public AutonOne oneContainer;
@@ -49,6 +50,7 @@ public class Robot extends IterativeRobot {
 		turn = new TurnPID(this);
 		straight = new StraightPID(this);
 		straightDist = new StraightDistancePID(this);
+		ultra = new UltrasonicPID(this);
 		control = new Controllers(this);
 		elevate = new Elevator(this);
 		pot = new ElevatorPot(this);
@@ -93,8 +95,6 @@ public class Robot extends IterativeRobot {
 		elevate.elevatorRelease(); //Elevator starts unlocked
 		encode.resetEncoders();
 		turn.gyro.reset();
-		
-		air.compress.stop();
 		
 		/*Disable the PIDs*/
 		straight.straightPID.disable();
