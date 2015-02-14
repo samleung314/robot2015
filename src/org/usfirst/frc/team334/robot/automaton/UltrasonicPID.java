@@ -3,6 +3,8 @@ package org.usfirst.frc.team334.robot.automaton;
 import org.usfirst.frc.team334.robot.Constants;
 import org.usfirst.frc.team334.robot.Robot;
 
+import edu.wpi.first.wpilibj.DigitalInput;
+import edu.wpi.first.wpilibj.DigitalOutput;
 import edu.wpi.first.wpilibj.PIDController;
 import edu.wpi.first.wpilibj.PIDOutput;
 import edu.wpi.first.wpilibj.Ultrasonic;
@@ -13,16 +15,24 @@ public class UltrasonicPID implements PIDOutput {
 
 	public PIDController ultrasonicPID;
 	public Ultrasonic ultrasonic;
-
+	public DigitalInput ultraInput;
+	public DigitalOutput ultraOutput;
+    
 	double p, i, d, output;
-
+    
+	private double rampVal,rawDist;
+	
 	public UltrasonicPID(Robot robot) {
 		this.robot = robot;
 
-		ultrasonic = new Ultrasonic(Constants.ultrasonicA,
-				Constants.ultrasonicB);
+		ultraInput = new DigitalInput(Constants.ultrasonicInput);
+		ultraOutput = new DigitalOutput(Constants.ultrasonicOutput);
+
+		ultrasonic = new Ultrasonic(ultraOutput, ultraInput, Ultrasonic.Unit.kInches);
+		ultrasonic.setAutomaticMode(true);
+		ultrasonic.setEnabled(true);
+		
 		ultrasonicPID = new PIDController(p, i, d, ultrasonic, this);
-		ultrasonicPID.setContinuous();
 		ultrasonicPID.setAbsoluteTolerance(Constants.ultraSonicPIDTolerance);
 	}
 
@@ -47,5 +57,27 @@ public class UltrasonicPID implements PIDOutput {
 	public void pidWrite(double output) {
 		this.output = output;
 	}
+	
+	public double UltraRamp(double rampDist) {
+		
+		rawDist = ultrasonic.getRangeInches();
+		
+		if (rawDist < Constants.ultraZeroPoint) {
+			rawDist = Constants.ultraZeroPoint;
+		}
+		
+		if (rawDist < rampDist) {
+			// $\frac{\left(\cos \left(x+\pi \right)+1\right)}{2}$ for DESMOS
+			rampVal = ((Math.cos((((rawDist - Constants.ultraZeroPoint) / (rampDist - Constants.ultraZeroPoint)) * Math.PI)  + Math.PI) + 1) / 2);
+		} else {
+			rampVal = 1;
+		}
 
+		if (rampVal < .1) {
+			rampVal = .1;
+		}
+		
+		return rampVal;
+	}
+	
 }

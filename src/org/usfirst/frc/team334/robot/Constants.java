@@ -25,6 +25,8 @@ public class Constants {
 	public static final int highSwitchLeft = 1;
 	public static final int lowSwitchLeft = 8;
 	
+	public static final double  ultraZeroPoint = 2;
+	
 	public static final int highSwitchRight = 6;
 	public static final int lowSwitchRight = 7;
 	
@@ -35,12 +37,13 @@ public class Constants {
 	public static final int rightEncoderX = 3;
 	public static final int rightEncoderY = 2;
 	
+	public static final int ultrasonicInput = 1;
+	public static final int ultrasonicOutput = 0;
+	
 	/*Analog*/
 	//Note: Analog ports 0,1 are reserved for accumulator sensors such as the gyroscope
 	public static final int gyroscope = 0;
 	public static final int elevatorPot = 1;
-	public static final int ultrasonicA = 3;
-	public static final int ultrasonicB = 4;
 	
 	/*Main Pneumatic Controller Module*/
 	public static final int PCM0 = 0;
