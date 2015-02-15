@@ -18,7 +18,7 @@ public class Controllers {
 	/* xBox Controller Inputs */
 	// Pushing up returns negative values, pulling returns positive values
 	public double xBoxLeftY, xBoxRightY;
-	boolean xBoxA, xBoxB, xBoxX, xBoxY, xBoxLeftBump, xBoxRightBump, rightJoyThree;
+	boolean xBoxA, xBoxB, xBoxX, xBoxY, xBoxLeftBump, xBoxRightBump, rightJoyFour, rightJoyFive;
 
 	public int elevatorLevel = 0;
 
@@ -52,7 +52,8 @@ public class Controllers {
 		leftJoyY = -Constants.driveMuliplier * leftJoy.getY();
 		rightJoyY = -Constants.driveMuliplier * rightJoy.getY();
 		leftTrigger = leftJoy.getTrigger();
-		rightJoyThree = rightJoy.getRawButton(3);
+		rightJoyFour = rightJoy.getRawButton(4);
+		rightJoyFive = rightJoy.getRawButton(5);
 		rightTrigger = rightJoy.getTrigger();
 	}
 
@@ -77,9 +78,9 @@ public class Controllers {
 		}
 	}
  
-	public void ultraSonicDrive() {
+	public void ultraSonicDrive(double tolerance) {
 		
-		mult = robot.ultrasonic.UltraRampTele(Constants.teleopRampDist);
+		mult = robot.ultrasonic.UltraRampTele(Constants.teleopRampDist, tolerance);
 		
 		if (!leftTrigger && !rightTrigger) {
 			
@@ -97,8 +98,10 @@ public class Controllers {
 	
     public void dynamicDrive()
     {
-    	if(rightJoyThree) {
-    		ultraSonicDrive();
+    	if(rightJoyFour) {
+    		ultraSonicDrive(Constants.canTolerance);
+    	}else if(rightJoyFive) {
+    		ultraSonicDrive(Constants.toteTolerance);
     	}
     	else {
     		forestDrive();

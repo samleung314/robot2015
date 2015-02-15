@@ -26,7 +26,10 @@ public class Constants {
 	public static final int lowSwitchLeft = 8;
 	
 	public static final double  ultraZeroPoint = 2;
-	
+	public static final double cutoffMult=.6;
+    public static final double canTolerance=12;
+    public static final double toteTolerance=4;
+    
 	public static final int highSwitchRight = 6;
 	public static final int lowSwitchRight = 7;
 	

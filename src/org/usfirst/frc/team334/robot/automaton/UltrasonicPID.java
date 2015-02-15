@@ -59,7 +59,7 @@ public class UltrasonicPID implements PIDOutput {
 		this.output = output;
 	}
 	
-	public double UltraRampTele(double rampDist) {
+	public double UltraRampTele(double rampDist, double tolerance) {
 
 		rawDist = RawDist();
 
@@ -76,10 +76,15 @@ public class UltrasonicPID implements PIDOutput {
 			rampVal = 1;
 		}
 
-		if (rampVal < .1) {
-			rampVal = .1;
+		if (rampVal < Constants.cutoffMult) {
+			rampVal = Constants.cutoffMult;
 		}
-
+        
+		if(Constants.ultraZeroPoint + tolerance > RawDist())
+		{
+			rampVal=0;
+			
+		}
 		return rampVal;
 	}
 
@@ -100,11 +105,12 @@ public class UltrasonicPID implements PIDOutput {
 			rampVal = 1;
 		}
 
-		if (rampVal < .1) {
-			rampVal = .1;
+		if (rampVal < Constants.cutoffMult) {
+			rampVal = Constants.cutoffMult;
 		}
 
-		robot.drive.doubleVicsDrive(rampVal, rampVal);
+		robot.drive.doubleVicsDrive(rampVal, rampVal);  //PIDs ????? drive straight
+		
 		inPosition = (Constants.ultraZeroPoint + tolerance > RawDist());
 
 		if (inPosition) {
