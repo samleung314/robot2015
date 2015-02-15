@@ -78,10 +78,10 @@ public class Elevator {
 
 	public boolean elevatorHeight(double height) {
 
-		if (robot.pot.getLevel() < height - 0.5) {
+		if (robot.pot.getLevel() < height - 1) {
 			doubleVicsElevator(.35);
 			return false;
-		} else if (robot.pot.getLevel() > height + 0.5) {
+		} else if (robot.pot.getLevel() > height + 1) {
 			doubleVicsElevator(-.35);
 			return false;
 		} else {

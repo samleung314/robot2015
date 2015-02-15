@@ -3,6 +3,7 @@ package org.usfirst.frc.team334.robot.autoscenarios;
 import org.usfirst.frc.team334.robot.Robot;
 
 import edu.wpi.first.wpilibj.command.Command;
+import edu.wpi.first.wpilibj.smartdashboard.SmartDashboard;
 
 /**
  *
@@ -32,6 +33,8 @@ public class AutonTest extends Command {
 
     // Called repeatedly when this Command is scheduled to run
     protected void execute() {
+    	SmartDashboard.putString("Mode", "Auto Test");
+    	
     	switch(step) {
 	    	case 1: distA = robot.straightDist.driveDistance(dist);
 	    			nextStep(distA);

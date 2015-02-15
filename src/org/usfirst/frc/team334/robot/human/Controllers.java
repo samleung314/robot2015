@@ -36,7 +36,7 @@ public class Controllers {
 	// for any controller code to work
 	public void getControllers() {
 		// xBox Controller
-		xBoxLeftY = -xBox.getRawAxis(1);
+		xBoxLeftY =  xBox.getRawAxis(1);
 		xBoxRightY = xBox.getRawAxis(5);
 		xBoxA = xBox.getRawButton(1);
 		xBoxB = xBox.getRawButton(2);
@@ -62,6 +62,13 @@ public class Controllers {
 	public void joystickDrive() {
 		robot.drive.chasisDrive.tankDrive(leftJoyY, rightJoyY);
 	}
+	
+	public void testArms() {
+		if(xBoxA) robot.air.flippersOut();
+		else if(xBoxB) robot.air.flippersIn();
+		else if(xBoxX) robot.air.armsExtend();
+		else if(xBoxY) robot.air.armsRetract();
+	}
 
 	public void forestDrive() {
 		if (leftTrigger && rightTrigger) {
@@ -74,8 +81,9 @@ public class Controllers {
 		}
 	}
 
-	public void ultraSonicDrive() {
-
+	public void joyPID(double setHeight) {
+		double scaledJoy = xBoxLeftY/Constants.elevatorMovementLength;
+		robot.pot.elevatePID(scaledJoy);
 	}
 
 	// Used for testing solenoids
@@ -100,13 +108,11 @@ public class Controllers {
 		robot.elevate.doubleVicsElevator(-xBoxLeftY);
 
 		// Controlling dog gear with xBox buttons
-		if (xBoxX) {
+		if (xBoxLeftBump) {
 			robot.elevate.elevatorRelease();
-			System.out.println("X Button");
 		}
-		if (xBoxY) {
+		else if (xBoxRightBump) {
 			robot.elevate.elevatorBreak();
-			System.out.println("Y Button");
 		}
 	}
 

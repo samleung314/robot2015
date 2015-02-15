@@ -22,7 +22,7 @@ public class ElevatorPot implements PIDSource{
 		elevatorPot = new AnalogPotentiometer(Constants.elevatorPot);
 		
 		elevatorPID = new PIDController(p, i, d, this, robot.elevate.elevatorVics);
-		elevatorPID.setOutputRange(-0.5, 0.5); //Limits the elevator speed so it doesn't go too fast
+		elevatorPID.setOutputRange(-0.3, 0.3); //Limits the elevator speed so it doesn't go too fast
 		elevatorPID.setAbsoluteTolerance(Constants.elevatorPIDTolerance);
 	}
 	
@@ -31,7 +31,7 @@ public class ElevatorPot implements PIDSource{
 		return zeroedPot * (Constants.elevatorMovementLength/Constants.elevatorRawLength);
 	}
 	
-	public boolean elevatorHeightPID(double height) {
+	public boolean elevatePID(double height) {
 		elevatorPID.setSetpoint(height);
 		elevatorPID.enable();
 		

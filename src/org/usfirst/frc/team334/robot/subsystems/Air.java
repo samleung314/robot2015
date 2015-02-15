@@ -14,7 +14,12 @@ public class Air {
 
 	public Compressor compress;
 
-	public DoubleSolenoid solA, solB, solC, solD, solE, solF;
+	public DoubleSolenoid solA, //Left arm (Check!)
+						  solB, //Right arm (Check!)
+						  solC, 
+						  solD, 
+						  solE, //Both flippers (Check!)
+						  solF; //Dog gear (Check!)
 
 	public Air(Robot robot) {
 		this.robot = robot;
@@ -51,20 +56,26 @@ public class Air {
 		}
 	}
 	
-	public void armsExtend() { //Extends grabbers
+	public boolean armsExtend() { //Extends grabbers
 		solA.set(Value.kForward);
-	}
-	
-	public void armsRetract() { //Retracts grabbers
-		solA.set(Value.kReverse);
-	}
-	
-	public void flippersUp() {
 		solB.set(Value.kForward);
+		return true;
 	}
 	
-	public void flippersDown() {
+	public boolean armsRetract() { //Retracts grabbers
+		solA.set(Value.kReverse);
 		solB.set(Value.kReverse);
+		return true;
+	}
+	
+	public boolean flippersIn() {
+		solE.set(Value.kForward);
+		return true;
+	}
+	
+	public boolean flippersOut() {
+		solE.set(Value.kReverse);
+		return true;
 	}
 
 	public void dogLock() { //Engages the Dog Gear piston

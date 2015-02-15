@@ -13,25 +13,29 @@ public class AutonThree extends Command {
 	Robot robot;
 	
 	boolean autonDone,
+			flippersOutA,
 	        liftToteA,
 	        elevatorBrakeA,
 	        travelForwardA,
 	        elevatorReleaseA,
 	        
 	        elevateDownA,
+	        flippersInA, 
 	        liftToteB,
 	        elevatorBrakeB,
 	        travelForwardB,
 	        elevatorReleaseB,
 	        
 	        elevateDownB,
+	        flippersOutB, 
 	        liftToteC,
 	        elevatorBrakeC,
 	        
         	turnA,
 	        travelForwardC,
 	        elevatorReleaseC,
-	        elevateDownC;
+	        elevateDownC,
+	        flippersInB; 
 	
 	double liftHeightA = 0, //tote 1 lift
 		   liftHeightB = 0, //tote 2 lift 
@@ -58,118 +62,143 @@ public class AutonThree extends Command {
     	
     	step = 1;
     	
-    	liftToteA = elevatorBrakeA = travelForwardA = elevatorReleaseA = elevateDownA = liftToteB =
-        elevatorBrakeB = travelForwardB = elevatorReleaseB = elevateDownB = liftToteC = elevatorBrakeC =
-        turnA = travelForwardC = elevatorReleaseC = elevateDownC = false;
+    	autonDone = flippersOutA = liftToteA = elevatorBrakeA = travelForwardA = 
+    	elevatorReleaseA = elevateDownA = flippersInA = liftToteB = elevatorBrakeB = 
+    	travelForwardB = elevatorReleaseB = elevateDownB = flippersOutB = liftToteC = 
+    	elevatorBrakeC = turnA = travelForwardC = elevatorReleaseC = elevateDownC = flippersInB = false;
     	
     }
 
     // Called repeatedly when this Command is scheduled to run
     protected void execute() {
-    	SmartDashboard.putString("Mode", "Running Auto Three");
+    	SmartDashboard.putString("Mode", "Auto Three");
     	SmartDashboard.putString("Current Step", currentStep);
     	System.out.println("---------->" + currentStep);
     	
     	switch (step) {
-		case 1:
+    	case 1:
+    		flippersOutA = robot.air.flippersOut();
+			nextStep(flippersOutA);
+			currentStep = "Flippers out A";
+			break;
+			
+		case 2:
 			liftToteA = robot.elevate.elevatorHeight(liftHeightA);
 			nextStep(liftToteA);
 			currentStep = "Lifting first tote";
 			break;
 			
-		case 2:
+		case 3:
 			elevatorBrakeA = robot.elevate.elevatorBreak();
 			nextStep(elevatorBrakeA);
 			currentStep = "Braking elevator A";
 			break;
 			
-		case 3:
+		case 4:
 			travelForwardA = robot.straightDist.driveDistance(forwardDistA);
 			nextStep(travelForwardA);
 			currentStep = "Moving to second tote";
 			break;
 			
-		case 4:
+		case 5:
 			elevatorReleaseA = robot.elevate.elevatorRelease();
 			nextStep(elevatorReleaseA);
 			currentStep = "Releasing elevator A";
 			break;
 			
-		case 5: 
+		case 6: 
 			elevateDownA = robot.elevate.elevatorHeight(dropHeightA);
 			nextStep(elevateDownA);
 			currentStep = "Dropping elevator A";
 			break;
+			
+		case 7:
+    		flippersInA = robot.air.flippersIn();
+			nextStep(flippersInA);
+			currentStep = "Flippers in A";
+			break;
 				
-		case 6:
+		case 8:
 			liftToteB = robot.elevate.elevatorHeight(liftHeightB);
 			nextStep(liftToteB);
 			currentStep = "Lifting second tote";
 			break;
 			
-		case 7:
+		case 9:
 			elevatorBrakeB = robot.elevate.elevatorBreak();
 			nextStep(elevatorBrakeB);
 			currentStep = "Braking elevator";
 			break;
 			
-		case 8:
+		case 10:
 			travelForwardB = robot.straightDist.driveDistance(forwardDistB);
 			nextStep(travelForwardB);
 			currentStep = "Moving to third tote";
 			break;
 			
-		case 9:
+		case 11:
 			elevatorReleaseB = robot.elevate.elevatorRelease();
 			nextStep(elevatorReleaseB);
 			currentStep = "Releasing elevator";
 			break;
 			
-		case 10:
+		case 12:
 			elevateDownB = robot.elevate.elevatorHeight(dropHeightB);
 			nextStep(elevateDownB);
 			currentStep = "Dropping elevator B";
 			break;
 			
-		case 11:
+		case 13:
+    		flippersOutB = robot.air.flippersOut();
+			nextStep(flippersOutB);
+			currentStep = "Flippers out B";
+			break;
+			
+		case 14:
 			liftToteC = robot.elevate.elevatorHeight(liftHeightC);
 			nextStep(liftToteC);
 			currentStep = "Lifting third tote";
 			break;
 			
-		case 12:
+		case 15:
 			elevatorBrakeC = robot.elevate.elevatorBreak();
 			nextStep(elevatorBrakeC);
 			currentStep = "Braking elevator";
 			break;
 			
-		case 13:
+		case 16:
 			turnA = robot.turn.PIDturnDegrees(turnDegreesA);
 			nextStep(turnA);
 			currentStep = "Turning towards autozone";
 			break;
 		
-		case 14:
+		case 17:
 			travelForwardC = robot.straightDist.driveDistance(forwardDistC);
 			nextStep(travelForwardC);
 			currentStep = "Driving into autozone";
 			break;
 		
-		case 15:
+		case 18:
 			elevatorReleaseC = robot.elevate.elevatorRelease();
 			nextStep(elevatorReleaseC);
 			currentStep = "Releasing elevator C";
 			break;
 			
-		case 16: 
+		case 19: 
 			elevateDownC = robot.elevate.elevatorHeight(dropHeightC);
 			nextStep(elevateDownC);
 			currentStep = "Dropping off tote stack";
 			break;
 			
-		case 17:
+		case 20:
 			autonDone = true;
 			currentStep = "Autonomous Three Done";
+			break;
+		
+		case 21:
+    		flippersInB = robot.air.flippersIn();
+			nextStep(flippersInB);
+			currentStep = "Flippers in B";
 			break;
 			
 		default:

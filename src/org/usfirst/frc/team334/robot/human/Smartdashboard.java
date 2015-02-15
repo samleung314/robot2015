@@ -11,7 +11,7 @@ public class Smartdashboard {
     
     Preferences pref = Preferences.getInstance();
     
-    public double autoDist, autoSpeed, autoDegrees;
+    public double autoDist, autoSpeed, autoDegrees, autoHeight;
     
     public Smartdashboard(Robot robot) {
         this.robot = robot;
@@ -48,6 +48,7 @@ public class Smartdashboard {
     	autoDist = pref.getDouble("Distance", 0);
     	autoSpeed = pref.getDouble("Speed", 0);
     	autoDegrees = pref.getDouble("Degrees", 0);
+    	autoHeight = pref.getDouble("Height", 30);
     	pref.save();
     }
 }
