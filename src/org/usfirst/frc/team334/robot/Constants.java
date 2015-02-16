@@ -29,6 +29,11 @@ public class Constants {
 	public static final int lowSwitchRight = 9;
 	
 	public static final double  ultraZeroPoint = 2;
+
+	public static final double cutoffMult = 0.6;
+    public static final double canTolerance = 12;
+    public static final double toteTolerance = 4;
+
 	
 	/*Digital I/O*/
 	public static final int leftEncoderX = 4;
@@ -37,9 +42,8 @@ public class Constants {
 	public static final int rightEncoderX = 3;
 	public static final int rightEncoderY = 2;
 
-	public static final int ultrasonicOutput = 1;
 	public static final int ultrasonicInput = 0;
-
+	public static final int ultrasonicOutput = 1;
 	
 	/*Analog*/
 	//Note: Analog ports 0,1 are reserved for accumulator sensors such as the gyroscope
@@ -78,6 +82,8 @@ public class Constants {
     public static final double elevatorPotHIGHLimit = 0.216;
     public static final double elevatorRawLength = elevatorPotLOWLimit - elevatorPotHIGHLimit;
     public static final double elevatorMovementLength = 56 + 15/16; //Inches
+    
+    public static final double teleopRampDist = 20;
     
     public static final double distancePIDTolerance = 0.5; //+- 0.5 inch from target
     public static final double elevatorPIDTolerance = 0.5; //+- 0.5 inch from target

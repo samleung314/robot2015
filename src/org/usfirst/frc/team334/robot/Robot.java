@@ -127,6 +127,7 @@ public class Robot extends IterativeRobot {
 		control.controlElevator();
 		//elevate.noSafety(0.5*control.xBoxLeftY); // Use only for testing
 		control.joystickDrive();
+
 		// control.testSolenoids();
 
 		// air.cycleThrough();
