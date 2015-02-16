@@ -2,6 +2,7 @@ package org.usfirst.frc.team334.robot;
 
 import org.usfirst.frc.team334.robot.automaton.Auton;
 import org.usfirst.frc.team334.robot.automaton.DistancePID;
+import org.usfirst.frc.team334.robot.automaton.ElevatorPID;
 import org.usfirst.frc.team334.robot.automaton.StraightDistancePID;
 import org.usfirst.frc.team334.robot.automaton.StraightPID;
 import org.usfirst.frc.team334.robot.automaton.TurnPID;
@@ -15,7 +16,6 @@ import org.usfirst.frc.team334.robot.human.Smartdashboard;
 import org.usfirst.frc.team334.robot.subsystems.Air;
 import org.usfirst.frc.team334.robot.subsystems.Drivetrain;
 import org.usfirst.frc.team334.robot.subsystems.Elevator;
-import org.usfirst.frc.team334.robot.subsystems.ElevatorPot;
 import org.usfirst.frc.team334.robot.subsystems.Encoders;
 
 import edu.wpi.first.wpilibj.IterativeRobot;
@@ -32,9 +32,9 @@ public class Robot extends IterativeRobot {
 	public Air air;
 	public Controllers control;
 	public Drivetrain drive;
-	public Elevator elevate;
-	public ElevatorPot pot;
+	public Elevator elevator;
 	public Encoders encode;
+	public ElevatorPID pot;
 	public DistancePID distance;
 	public StraightPID straight;
 	public StraightDistancePID straightDist;
@@ -65,8 +65,8 @@ public class Robot extends IterativeRobot {
 		straight = new StraightPID(this);
 		straightDist = new StraightDistancePID(this);
 		control = new Controllers(this);
-		elevate = new Elevator(this);
-		pot = new ElevatorPot(this);
+		elevator = new Elevator(this);
+		pot = new ElevatorPID(this);
 		smart = new Smartdashboard(this);
 
 		oneContainer = new AutonOne(this);
@@ -87,7 +87,7 @@ public class Robot extends IterativeRobot {
 	}
 
 	public void autonomousInit() {
-		elevate.elevatorRelease(); // Elevator starts unlocked
+		elevator.elevatorRelease(); // Elevator starts unlocked
 		smart.getPrefs();
 		encode.resetEncoders();
 		turn.gyro.reset();
@@ -100,7 +100,6 @@ public class Robot extends IterativeRobot {
 
 	public void autonomousPeriodic() {
 		//Scheduler.getInstance().run();
-		elevate.elevatorHeight(smart.autoHeight);
 		
 		SmartDashboard.putNumber("Pot", pot.elevatorPot.get());
 		SmartDashboard.putNumber("Elevator Height", pot.getLevel());
@@ -108,7 +107,7 @@ public class Robot extends IterativeRobot {
 	}
 
 	public void teleopInit() {
-		elevate.elevatorRelease(); // Elevator starts unlocked
+		elevator.elevatorRelease(); // Elevator starts unlocked
 		encode.resetEncoders();
 		turn.gyro.reset();
 		

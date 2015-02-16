@@ -82,13 +82,13 @@ public class AutonTwo extends Command {
 					break; 
 					
 			case 2:
-				elevateUpA = robot.elevate.elevatorHeight(liftHeightA);
+				elevateUpA = robot.elevator.elevatorHeight(liftHeightA);
 				nextStep(elevateUpA);
 				currentStep = "Lifting containter";
 				break;
 				
 			case 3:
-				elevatorBrakeA = robot.elevate.elevatorLock();
+				elevatorBrakeA = robot.elevator.elevatorLock();
 				nextStep(elevatorBrakeA);
 				currentStep = "Braking elevator";
 				break;
@@ -106,13 +106,13 @@ public class AutonTwo extends Command {
 				break;
 				
 			case 6: 
-				elevatorUnlockA = robot.elevate.elevatorRelease();
+				elevatorUnlockA = robot.elevator.elevatorRelease();
 				nextStep(elevatorUnlockA);
 				currentStep = "Releasing elevator";
 				break;
 					
 			case 7:
-				elevatorDownA = robot.elevate.elevatorHeight(dropHeightA);
+				elevatorDownA = robot.elevator.elevatorHeight(dropHeightA);
 				nextStep(elevatorDownA);
 				currentStep = "Dropping off container";
 				break;
@@ -146,13 +146,13 @@ public class AutonTwo extends Command {
 					break; 
 				
 			case 13:
-				elevatorUpB = robot.elevate.elevatorHeight(liftHeightB);
+				elevatorUpB = robot.elevator.elevatorHeight(liftHeightB);
 				nextStep(elevatorUpB);
 				currentStep = "Lifting second containter";
 				break;
 				
 			case 14:
-				elevatorBrakeB = robot.elevate.elevatorLock();
+				elevatorBrakeB = robot.elevator.elevatorLock();
 				nextStep(elevatorBrakeB);
 				currentStep = "Braking elevator";
 				break;
@@ -164,13 +164,13 @@ public class AutonTwo extends Command {
 				break;
 				
 			case 16:
-				elevatorUnlockB = robot.elevate.elevatorRelease();
+				elevatorUnlockB = robot.elevator.elevatorRelease();
 				nextStep(elevatorUnlockB);
 				currentStep = "Unlocking elevator";
 				break;
 			
 			case 17:
-				elevatorDownB = robot.elevate.elevatorHeight(dropHeightB);
+				elevatorDownB = robot.elevator.elevatorHeight(dropHeightB);
 				nextStep(elevatorDownB);
 				currentStep = "Dropping second container";
 				break;

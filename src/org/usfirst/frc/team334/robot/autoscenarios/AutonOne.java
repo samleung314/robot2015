@@ -55,12 +55,12 @@ public class AutonOne extends Command {
     				currentStep = "Flippers out";
     				break;
     	
-    		case 2: elevatorUpA = robot.elevate.elevatorHeight(liftHeightA);
+    		case 2: elevatorUpA = robot.elevator.elevatorHeight(liftHeightA);
     				nextStep(elevatorUpA);
     				currentStep = "Lifting container";
     				break;
     				
-    		case 3: elevatorBrakeA = robot.elevate.elevatorLock();
+    		case 3: elevatorBrakeA = robot.elevator.elevatorLock();
     				nextStep(elevatorBrakeA);
     				currentStep = "Braking the elevator";
     				break;
@@ -75,7 +75,7 @@ public class AutonOne extends Command {
 					currentStep = "Moving to the landmark";
 					break;
 			
-    		case 6: elevatorDownA = robot.elevate.elevatorHeight(dropHeightA);
+    		case 6: elevatorDownA = robot.elevator.elevatorHeight(dropHeightA);
     				nextStep(elevatorDownA);
     				currentStep = "Dropping container";
     				break;

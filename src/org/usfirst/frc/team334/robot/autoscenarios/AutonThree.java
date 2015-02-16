@@ -83,13 +83,13 @@ public class AutonThree extends Command {
 			break;
 			
 		case 2:
-			liftToteA = robot.elevate.elevatorHeight(liftHeightA);
+			liftToteA = robot.elevator.elevatorHeight(liftHeightA);
 			nextStep(liftToteA);
 			currentStep = "Lifting first tote";
 			break;
 			
 		case 3:
-			elevatorBrakeA = robot.elevate.elevatorLock();
+			elevatorBrakeA = robot.elevator.elevatorLock();
 			nextStep(elevatorBrakeA);
 			currentStep = "Braking elevator A";
 			break;
@@ -101,13 +101,13 @@ public class AutonThree extends Command {
 			break;
 			
 		case 5:
-			elevatorReleaseA = robot.elevate.elevatorRelease();
+			elevatorReleaseA = robot.elevator.elevatorRelease();
 			nextStep(elevatorReleaseA);
 			currentStep = "Releasing elevator A";
 			break;
 			
 		case 6: 
-			elevateDownA = robot.elevate.elevatorHeight(dropHeightA);
+			elevateDownA = robot.elevator.elevatorHeight(dropHeightA);
 			nextStep(elevateDownA);
 			currentStep = "Dropping elevator A";
 			break;
@@ -119,13 +119,13 @@ public class AutonThree extends Command {
 			break;
 				
 		case 8:
-			liftToteB = robot.elevate.elevatorHeight(liftHeightB);
+			liftToteB = robot.elevator.elevatorHeight(liftHeightB);
 			nextStep(liftToteB);
 			currentStep = "Lifting second tote";
 			break;
 			
 		case 9:
-			elevatorBrakeB = robot.elevate.elevatorLock();
+			elevatorBrakeB = robot.elevator.elevatorLock();
 			nextStep(elevatorBrakeB);
 			currentStep = "Braking elevator";
 			break;
@@ -137,13 +137,13 @@ public class AutonThree extends Command {
 			break;
 			
 		case 11:
-			elevatorReleaseB = robot.elevate.elevatorRelease();
+			elevatorReleaseB = robot.elevator.elevatorRelease();
 			nextStep(elevatorReleaseB);
 			currentStep = "Releasing elevator";
 			break;
 			
 		case 12:
-			elevateDownB = robot.elevate.elevatorHeight(dropHeightB);
+			elevateDownB = robot.elevator.elevatorHeight(dropHeightB);
 			nextStep(elevateDownB);
 			currentStep = "Dropping elevator B";
 			break;
@@ -155,13 +155,13 @@ public class AutonThree extends Command {
 			break;
 			
 		case 14:
-			liftToteC = robot.elevate.elevatorHeight(liftHeightC);
+			liftToteC = robot.elevator.elevatorHeight(liftHeightC);
 			nextStep(liftToteC);
 			currentStep = "Lifting third tote";
 			break;
 			
 		case 15:
-			elevatorBrakeC = robot.elevate.elevatorLock();
+			elevatorBrakeC = robot.elevator.elevatorLock();
 			nextStep(elevatorBrakeC);
 			currentStep = "Braking elevator";
 			break;
@@ -179,13 +179,13 @@ public class AutonThree extends Command {
 			break;
 		
 		case 18:
-			elevatorReleaseC = robot.elevate.elevatorRelease();
+			elevatorReleaseC = robot.elevator.elevatorRelease();
 			nextStep(elevatorReleaseC);
 			currentStep = "Releasing elevator C";
 			break;
 			
 		case 19: 
-			elevateDownC = robot.elevate.elevatorHeight(dropHeightC);
+			elevateDownC = robot.elevator.elevatorHeight(dropHeightC);
 			nextStep(elevateDownC);
 			currentStep = "Dropping off tote stack";
 			break;

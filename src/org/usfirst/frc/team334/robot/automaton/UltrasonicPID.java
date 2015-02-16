@@ -36,6 +36,11 @@ public class UltrasonicPID implements PIDOutput {
 		ultrasonicPID = new PIDController(p, i, d, ultrasonic, this);
 		ultrasonicPID.setAbsoluteTolerance(Constants.ultraSonicPIDTolerance);
 	}
+	
+	@Override
+	public void pidWrite(double output) {
+		this.output = output;
+	}
 
 	public boolean driveDistance(int distance) {
 		ultrasonicPID.setSetpoint(distance);
@@ -52,11 +57,6 @@ public class UltrasonicPID implements PIDOutput {
 
 	public boolean hitDistance() {
 		return ultrasonicPID.onTarget();
-	}
-
-	@Override
-	public void pidWrite(double output) {
-		this.output = output;
 	}
 	
 	public double UltraRampTele(double rampDist, double tolerance) {

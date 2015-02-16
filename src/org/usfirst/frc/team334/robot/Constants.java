@@ -81,7 +81,7 @@ public class Constants {
     public static final double elevatorPotLOWLimit = 0.905;
     public static final double elevatorPotHIGHLimit = 0.216;
     public static final double elevatorRawLength = elevatorPotLOWLimit - elevatorPotHIGHLimit;
-    public static final double elevatorMovementLength = 56 + 15/16; //Inches
+    public static final double elevatorHeight = 56 + ((double)15/16); //Inches
     
     public static final double teleopRampDist = 20;
     

@@ -3,7 +3,6 @@ package org.usfirst.frc.team334.robot.human;
 import org.usfirst.frc.team334.robot.Constants;
 import org.usfirst.frc.team334.robot.Robot;
 
-import edu.wpi.first.wpilibj.GenericHID.Hand;
 import edu.wpi.first.wpilibj.Joystick;
 
 public class Controllers {
@@ -18,7 +17,8 @@ public class Controllers {
 	/* xBox Controller Inputs */
 	// Pushing up returns negative values, pulling returns positive values
 	public double xBoxLeftY, xBoxRightY;
-	boolean xBoxA, xBoxB, xBoxX, xBoxY, xBoxLeftBump, xBoxRightBump, rightJoyFour, rightJoyFive;
+	boolean xBoxA, xBoxB, xBoxX, xBoxY, xBoxLeftBump, xBoxRightBump, rightJoyFour, rightJoyFive,
+			press;
 
 	public int elevatorLevel = 0;
 
@@ -32,6 +32,8 @@ public class Controllers {
 	
 	public Controllers(Robot robot) {
 		this.robot = robot;
+		
+		press = false;
 	}
 
 	// Updates variables with controller inputs. Needs to be run periodically
@@ -56,21 +58,31 @@ public class Controllers {
 		rightJoyFive = rightJoy.getRawButton(5);
 		rightTrigger = rightJoy.getTrigger();
 	}
+	
+	public void positionElevator() {
+		
+		double shiftValues = xBoxLeftY + 1;
+		double mappedHeight = shiftValues * (Constants.elevatorHeight/2);
+		
+		if(xBoxA) {
+			robot.pot.elevatorPID.disable();
+			robot.elevator.elevatorVics.set(0);
+			
+			if(!press)
+			{
+				System.out.println(robot.pot.getLevel());
+				press = true;
+			}
+		} else {
+			robot.pot.elevatorPID.enable();
+			robot.pot.elevatorPID.setSetpoint(mappedHeight);
+			press = false;
+		}
+	}
 
 	// Driving with the joystick controllers
 	public void joystickDrive() {
 		robot.drive.chasisDrive.tankDrive(leftJoyY, rightJoyY);
-	}
-
-	public void forestDrive() {
-		if (!leftTrigger && !rightTrigger) {
-			robot.drive.chasisDrive.tankDrive(Constants.highGearSpeed
-					* leftJoyY, Constants.highGearSpeed * rightJoyY);
-		} else  {
-			robot.drive.chasisDrive.tankDrive(
-					Constants.lowGearSpeed * leftJoyY, Constants.lowGearSpeed
-							* rightJoyY);
-		}
 	}
 
 	public void ultraSonicDrive(double tolerance) {
@@ -87,7 +99,6 @@ public class Controllers {
 			robot.drive.chasisDrive.tankDrive(
 					Constants.lowGearSpeed * leftJoyY * mult, Constants.lowGearSpeed
 							* rightJoyY* mult);
-			
 		}
 	}
 	
@@ -103,6 +114,7 @@ public class Controllers {
     	}
     	
     }
+    
 	// Used for testing solenoids
 	public void testSolenoids() {
 		if (xBoxA) {
@@ -122,10 +134,10 @@ public class Controllers {
 
 	// Mapping elevator functionality to xBox
 	public void controlElevator() {
-		robot.elevate.doubleVicsElevator(-xBoxLeftY);
+		robot.elevator.doubleVicsElevator(-xBoxLeftY);
 
-		if (xBoxLeftBump) robot.elevate.elevatorRelease();
-		else if (xBoxRightBump) robot.elevate.elevatorLock();
+		if (xBoxLeftBump) robot.elevator.elevatorRelease();
+		else if (xBoxRightBump) robot.elevator.elevatorLock();
 		else if(xBoxA) robot.air.flippersIn();
 		else if(xBoxB) robot.air.flippersOut();
 		else if(xBoxX) robot.air.armsRetract();
@@ -139,8 +151,19 @@ public class Controllers {
 			return input;
 		}
 	}
+	
+	public void forestDrive() {
+		if (!leftTrigger && !rightTrigger) {
+			robot.drive.chasisDrive.tankDrive(Constants.highGearSpeed
+					* leftJoyY, Constants.highGearSpeed * rightJoyY);
+		} else  {
+			robot.drive.chasisDrive.tankDrive(
+					Constants.lowGearSpeed * leftJoyY, Constants.lowGearSpeed
+							* rightJoyY);
+		}
+	}
 
-	public void operatorControl() {
+	public void riceOperate() {
 		if (xBoxLeftBump) {
 			robot.air.armsExtend();
 		}
@@ -167,11 +190,11 @@ public class Controllers {
 		}
 		
 		if (deadZone(xBoxLeftY) != 0 && deadZone(xBoxRightY) == 0) {
-			robot.elevate.doubleVicsElevator(xBoxLeftY * .60);
+			robot.elevator.doubleVicsElevator(xBoxLeftY * .60);
 		} else if (deadZone(xBoxRightY) != 0 && deadZone(xBoxLeftY) == 0) {
-			robot.elevate.doubleVicsElevator(xBoxRightY * .30);
+			robot.elevator.doubleVicsElevator(xBoxRightY * .30);
 		} else {
-			robot.elevate.doubleVicsElevator(0);
+			robot.elevator.doubleVicsElevator(0);
 		}
 
 	}

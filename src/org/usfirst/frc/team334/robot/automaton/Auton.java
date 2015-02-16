@@ -26,7 +26,7 @@ public class Auton {
     public boolean pickUpTote() {
 
     	switch(pickup) {
-	    	case 1: elevatorUnlockA = robot.elevate.elevatorRelease();
+	    	case 1: elevatorUnlockA = robot.elevator.elevatorRelease();
 					nextStep(pickup, elevatorUnlockA);
 					break;
 			
@@ -34,7 +34,7 @@ public class Auton {
 					nextStep(pickup, flippersInA);
 					break;
     	
-	    	case 3: elevatorZeroA = robot.elevate.elevatorHeight(levelZero);
+	    	case 3: elevatorZeroA = robot.elevator.elevatorHeight(levelZero);
 					nextStep(pickup, elevatorZeroA);
 					break;
 			
@@ -42,11 +42,11 @@ public class Auton {
 		    		nextStep(pickup, flippersOutA);
 		    		break;
     		
-    		case 5: elevatorToteLvl = robot.elevate.elevatorHeight(levelOne);
+    		case 5: elevatorToteLvl = robot.elevator.elevatorHeight(levelOne);
 		    		nextStep(pickup, elevatorToteLvl);
 		    		break;
 		    		
-    		case 6: elevatorLockA = robot.elevate.elevatorLock();
+    		case 6: elevatorLockA = robot.elevator.elevatorLock();
 		    		nextStep(pickup, elevatorLockA);
 		    		break;
 	
@@ -70,11 +70,11 @@ public class Auton {
     public boolean putDownStack() {
 
     	switch(putdown) {
-	    	case 1: elevatorUnlockB = robot.elevate.elevatorRelease();
+	    	case 1: elevatorUnlockB = robot.elevator.elevatorRelease();
 					nextStep(putdown, elevatorUnlockB);
 					break;
 					
-	    	case 2: elevatorZeroB = robot.elevate.elevatorHeight(levelZero);
+	    	case 2: elevatorZeroB = robot.elevator.elevatorHeight(levelZero);
 					nextStep(putdown, elevatorZeroB);
 					break;
 			

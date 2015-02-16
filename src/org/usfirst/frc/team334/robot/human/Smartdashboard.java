@@ -37,7 +37,7 @@ public class Smartdashboard {
         SmartDashboard.putNumber("Gyroscope", robot.turn.gyro.getAngle());
         
         SmartDashboard.putBoolean("At full pressure?", robot.air.compress.getPressureSwitchValue());
-        SmartDashboard.putBoolean("Elevator brake engaged?", robot.elevate.locked);
+        SmartDashboard.putBoolean("Elevator brake engaged?", robot.elevator.locked);
     }
     
     public void getPrefs() {
