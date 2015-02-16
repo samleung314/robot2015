@@ -43,29 +43,11 @@ public class Elevator {
 		return true;
 	}
 
-	public boolean elevatorBreak() { // Locks the elevator in place and stops elevator motors
+	public boolean elevatorLock() { // Locks the elevator in place and stops elevator motors
 		locked = true;
 		elevatorVics.set(0);
 		robot.air.dogLock();
 		return true;
-	}
-
-	public void elevatorUp() {
-		if (robot.pot.elevatorPot.get() < desiredpot && robot.pot.elevatorPot.get() < maxpot
-				&& !locked) {
-			manualVicsElevator(0.35);
-		} else {
-			manualVicsElevator(0);
-		}
-	}
-
-	public void elevatorDown() { // Makes Elevator go down
-		if (robot.pot.elevatorPot.get() > desiredpot && robot.pot.elevatorPot.get() > minpot
-				&& !locked) {
-			manualVicsElevator(-0.35);
-		} else {
-			manualVicsElevator(0);
-		}
 	}
 	
 	public boolean topOut() { //Returns true if either left/right limit switch pressed
@@ -102,24 +84,6 @@ public class Elevator {
         } else {
             elevatorVics.set(0);
         }
-    }
-    
-    public void manualVicsElevator(double speed) {
-		if (!locked) {
-			if (!topOut() && speed >= 0) {
-				elevatorVicA.set(speed);
-				elevatorVicB.set(speed);
-			} else if (!bottomOut() && speed <= 0) {
-				elevatorVicA.set(speed);
-				elevatorVicB.set(speed);
-			} else {
-				elevatorVicA.set(0);
-				elevatorVicB.set(0);
-			}
-		} else {
-			elevatorVicA.set(0);
-			elevatorVicB.set(0);
-		}
     }
     
     public void noSafety(double speed) { //USE ONLY FOR TESTING. ENSURE IT'S SAFE

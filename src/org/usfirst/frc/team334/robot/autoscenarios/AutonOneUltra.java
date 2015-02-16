@@ -60,7 +60,7 @@ public class AutonOneUltra extends Command {
     				currentStep = "Lifting container";
     				break;
     				
-    		case 3: elevatorBrakeA = robot.elevate.elevatorBreak();
+    		case 3: elevatorBrakeA = robot.elevate.elevatorLock();
     				nextStep(elevatorBrakeA);
     				currentStep = "Braking the elevator";
     				break;

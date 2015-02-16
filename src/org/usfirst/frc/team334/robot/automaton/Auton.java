@@ -6,61 +6,102 @@ public class Auton {
 
     Robot robot;
 
-    public boolean seg1 = false, 
-    		seg2 = false, 
-    		seg3 = false, 
-    		seg4 = false, 
-    		turn1 = false, 
-    		turn2 = false, 
-    		turn3 = false, 
-    		turn4 = false;
+    private boolean pickupDone, elevatorUnlockA, flippersInA, elevatorZeroA, flippersOutA, elevatorToteLvl, elevatorLockA,
+    			    putdownDone, elevatorUnlockB, elevatorZeroB, flippersOutB;
     
-    public String currentState;
-
+    private int pickup, putdown;
+    
+    private double levelZero = 0, levelOne = 0;
+    
     public Auton(Robot robot) {
         this.robot = robot;
+        
+        pickup = 1;
+        pickupDone = flippersInA = elevatorZeroA = flippersOutA = elevatorToteLvl = false;
+        
+        putdown = 1;
+        putdownDone = elevatorUnlockB = elevatorZeroB = flippersOutB = false;
     }
 
-    public void squareSequence(double speed) { //Makes the robot drive in a 38x38 square at a specified speed
-        if (!seg1) {
-            seg1 = robot.straight.travelDistance(38, speed);
-            currentState = "FIRST of 4 segments";
-        }
+    public boolean pickUpTote() {
 
-        if ((seg1) && (!turn1)) {
-            turn1 = robot.turn.turnDegrees(90, 0.5);
-            currentState = "FIRST of 4 turns";
-        }
-
-        if ((turn1) && (!seg2)) {
-            seg2 = robot.straight.travelDistance(38, speed);
-            currentState = "SECOND of 4 segments";
-        }
-
-        if ((seg2) && (!turn2)) {
-            turn2 = robot.turn.turnDegrees(90, 0.5);
-            currentState = "SECOND of 4 turns";
-        }
-
-        if ((turn2) && (!seg3)) {
-            seg3 = robot.straight.travelDistance(38, speed);
-            currentState = "THIRD of 4 segments";
-        }
-
-        if ((seg3) && (!turn3)) {
-            turn3 = robot.turn.turnDegrees(90, 0.5);
-            currentState = "THIRD of 4 turns";
-        }
-
-        if ((turn3) && (!seg4)) {
-            seg4 = robot.straight.travelDistance(38, speed);
-            currentState = "LAST of 4 segments";
-        }
-
-        if ((seg4) && (!turn4)) {
-            turn4 = robot.turn.turnDegrees(90, 0.5);
-            currentState = "LAST of 4 turns";
-        }
+    	switch(pickup) {
+	    	case 1: elevatorUnlockA = robot.elevate.elevatorRelease();
+					nextStep(pickup, elevatorUnlockA);
+					break;
+			
+	    	case 2: flippersInA = robot.air.flippersIn();
+					nextStep(pickup, flippersInA);
+					break;
+    	
+	    	case 3: elevatorZeroA = robot.elevate.elevatorHeight(levelZero);
+					nextStep(pickup, elevatorZeroA);
+					break;
+			
+    		case 4: flippersOutA = robot.air.flippersOut();
+		    		nextStep(pickup, flippersOutA);
+		    		break;
+    		
+    		case 5: elevatorToteLvl = robot.elevate.elevatorHeight(levelOne);
+		    		nextStep(pickup, elevatorToteLvl);
+		    		break;
+		    		
+    		case 6: elevatorLockA = robot.elevate.elevatorLock();
+		    		nextStep(pickup, elevatorLockA);
+		    		break;
+	
+    		case 7: pickupDone = true;
+    				break;
+    		
+    		default: System.out.println("Elevator Pickup Defaulting");
+    				 break;
+    	}
+    	
+    	//Resets method for reuse
+    	if(pickupDone) {
+    		pickupDone = elevatorUnlockA = flippersInA = elevatorZeroA = flippersOutA = elevatorToteLvl = elevatorLockA = false;
+    		pickup = 1;
+    		return true;
+    	}
+    	
+    	return false;
     }
+    
+    public boolean putDownStack() {
 
+    	switch(putdown) {
+	    	case 1: elevatorUnlockB = robot.elevate.elevatorRelease();
+					nextStep(putdown, elevatorUnlockB);
+					break;
+					
+	    	case 2: elevatorZeroB = robot.elevate.elevatorHeight(levelZero);
+					nextStep(putdown, elevatorZeroB);
+					break;
+			
+	    	case 3: flippersOutB = robot.air.flippersOut();
+		    		nextStep(putdown, flippersOutB);
+		    		break;
+    		
+	    	case 4: putdownDone = true;
+	    			break;
+    		
+    		default: System.out.println("Elevator Put Down Defaulting");
+    				 break;
+    	}
+    	
+    	//Resets method for reuse
+    	if(putdownDone) {
+    		putdownDone = elevatorUnlockB = elevatorZeroB = flippersOutB = false;
+    		putdown = 1;
+    		return true;
+    	}
+    	
+    	return false;
+    }
+    
+    public void nextStep(int step, boolean action) {
+    	if (action) {
+    		step++;
+    	}
+    }
 }

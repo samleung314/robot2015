@@ -53,21 +53,9 @@ public class Controllers {
 		rightTrigger = rightJoy.getTrigger();
 	}
 
-	// Driving with the xBox controller
-	public void xBoxDrive() {
-		robot.drive.chasisDrive.tankDrive(-xBoxLeftY, -xBoxRightY);
-	}
-
 	// Driving with the joystick controllers
 	public void joystickDrive() {
 		robot.drive.chasisDrive.tankDrive(leftJoyY, rightJoyY);
-	}
-	
-	public void testArms() {
-		if(xBoxA) robot.air.flippersOut();
-		else if(xBoxB) robot.air.flippersIn();
-		else if(xBoxX) robot.air.armsExtend();
-		else if(xBoxY) robot.air.armsRetract();
 	}
 
 	public void forestDrive() {
@@ -107,17 +95,16 @@ public class Controllers {
 	public void controlElevator() {
 		robot.elevate.doubleVicsElevator(-xBoxLeftY);
 
-		// Controlling dog gear with xBox buttons
-		if (xBoxLeftBump) {
-			robot.elevate.elevatorRelease();
-		}
-		else if (xBoxRightBump) {
-			robot.elevate.elevatorBreak();
-		}
+		if (xBoxLeftBump) robot.elevate.elevatorRelease();
+		else if (xBoxRightBump) robot.elevate.elevatorLock();
+		else if(xBoxA) robot.air.flippersIn();
+		else if(xBoxB) robot.air.flippersOut();
+		else if(xBoxX) robot.air.armsRetract();
+		else if(xBoxY) robot.air.armsExtend();
 	}
 
 	public double deadZone(double input) {
-		if (input < 0.1 || input > -0.1) {
+		if (input < 0.15 || input > -0.15) {
 			return 0;
 		} else {
 			return input;
@@ -149,6 +136,7 @@ public class Controllers {
 		} else {
 			xBoxAClicked = false;
 		}
+		
 		if (deadZone(xBoxLeftY) != 0 && deadZone(xBoxRightY) == 0) {
 			robot.elevate.doubleVicsElevator(xBoxLeftY * .60);
 		} else if (deadZone(xBoxRightY) != 0 && deadZone(xBoxLeftY) == 0) {

@@ -88,7 +88,7 @@ public class AutonTwo extends Command {
 				break;
 				
 			case 3:
-				elevatorBrakeA = robot.elevate.elevatorBreak();
+				elevatorBrakeA = robot.elevate.elevatorLock();
 				nextStep(elevatorBrakeA);
 				currentStep = "Braking elevator";
 				break;
@@ -152,7 +152,7 @@ public class AutonTwo extends Command {
 				break;
 				
 			case 14:
-				elevatorBrakeB = robot.elevate.elevatorBreak();
+				elevatorBrakeB = robot.elevate.elevatorLock();
 				nextStep(elevatorBrakeB);
 				currentStep = "Braking elevator";
 				break;
@@ -188,50 +188,6 @@ public class AutonTwo extends Command {
 				System.out.println("Auton Two is defaulting");
 				break;
 		}
-		
-		
-    	/*if(!elevateUpA) {
-    		elevateUpA = robot.elevate.elevatorHeight(liftHeightA);
-    	} 	
-    	if(elevateUpA && !elevatorBrakeA) {
-    		elevatorBrakeA = robot.elevate.elevatorBreak();
-    	}
-    	if(elevatorBrakeA && !backwardA) {
-    		robot.straightRamp.rampStraight(backDistA);
-    	}
-    	if(backwardA && !turnA) {
-    		robot.turn.PIDturnDegrees(turnDegA);
-    	}
-    	if(turnA && !backwardB) {
-    		robot.straightRamp.rampStraight(backDistA);
-    	}
-    	if(backwardB && !elevatorDownA) {
-    		robot.elevate.elevatorHeight(dropHeightA);
-    	}
-    	if(elevatorDownA && !backwardC) {
-    		robot.straightRamp.rampStraight(backDistB);
-    	}
-    	if(backwardC && !turnB) {
-    		
-    	}
-    	if(turnB && !forwardA) {
-    		
-    	}
-    	if(forwardA && !elevatorUpB) {
-    		
-    	}
-    	if(elevatorUpB && !elevatorBrakeB) {
-    		
-    	}
-    	if(elevatorBrakeB && !backwardD) {
-    		
-    	}
-    	if(backwardD && !dropContainer) {
-    		
-    	}
-    	if(dropContainer && !autonDone) {
-    		autonDone = true;
-    	}*/
     }
     
     private void nextStep(boolean action) {

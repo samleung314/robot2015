@@ -89,7 +89,7 @@ public class AutonThree extends Command {
 			break;
 			
 		case 3:
-			elevatorBrakeA = robot.elevate.elevatorBreak();
+			elevatorBrakeA = robot.elevate.elevatorLock();
 			nextStep(elevatorBrakeA);
 			currentStep = "Braking elevator A";
 			break;
@@ -125,7 +125,7 @@ public class AutonThree extends Command {
 			break;
 			
 		case 9:
-			elevatorBrakeB = robot.elevate.elevatorBreak();
+			elevatorBrakeB = robot.elevate.elevatorLock();
 			nextStep(elevatorBrakeB);
 			currentStep = "Braking elevator";
 			break;
@@ -161,7 +161,7 @@ public class AutonThree extends Command {
 			break;
 			
 		case 15:
-			elevatorBrakeC = robot.elevate.elevatorBreak();
+			elevatorBrakeC = robot.elevate.elevatorLock();
 			nextStep(elevatorBrakeC);
 			currentStep = "Braking elevator";
 			break;
@@ -205,49 +205,6 @@ public class AutonThree extends Command {
 			System.out.println("Auton Three is defaulting");
 			break;
     	}
-    	
-    	/*//moving and picking up Totes
-    	if(!travelForwardE) {
-    		travelForwardE = robot.straightRamp.rampStraight(travelDistanceE);
-    	}
-    	if(!liftToteA && travelForwardE) {
-    		liftToteA = robot.elevate.elevatorHeight(liftHeightA);
-    	}
-    	if(!travelForwardA && liftToteA) {
-    		travelForwardA = robot.straightRamp.rampStraight(travelDistanceA);   //not engaging elevator clamp
-    	}
-    	if(!liftToteB && travelForwardA) {
-    		liftToteB = robot.elevate.elevatorHeight(liftHeightB);
-    	}
-    	if(!travelForwardB && liftToteB) {
-    		travelForwardB = robot.straightRamp.rampStraight(travelDistanceB);
-    	}
-    	if(!liftToteC && travelForwardB) {
-    		liftToteC = robot.elevate.elevatorHeight(liftHeightC);
-    	}
-    	
-    	if(!turnNinety && liftToteC)
-    	{
-    		robot.turn.PIDturnDegrees(turnDegreesA);
-    	}
-    	
-    	if(!travelForwardC && turnNinety)
-    	{
-    		
-    	}
-    	
-    	if(liftTote && !elevatorBrake) {
-    		elevatorBrake = robot.elevate.elevatorBreak();
-    	}
-    	if (elevatorBrake && !turnNinety) {
-    		robot.turn.PIDturnDegrees(turnDegrees);
-    	}
-    	if(turnNinety && !travelForward) {
-    		travelForward = robot.straightRamp.rampStraight(travelDistance);
-    	}
-    	if(travelForward) {
-    		autonDone = true;
-    		*/
     }
     
     private void nextStep(boolean action) {

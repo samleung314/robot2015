@@ -124,19 +124,12 @@ public class Robot extends IterativeRobot {
 		air.chargeAir();
 		
 		control.getControllers();
-		control.testArms();
 		control.controlElevator();
 		//elevate.noSafety(0.5*control.xBoxLeftY); // Use only for testing
 		control.joystickDrive();
 		// control.testSolenoids();
 
 		// air.cycleThrough();
-		
-		SmartDashboard.putBoolean("Locked", elevate.locked);
-		SmartDashboard.putBoolean("Top Out", elevate.topOut());
-		SmartDashboard.putBoolean("Bottom Out", elevate.bottomOut());
-		SmartDashboard.putNumber("Pot", pot.elevatorPot.get());
-		SmartDashboard.putNumber("Elevator Height", pot.getLevel());
 
 		smart.displaySensors();
 	}

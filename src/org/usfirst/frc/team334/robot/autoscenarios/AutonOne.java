@@ -60,7 +60,7 @@ public class AutonOne extends Command {
     				currentStep = "Lifting container";
     				break;
     				
-    		case 3: elevatorBrakeA = robot.elevate.elevatorBreak();
+    		case 3: elevatorBrakeA = robot.elevate.elevatorLock();
     				nextStep(elevatorBrakeA);
     				currentStep = "Braking the elevator";
     				break;
@@ -91,22 +91,6 @@ public class AutonOne extends Command {
 			default: System.out.println("Auton One is defaulting");
 					break;
     	}
-    	
-    	/*if(!elevatorUpA) {
-		elevatorUpA = robot.elevate.elevatorHeight(liftHeight);
-		}
-		if(elevatorUpA && !elevatorBrakeA) {
-			elevatorBrakeA = robot.elevate.elevatorBreak();
-		}
-		if (elevatorBrakeA && !turnA) {
-			robot.turn.PIDturnDegrees(turnDegrees);
-		}
-		if(turnA && !forwardA) {
-			forwardA = robot.straightRamp.rampStraight(travelDistance);
-		}
-		if(forwardA) {
-			autonDone = true;
-		}*/
     }
     
     private void nextStep(boolean action) {
