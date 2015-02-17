@@ -31,7 +31,6 @@ public class Robot extends IterativeRobot {
 	public AutonTwoContainer twoContainer;
 	public AutonThreeTote threeTotes;
 	public AutonThreeToteUltra threeTotesUltra;
-	public AutonTest autonTest;
 
 	public Command autoCommand;
 	public SendableChooser autoChoose;
@@ -58,7 +57,6 @@ public class Robot extends IterativeRobot {
 		twoContainer = new AutonTwoContainer(this);
 		threeTotes = new AutonThreeTote(this);
 		threeTotesUltra = new AutonThreeToteUltra(this);
-		autonTest = new AutonTest(this);
 
 		/* Sendable Chooser Setup */
 
@@ -69,7 +67,6 @@ public class Robot extends IterativeRobot {
 		autoChoose.addObject("TWO Containers", twoContainer);
 		autoChoose.addObject("THREE Totes", threeTotes);
 		autoChoose.addObject("THREE Totes ULTRA", threeTotesUltra);
-		autoChoose.addObject("TESTING", autonTest);
 		SmartDashboard.putData("Choose Auton Mode", autoChoose);
 	}
 
