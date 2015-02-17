@@ -83,38 +83,30 @@ public class AutonOneTote extends Command {
 					nextStep(elevatorUpA);
 					currentStep = "Lifting container A";
 					break;
-    				
-    		case 5: elevatorBrakeA = robot.elevator.elevatorLock();
-    				nextStep(elevatorBrakeA);
-    				currentStep = "Braking the elevator A";
-    				break;
+    			
     	/*---------------------------------Move to autozone--------------------------------*/ 
-    		case 6: turnA = robot.turn.PIDturnDegrees(turnDegA);
+    		case 5: turnA = robot.turn.PIDturnDegrees(turnDegA);
 					nextStep(turnA);
 					currentStep = "Turning 90 degrees A";
 					break;
 					
-    		case 7: forwardA = robot.straightDist.driveDistance(forwardDistA);
+    		case 6: forwardA = robot.straightDist.driveDistance(forwardDistA);
 					nextStep(forwardA);
 					currentStep = "Moving to the landmark";
 					break;
 		/*---------------------------------Dropping down tote--------------------------------*/ 		
-    		case 8: elevatorUnlockA = robot.elevator.elevatorAutoRelease();
-					nextStep(elevatorUnlockA);
-					currentStep = "Unlocking the elevator A";
-					break;
 			
-    		case 9: elevatorDownA = robot.pot.elevatePID(liftZero);
+    		case 7: elevatorDownA = robot.pot.elevatePID(liftZero);
     				nextStep(elevatorDownA);
     				currentStep = "Dropping container";
     				break;
     				
-    		case 10: flippersAutoReleaseB = robot.air.flippersAutoRelease();
+    		case 8: flippersAutoReleaseB = robot.air.flippersAutoRelease();
 					nextStep(flippersAutoReleaseB);
 					currentStep = "Flippers release B";
 					break;
 					
-    		case 11: autonDone = true;
+    		case 9: autonDone = true;
 					 break;	
 					
 			default: System.out.println("Auton One is defaulting");

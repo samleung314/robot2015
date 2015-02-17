@@ -49,7 +49,7 @@ public class AutonOneUltra extends Command {
     	System.out.println("------------> " + currentStep);
     	
     	switch (step) {
-    	    case 1: ultraForward = robot.ultrasonic.UltraRampAuto(startRamp,tolerance);
+    	    case 1: ultraForward = robot.ultrasonic.UltraRampAuto(tolerance);
     	    	    nextStep(ultraForward);
     	    	    currentStep = "Moving to Container";
     	    	    break;

@@ -103,8 +103,8 @@ public class AutonTwoContainer extends Command {
 			break;
 
 		case 5:
-			elevatorBrakeA = robot.elevator.elevatorLock();
-			nextStep(elevatorBrakeA);
+			//elevatorBrakeA = robot.elevator.elevatorLock();
+			nextStep(true);
 			currentStep = "Braking elevator";
 			break;
 
@@ -122,8 +122,8 @@ public class AutonTwoContainer extends Command {
 			break;
 
 		case 8:
-			elevatorUnlockA = robot.elevator.elevatorAutoRelease();
-			nextStep(elevatorUnlockA);
+			//elevatorUnlockA = robot.elevator.elevatorAutoRelease();
+			nextStep(true);
 			currentStep = "Releasing elevator A";
 			break;
 
@@ -171,8 +171,8 @@ public class AutonTwoContainer extends Command {
 			break;
 
 		case 16:
-			elevatorBrakeB = robot.elevator.elevatorLock();
-			nextStep(elevatorBrakeB);
+			//elevatorBrakeB = robot.elevator.elevatorLock();
+			nextStep(true);
 			currentStep = "Braking elevator";
 			break;
 
@@ -184,8 +184,8 @@ public class AutonTwoContainer extends Command {
 			break;
 
 		case 18:
-			elevatorUnlockB = robot.elevator.elevatorAutoRelease();
-			nextStep(elevatorUnlockB);
+			//elevatorUnlockB = robot.elevator.elevatorAutoRelease();
+			nextStep(true);
 			currentStep = "Unlocking elevator B";
 			break;
 

@@ -16,7 +16,7 @@ public class Controllers {
 
 	/* xBox Controller Inputs */
 	// Pushing up returns negative values, pulling returns positive values
-	public double xBoxLeftY, xBoxRightY;
+	public double xBoxLeftY, xBoxRightY, xBoxLeftTrigger, xBoxRightTrigger;
 	boolean xBoxA, xBoxB, xBoxX, xBoxY, xBoxLeftBump, xBoxRightBump, rightJoyFour, rightJoyFive,
 			press;
 
@@ -25,7 +25,7 @@ public class Controllers {
 	/* Joystick Controllers Input */
 	// Pushing up returns negative values, pulling returns positive values
 	double leftJoyY, rightJoyY;
-	boolean leftTrigger, rightTrigger, xBoxYClicked = false,
+	boolean leftTrigger, rightTrigger, leftJoyThree, rightJoyThree, xBoxYClicked = false,
 			xBoxAClicked = false;
 
 	private double mult;
@@ -48,12 +48,17 @@ public class Controllers {
 		xBoxY = xBox.getRawButton(4);
 		xBoxLeftBump = xBox.getRawButton(5);
 		xBoxRightBump = xBox.getRawButton(6);
+		xBoxLeftTrigger = xBox.getRawAxis(2);
+		xBoxRightTrigger = xBox.getRawAxis(2);
 		
 
 		// Joysticks
 		leftJoyY = leftJoy.getY();
-		rightJoyY = rightJoy.getY();
 		leftTrigger = leftJoy.getTrigger();
+		leftJoyThree = leftJoy.getRawButton(3);
+		
+		rightJoyY = rightJoy.getY();
+		rightJoyThree = rightJoy.getRawButton(3);
 		rightJoyFour = rightJoy.getRawButton(4);
 		rightJoyFive = rightJoy.getRawButton(5);
 		rightTrigger = rightJoy.getTrigger();
@@ -84,24 +89,7 @@ public class Controllers {
 	public void joystickDrive() {
 		robot.drive.chasisDrive.tankDrive(-Constants.driveMuliplier * leftJoyY, -Constants.driveMuliplier * rightJoyY);
 	}
-
-	public void ultraSonicDrive(double tolerance) {
-		
-		mult = robot.ultrasonic.UltraRampTele(tolerance);
-		
-		if (!leftTrigger && !rightTrigger) {
-			
-			robot.drive.chasisDrive.tankDrive(Constants.highGearSpeed
-					* leftJoyY * mult, Constants.highGearSpeed * rightJoyY * mult);
-			
-		} else {
-			
-			robot.drive.chasisDrive.tankDrive(
-					Constants.lowGearSpeed * leftJoyY * mult, Constants.lowGearSpeed
-							* rightJoyY* mult);
-		}
-	}
-	
+	/*
     public void dynamicDrive()
     {
     	if(rightJoyFour) {
@@ -113,7 +101,7 @@ public class Controllers {
     		forestDrive();
     	}
     }
-    
+    */
 	// Used for testing solenoids
 	public void testSolenoids() {
 		if (xBoxA) {
@@ -152,16 +140,57 @@ public class Controllers {
 	}
 	
 	public void forestDrive() {
-		if (!leftTrigger && !rightTrigger) {
-			robot.drive.chasisDrive.tankDrive(Constants.highGearSpeed
-					* leftJoyY, Constants.highGearSpeed * rightJoyY);
-		} else  {
-			robot.drive.chasisDrive.tankDrive(
-					Constants.lowGearSpeed * leftJoyY, Constants.lowGearSpeed
-							* rightJoyY);
+
+		if (rightJoyThree) {
+			ultraSonicDrive(Constants.canTolerance);
+		} else if (leftJoyThree) {
+			ultraSonicDrive(Constants.toteTolerance);
+		} else {
+			if (!leftTrigger && !rightTrigger) {
+				robot.drive.chasisDrive.tankDrive(Constants.highGearSpeed
+						* leftJoyY, Constants.highGearSpeed * rightJoyY);
+			} else {
+				robot.drive.chasisDrive.tankDrive(Constants.lowGearSpeed
+						* leftJoyY, Constants.lowGearSpeed * rightJoyY);
+			}
 		}
+
 	}
 
+	public void ultraSonicDrive(double tolerance) {
+
+		mult = robot.ultrasonic.UltraRampTele(tolerance);
+
+		if (!leftTrigger && !rightTrigger) {
+
+			robot.drive.chasisDrive.tankDrive(Constants.highGearSpeed
+					* leftJoyY * mult, Constants.highGearSpeed * rightJoyY
+					* mult);
+
+		} else {
+
+			robot.drive.chasisDrive.tankDrive(Constants.lowGearSpeed * leftJoyY
+					* mult, Constants.lowGearSpeed * rightJoyY * mult);
+		}
+	}
+/*	
+public void ultraSonicDrive(double tolerance) {
+		
+		mult = robot.ultrasonic.UltraRampTele(tolerance);
+		
+		if (!leftTrigger && !rightTrigger) {
+			
+			robot.drive.chasisDrive.tankDrive(Constants.highGearSpeed
+					* leftJoyY * mult, Constants.highGearSpeed * rightJoyY * mult);
+			
+		} else {
+			
+			robot.drive.chasisDrive.tankDrive(
+					Constants.lowGearSpeed * leftJoyY * mult, Constants.lowGearSpeed
+							* rightJoyY* mult);
+		}
+	}
+*/
 	public void riceOperate() {
 		if (xBoxLeftBump) {
 			robot.air.armsExtend();
@@ -189,11 +218,18 @@ public class Controllers {
 		}
 		
 		if (deadZone(xBoxLeftY) != 0 && deadZone(xBoxRightY) == 0) {
-			robot.elevator.doubleVicsElevator(xBoxLeftY * .60);
+			robot.elevator.doubleVicsElevator(xBoxLeftY);
 		} else if (deadZone(xBoxRightY) != 0 && deadZone(xBoxLeftY) == 0) {
-			robot.elevator.doubleVicsElevator(xBoxRightY * .30);
+			robot.elevator.doubleVicsElevator(xBoxRightY * .50);
 		} else {
 			robot.elevator.doubleVicsElevator(0);
+		}
+		
+		if(xBoxLeftTrigger > 0.9 && xBoxRightTrigger < 0.1) {
+			robot.air.flippersGrip();
+		}
+		else if (xBoxRightTrigger > 0.9 && xBoxLeftTrigger < 0.1) {
+			robot.air.flippersRelease();
 		}
 
 	}

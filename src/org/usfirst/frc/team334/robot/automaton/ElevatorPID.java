@@ -16,7 +16,7 @@ public class ElevatorPID implements PIDSource{
 	public AnalogPotentiometer elevatorPot;
 	public PIDController elevatorPID;
 	
-	double p = 0.3, i = 0.045, d = 0.001;
+	double p = 0.2, i = 0.045, d = 0.001;
 	
 	public ElevatorPID(Robot robot) {
 		this.robot = robot;
@@ -32,10 +32,10 @@ public class ElevatorPID implements PIDSource{
 	}
 	
 	public boolean elevatePID(double height) {
-		elevatorPID.setOutputRange(-0.5, 1);
+		elevatorPID.setOutputRange(-0.5, 0.7);
 		elevatorPID.setSetpoint(height);
 		elevatorPID.enable();
-		Timer.delay(0.7);
+		Timer.delay(0.2); //Lets elevator settle
 		
 		if(elevatorPID.onTarget()) {
 			//elevatorPID.disable();
