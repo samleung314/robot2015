@@ -75,15 +75,15 @@ public class Constants {
     /*ETC*/
     public static final double encoderDistancePerPulse = ((double)9/1088) * Math.PI; //(18/34)*((4*Math.PI)/256);
     
-    public static final double elevatorPotLOWLimit = 0.905;
-    public static final double elevatorPotHIGHLimit = 0.216;
+    public static final double elevatorPotLOWLimit = 0.908;
+    public static final double elevatorPotHIGHLimit = 0.281;
     public static final double elevatorRawLength = elevatorPotLOWLimit - elevatorPotHIGHLimit;
-    public static final double elevatorHeight = 56 + ((double)15/16); //Inches
+    public static final double elevatorHeight = 51 + ((double)3/4); //Inches
     
     public static final double teleopRampDist = 20;
     
-    public static final double distancePIDTolerance = 3; //+- 0.5 inch from target
-    public static final double elevatorPIDTolerance = 0.5; //+- 0.5 inch from target
+    public static final double distancePIDTolerance = 1.5; //+- 0.5 inch from target
+    public static final double elevatorPIDTolerance = 0.7; //+- 0.5 inch from target
     public static final double turnPIDTolerance = 1; //+-1 degree tolerance from target
     public static final double ultraSonicPIDTolerance = .5;
     

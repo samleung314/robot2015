@@ -52,8 +52,8 @@ public class AutonThreeTote extends Command {
 		   liftHeightC = 7, //tote 3 lift
 		   forwardDistA = 80.5, //to second tote
 		   forwardDistB = 80.5, //to last tote
-	       forwardDistC = 141.5, //to dump zone
-		   turnDegreesA = 90;
+	       forwardDistC = 112,//141.5, //to dump zone
+		   turnDegreesA = -90;
 	
 	int step;
 	
@@ -111,8 +111,8 @@ public class AutonThreeTote extends Command {
 			break;
 
 		case 5:
-			elevatorBrakeA = robot.elevator.elevatorLock();
-			nextStep(elevatorBrakeA);
+			//elevatorBrakeA = robot.elevator.elevatorLock();
+			nextStep(true);
 			currentStep = "Brake elevator A";
 			break;
 
@@ -124,8 +124,8 @@ public class AutonThreeTote extends Command {
 			
 		/*---------------------------------Pickup second tote--------------------------------*/ 
 		case 7:
-			elevatorReleaseA = robot.elevator.elevatorAutoRelease();
-			nextStep(elevatorReleaseA);
+			//elevatorReleaseA = robot.elevator.elevatorAutoRelease();
+			nextStep(true);
 			currentStep = "Release elevator A";
 			break;
 			
@@ -154,8 +154,8 @@ public class AutonThreeTote extends Command {
 			break;
 
 		case 12:
-			elevatorBrakeB = robot.elevator.elevatorLock();
-			nextStep(elevatorBrakeB);
+			//elevatorBrakeB = robot.elevator.elevatorLock();
+			nextStep(true);
 			currentStep = "Brake elevator B";
 			break;
 			
@@ -167,8 +167,8 @@ public class AutonThreeTote extends Command {
 			break;
 
 		case 14:
-			elevatorReleaseB = robot.elevator.elevatorAutoRelease();
-			nextStep(elevatorReleaseB);
+			//elevatorReleaseB = robot.elevator.elevatorAutoRelease();
+			nextStep(true);
 			currentStep = "Release elevator B";
 			break;
 			
@@ -197,8 +197,8 @@ public class AutonThreeTote extends Command {
 			break;
 
 		case 19:
-			elevatorBrakeC = robot.elevator.elevatorLock();
-			nextStep(elevatorBrakeC);
+			//elevatorBrakeC = robot.elevator.elevatorLock();
+			nextStep(true);
 			currentStep = "Braking elevator";
 			break;
 			
@@ -217,8 +217,8 @@ public class AutonThreeTote extends Command {
 		
 		/*---------------------------------Drop stack--------------------------------*/ 
 		case 22:
-			elevatorReleaseC = robot.elevator.elevatorAutoRelease();
-			nextStep(elevatorReleaseC);
+			//elevatorReleaseC = robot.elevator.elevatorAutoRelease();
+			nextStep(true);
 			currentStep = "Release elevator C";
 			break;
 

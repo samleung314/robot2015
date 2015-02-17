@@ -6,6 +6,7 @@ import org.usfirst.frc.team334.robot.Constants;
 import edu.wpi.first.wpilibj.AnalogPotentiometer;
 import edu.wpi.first.wpilibj.PIDController;
 import edu.wpi.first.wpilibj.PIDSource;
+import edu.wpi.first.wpilibj.Timer;
 
 public class ElevatorPID implements PIDSource{
 	
@@ -15,7 +16,7 @@ public class ElevatorPID implements PIDSource{
 	public AnalogPotentiometer elevatorPot;
 	public PIDController elevatorPID;
 	
-	double p = 0.4, i = 0.05, d;
+	double p = 0.3, i = 0.045, d = 0.001;
 	
 	public ElevatorPID(Robot robot) {
 		this.robot = robot;
@@ -34,10 +35,11 @@ public class ElevatorPID implements PIDSource{
 		elevatorPID.setOutputRange(-0.5, 1);
 		elevatorPID.setSetpoint(height);
 		elevatorPID.enable();
+		Timer.delay(0.7);
 		
 		if(elevatorPID.onTarget()) {
-			elevatorPID.disable();
-			robot.elevator.elevatorVics.set(0);
+			//elevatorPID.disable();
+			//robot.elevator.elevatorVics.set(0);
 			return true;
 		}
 		else {

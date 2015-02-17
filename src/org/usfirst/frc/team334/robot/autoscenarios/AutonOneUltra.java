@@ -85,22 +85,6 @@ public class AutonOneUltra extends Command {
 			default: System.out.println("Auton One is defaulting");
 					break;
     	}
-    	
-    	/*if(!elevatorUpA) {
-		elevatorUpA = robot.elevate.elevatorHeight(liftHeight);
-		}
-		if(elevatorUpA && !elevatorBrakeA) {
-			elevatorBrakeA = robot.elevate.elevatorBreak();
-		}
-		if (elevatorBrakeA && !turnA) {
-			robot.turn.PIDturnDegrees(turnDegrees);
-		}
-		if(turnA && !forwardA) {
-			forwardA = robot.straightRamp.rampStraight(travelDistance);
-		}
-		if(forwardA) {
-			autonDone = true;
-		}*/
     }
     
     private void nextStep(boolean action) {

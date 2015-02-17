@@ -6,7 +6,6 @@ import org.usfirst.frc.team334.robot.human.*;
 import org.usfirst.frc.team334.robot.subsystems.*;
 
 import edu.wpi.first.wpilibj.IterativeRobot;
-import edu.wpi.first.wpilibj.Timer;
 import edu.wpi.first.wpilibj.command.Command;
 import edu.wpi.first.wpilibj.command.Scheduler;
 import edu.wpi.first.wpilibj.smartdashboard.SendableChooser;
@@ -38,7 +37,7 @@ public class Robot extends IterativeRobot {
 	public Command autoCommand;
 	public SendableChooser autoChoose;
 
-	boolean lifted, clamp;
+	boolean lifted, clamp, once;
 
 	public void robotInit() {
 
@@ -81,7 +80,7 @@ public class Robot extends IterativeRobot {
 		encode.resetEncoders();
 		turn.gyro.reset();
 		
-		lifted = clamp = false;
+		lifted = clamp = once = false;
 
 		Scheduler.getInstance().removeAll(); //Need to clear previously selected commands so only a single command runs
 		autoCommand = (Command) autoChoose.getSelected();
@@ -91,6 +90,7 @@ public class Robot extends IterativeRobot {
 	public void autonomousPeriodic() {
 		Scheduler.getInstance().run();
 		//elevatorTuning();
+		//runOnce();
 		
 		SmartDashboard.putNumber("Elevator Height", pot.getLevel());
 		
@@ -112,7 +112,7 @@ public class Robot extends IterativeRobot {
 		if(!clamp) {
 			clamp = air.flippersAutoGrip();
 		} else if(clamp && !lifted) {
-			lifted = pot.elevatePID(smart.autoHeight);
+			lifted = pot.elevatePID(14);
 		}
 		
 		SmartDashboard.putBoolean("At height?", lifted);
@@ -120,6 +120,12 @@ public class Robot extends IterativeRobot {
 		SmartDashboard.putData("ElevatorPID", pot.elevatorPID);
 		SmartDashboard.putNumber("Elevator Height", pot.getLevel());
 		SmartDashboard.putNumber("Elevator Raw", pot.elevatorPot.get());
+	}
+	
+	public void runOnce() {
+		if(!once) {
+			once = turn.PIDturnDegrees(90);
+		}
 	}
 
 	public void teleopInit() {
@@ -147,6 +153,8 @@ public class Robot extends IterativeRobot {
 		//smart.displaySensors();
 		
 		SmartDashboard.putNumber("Gyro", turn.gyro.getAngle());
+		SmartDashboard.putNumber("Elevator Height", pot.getLevel());
+		SmartDashboard.putNumber("Elevator Raw", pot.elevatorPot.get());
 	}
 
 	public void testInit() {

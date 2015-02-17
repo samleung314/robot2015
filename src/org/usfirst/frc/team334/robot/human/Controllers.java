@@ -112,7 +112,6 @@ public class Controllers {
     	else {
     		forestDrive();
     	}
-    	
     }
     
 	// Used for testing solenoids

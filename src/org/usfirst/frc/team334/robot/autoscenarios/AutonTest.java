@@ -15,7 +15,7 @@ public class AutonTest extends Command {
 	
 	boolean clampA, brakeA, levelOne, unbrakeA, levelZero, autonDone;
 	
-	double height, deg;
+	double height, deg, liftZero;
 	
 	int step;
 	
@@ -30,6 +30,7 @@ public class AutonTest extends Command {
     	
     	height = 14;
     	deg = 90;
+    	liftZero = 0;
     }
 
     // Called repeatedly when this Command is scheduled to run
@@ -37,8 +38,7 @@ public class AutonTest extends Command {
     	SmartDashboard.putString("Mode", "Auto Test");
     	
     	switch(step) {
-	    	case 1: clampA = robot.air.flippersGrip();
-	    			Timer.delay(0.5);
+	    	case 1: clampA = robot.air.flippersAutoGrip();
 	    			nextStep(clampA);
 		    		break;
 		    		
@@ -47,7 +47,7 @@ public class AutonTest extends Command {
 			    	break;
 			    	
 	    	case 3: brakeA = robot.elevator.elevatorLock();
-	    			Timer.delay(0.5);
+	    			Timer.delay(2);
 	    			nextStep(brakeA);
 	    			break;
 	    			
@@ -55,7 +55,7 @@ public class AutonTest extends Command {
 	    			nextStep(unbrakeA);
 	    			break;
 	    			
-	    	case 5: levelZero = robot.pot.elevatePID(0);
+	    	case 5: levelZero = robot.pot.elevatePID(liftZero);
 	    			nextStep(levelZero);
 	    			break;
 	    		
