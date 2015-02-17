@@ -54,7 +54,7 @@ public class AutonOneUltra extends Command {
     	    	    currentStep = "Moving to Container";
     	    	    break;
     	    	    
-    		case 2: elevatorUpA = robot.elevator.elevatorHeight(liftHeightA);
+    		case 2: elevatorUpA = robot.pot.elevatePID(liftHeightA);
     				nextStep(elevatorUpA);
     				currentStep = "Lifting container";
     				break;
@@ -74,7 +74,7 @@ public class AutonOneUltra extends Command {
 					currentStep = "Moving to the landmark";
 					break;
 			
-    		case 6: elevatorDownA = robot.elevator.elevatorHeight(dropHeightA);
+    		case 6: elevatorDownA = robot.pot.elevatePID(dropHeightA);
     				nextStep(elevatorDownA);
     				currentStep = "Dropping container";
     				break;

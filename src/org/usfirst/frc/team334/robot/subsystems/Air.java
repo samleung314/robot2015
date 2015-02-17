@@ -68,12 +68,12 @@ public class Air {
 		return true;
 	}
 	
-	public boolean flippersIn() {
+	public boolean flippersGrip() {
 		solE.set(Value.kForward);
 		return true;
 	}
 	
-	public boolean flippersOut() {
+	public boolean flippersRelease() {
 		solE.set(Value.kReverse);
 		return true;
 	}

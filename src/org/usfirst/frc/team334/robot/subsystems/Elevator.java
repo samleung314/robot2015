@@ -5,6 +5,7 @@ import org.usfirst.frc.team334.robot.DoubleVics;
 import org.usfirst.frc.team334.robot.Robot;
 
 import edu.wpi.first.wpilibj.DigitalInput;
+import edu.wpi.first.wpilibj.Timer;
 import edu.wpi.first.wpilibj.VictorSP;
 
 public class Elevator {
@@ -42,6 +43,16 @@ public class Elevator {
 		robot.air.dogRelease();
 		return true;
 	}
+	
+	public boolean elevatorReleaseAuto() { // Releases the elevator break
+		locked = false;
+		robot.air.dogRelease();
+		Timer.delay(0.4);
+		robot.elevator.elevatorVics.set(1);
+		Timer.delay(0.1);
+		robot.elevator.elevatorVics.set(0);
+		return true;
+	}
 
 	public boolean elevatorLock() { // Locks the elevator in place and stops elevator motors
 		locked = true;
@@ -56,20 +67,6 @@ public class Elevator {
 	
 	public boolean bottomOut() { //Returns true if either left/right limit switch pressed
 		return (!lowSwitchLeft.get() || !lowSwitchRight.get());
-	}
-
-	public boolean elevatorHeight(double height) {
-
-		if (robot.pot.getLevel() < height - 1) {
-			doubleVicsElevator(.35);
-			return false;
-		} else if (robot.pot.getLevel() > height + 1) {
-			doubleVicsElevator(-.35);
-			return false;
-		} else {
-			doubleVicsElevator(0);
-			return true;
-		}
 	}
 
     public void doubleVicsElevator(double speed) {

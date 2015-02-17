@@ -13,8 +13,8 @@ public class TurnPID implements PIDOutput {
     
     public Gyro gyro;
 
-    public PIDController turnPID, doubleTurnPIDA, doubleTurnPIDB;
-    double tP, tI, tD, dtP, dtI, dtD, turnOutput;
+    public PIDController turnPID;
+    public double tP = 0.1, tI = 0.006, tD = 0.27, turnOutput;
 
     public TurnPID(Robot robot) {
         this.robot = robot;
@@ -24,17 +24,7 @@ public class TurnPID implements PIDOutput {
         turnPID = new PIDController(tP, tI, tD, gyro, this);
         turnPID.setInputRange(-360, 360);
         turnPID.setContinuous();
-        turnPID.setOutputRange(-0.5, 0.5);
         turnPID.setAbsoluteTolerance(Constants.turnPIDTolerance);
-        
-        /*Experimental*/
-        doubleTurnPIDA = new PIDController(dtP, dtI, dtD, gyro, robot.drive.leftVics);
-        doubleTurnPIDA.setContinuous();
-        doubleTurnPIDA.setOutputRange(-0.5, 0.5);
-        
-        doubleTurnPIDB = new PIDController(dtP, dtI, dtD, gyro, robot.drive.rightVics);
-        doubleTurnPIDB.setContinuous();
-        doubleTurnPIDB.setOutputRange(-0.5, 0.5);
     }
 
     public boolean turnDegrees(double degrees, double turnSpeed) { //Method for making robot turn a number of degrees at a turnSpeed
@@ -94,15 +84,6 @@ public class TurnPID implements PIDOutput {
         else {
         	return false;
         }
-    }
-    
-    /*Experimental*/
-    public void doublePIDturnDegrees(double degrees) { //Method for making robot turn a number of degrees using two PID controllers
-        doubleTurnPIDA.setSetpoint(degrees);
-        doubleTurnPIDB.setSetpoint(degrees);
-
-        doubleTurnPIDA.enable();
-        doubleTurnPIDB.enable();
     }
     
     @Override //Returns output speed for robot to turn at

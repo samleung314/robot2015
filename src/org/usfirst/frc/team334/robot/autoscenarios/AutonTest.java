@@ -2,6 +2,7 @@ package org.usfirst.frc.team334.robot.autoscenarios;
 
 import org.usfirst.frc.team334.robot.Robot;
 
+import edu.wpi.first.wpilibj.Timer;
 import edu.wpi.first.wpilibj.command.Command;
 import edu.wpi.first.wpilibj.smartdashboard.SmartDashboard;
 
@@ -12,9 +13,9 @@ public class AutonTest extends Command {
 
 	Robot robot;
 	
-	boolean distA, turnA, autonDone;
+	boolean clampA, brakeA, levelOne, unbrakeA, levelZero, autonDone;
 	
-	double dist, deg;
+	double height, deg;
 	
 	int step;
 	
@@ -25,9 +26,9 @@ public class AutonTest extends Command {
     // Called just before this Command runs the first time
     protected void initialize() {
     	step = 1;
-    	autonDone = false;
+    	autonDone = clampA = unbrakeA =  false;
     	
-    	dist = 24;
+    	height = 14;
     	deg = 90;
     }
 
@@ -36,15 +37,29 @@ public class AutonTest extends Command {
     	SmartDashboard.putString("Mode", "Auto Test");
     	
     	switch(step) {
-	    	case 1: distA = robot.straightDist.driveDistance(dist);
-	    			nextStep(distA);
+	    	case 1: clampA = robot.air.flippersGrip();
+	    			Timer.delay(0.5);
+	    			nextStep(clampA);
 		    		break;
 		    		
-	    	case 2: turnA = robot.turn.PIDturnDegrees(deg);
-					nextStep(turnA);
-		    		break;
-		    		
-	    	case 3: autonDone = true;
+	    	case 2: levelOne = robot.pot.elevatePID(height);
+			    	nextStep(levelOne);
+			    	break;
+			    	
+	    	case 3: brakeA = robot.elevator.elevatorLock();
+	    			Timer.delay(0.5);
+	    			nextStep(brakeA);
+	    			break;
+	    			
+	    	case 4: unbrakeA = robot.elevator.elevatorReleaseAuto();
+	    			nextStep(unbrakeA);
+	    			break;
+	    			
+	    	case 5: levelZero = robot.pot.elevatePID(0);
+	    			nextStep(levelZero);
+	    			break;
+	    		
+	    	case 6: autonDone = true;
 	    			break;
 	    			
 			default: System.out.println("Test Auton is defaulting");

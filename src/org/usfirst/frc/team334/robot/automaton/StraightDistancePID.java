@@ -34,20 +34,23 @@ public class StraightDistancePID implements PIDOutput {
 	}
 
 	public boolean driveDistance(double distance) {
-		robot.distance.rampPID.setSetpoint(distance);
+		robot.distance.distancePID.setSetpoint(distance);
 		keepStraightPID.enable();
-		robot.distance.rampPID.enable();
+		robot.distance.distancePID.enable();
 
 		double leftOutput = robot.distance.rampSpeed + straightSpeed;
 		double rightOutput = robot.distance.rampSpeed - straightSpeed;
 
 		robot.drive.doubleVicsDrive(leftOutput, rightOutput);
 
-		if (robot.distance.rampPID.onTarget()) { // Returns true when robot is
+		if (robot.distance.distancePID.onTarget()) { // Returns true when robot is
 													// within tolerance
-			robot.distance.rampPID.disable();
+			robot.distance.distancePID.disable();
+			keepStraightPID.disable();
 			robot.drive.doubleVicsDrive(0, 0);
 			robot.encode.resetEncoders();
+			robot.turn.gyro.reset();
+			
 			return true;
 		}
 		return false;

@@ -17,7 +17,7 @@ public class Constants {
 	public static final int leftJoystick = 1;
 	public static final int rightJoystick = 2;
 	
-	public static final double driveMuliplier = 0.55;
+	public static final double driveMuliplier = 1;
 	public static final double highGearSpeed = 0.65;
 	public static final double lowGearSpeed = 0.45;
 	
@@ -85,7 +85,7 @@ public class Constants {
     
     public static final double teleopRampDist = 20;
     
-    public static final double distancePIDTolerance = 0.5; //+- 0.5 inch from target
+    public static final double distancePIDTolerance = 3; //+- 0.5 inch from target
     public static final double elevatorPIDTolerance = 0.5; //+- 0.5 inch from target
     public static final double turnPIDTolerance = 1; //+-1 degree tolerance from target
     public static final double ultraSonicPIDTolerance = .5;

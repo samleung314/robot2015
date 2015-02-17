@@ -1,24 +1,12 @@
 package org.usfirst.frc.team334.robot;
 
-import org.usfirst.frc.team334.robot.automaton.Auton;
-import org.usfirst.frc.team334.robot.automaton.DistancePID;
-import org.usfirst.frc.team334.robot.automaton.ElevatorPID;
-import org.usfirst.frc.team334.robot.automaton.StraightDistancePID;
-import org.usfirst.frc.team334.robot.automaton.StraightPID;
-import org.usfirst.frc.team334.robot.automaton.TurnPID;
-import org.usfirst.frc.team334.robot.automaton.UltrasonicPID;
-import org.usfirst.frc.team334.robot.autoscenarios.AutonOne;
-import org.usfirst.frc.team334.robot.autoscenarios.AutonTest;
-import org.usfirst.frc.team334.robot.autoscenarios.AutonThree;
-import org.usfirst.frc.team334.robot.autoscenarios.AutonTwo;
-import org.usfirst.frc.team334.robot.human.Controllers;
-import org.usfirst.frc.team334.robot.human.Smartdashboard;
-import org.usfirst.frc.team334.robot.subsystems.Air;
-import org.usfirst.frc.team334.robot.subsystems.Drivetrain;
-import org.usfirst.frc.team334.robot.subsystems.Elevator;
-import org.usfirst.frc.team334.robot.subsystems.Encoders;
+import org.usfirst.frc.team334.robot.automaton.*;
+import org.usfirst.frc.team334.robot.autoscenarios.*;
+import org.usfirst.frc.team334.robot.human.*;
+import org.usfirst.frc.team334.robot.subsystems.*;
 
 import edu.wpi.first.wpilibj.IterativeRobot;
+import edu.wpi.first.wpilibj.Timer;
 import edu.wpi.first.wpilibj.command.Command;
 import edu.wpi.first.wpilibj.command.Scheduler;
 import edu.wpi.first.wpilibj.smartdashboard.SendableChooser;
@@ -42,7 +30,8 @@ public class Robot extends IterativeRobot {
 	public UltrasonicPID ultrasonic;
 	public Smartdashboard smart;
 
-	public AutonOne oneContainer;
+	public AutonOneTote oneTote;
+	public AutonOneContainer oneContainer;
 	public AutonTwo twoContainer;
 	public AutonThree threeTotes;
 	public AutonTest autonTest;
@@ -50,7 +39,7 @@ public class Robot extends IterativeRobot {
 	public Command autoCommand;
 	public SendableChooser autoChoose;
 
-	boolean testStraight, testTurn;
+	boolean lifted, clamp;
 
 	public void robotInit() {
 
@@ -69,7 +58,8 @@ public class Robot extends IterativeRobot {
 		pot = new ElevatorPID(this);
 		smart = new Smartdashboard(this);
 
-		oneContainer = new AutonOne(this);
+		oneTote = new AutonOneTote(this);
+		oneContainer = new AutonOneContainer(this);
 		twoContainer = new AutonTwo(this);
 		threeTotes = new AutonThree(this);
 		autonTest = new AutonTest(this);
@@ -78,20 +68,22 @@ public class Robot extends IterativeRobot {
 
 		// Add objects to the SendableChooser for autonomous
 		autoChoose = new SendableChooser();
-		autoChoose.addDefault("ONE Container", oneContainer);
+		autoChoose.addDefault("ONE Tote", oneTote);
+		autoChoose.addObject("ONE Container", oneContainer);
 		autoChoose.addObject("TWO Containers", twoContainer);
 		autoChoose.addObject("THREE Totes", threeTotes);
 		autoChoose.addObject("TESTING", autonTest);
 		SmartDashboard.putData("Choose Auton Mode", autoChoose);
-
 	}
 
 	public void autonomousInit() {
 		elevator.elevatorRelease(); // Elevator starts unlocked
+		air.flippersRelease(); //Flippers start ungripping
 		smart.getPrefs();
 		encode.resetEncoders();
 		turn.gyro.reset();
-		air.compress.stop();
+		
+		lifted = clamp = false;
 
 		Scheduler.getInstance().removeAll(); //Need to clear previously selected commands so only a single command runs
 		autoCommand = (Command) autoChoose.getSelected();
@@ -99,11 +91,38 @@ public class Robot extends IterativeRobot {
 	}
 
 	public void autonomousPeriodic() {
-		//Scheduler.getInstance().run();
+		Scheduler.getInstance().run();
+		//elevatorTuning();
 		
-		SmartDashboard.putNumber("Pot", pot.elevatorPot.get());
 		SmartDashboard.putNumber("Elevator Height", pot.getLevel());
+		
+		SmartDashboard.putNumber("Turn Output", turn.turnOutput);
+		
+		SmartDashboard.putNumber("Gyro", turn.gyro.getAngle());
+		
+		SmartDashboard.putNumber("Distance", encode.averageDist());
+		
+		SmartDashboard.putData("DistancePID", distance.distancePID);
+		SmartDashboard.putData("StraightPID", straightDist.keepStraightPID);
+		
 		SmartDashboard.putData("ElevatorPID", pot.elevatorPID);
+		SmartDashboard.putData("TurnPID", turn.turnPID);
+		
+	}
+	
+	public void elevatorTuning() {
+		if(!clamp) {
+			clamp = air.flippersGrip();
+			Timer.delay(0.5);
+		} else if(clamp && !lifted) {
+			lifted = pot.elevatePID(smart.autoHeight);
+		}
+		
+		SmartDashboard.putBoolean("At height?", lifted);
+		
+		SmartDashboard.putData("ElevatorPID", pot.elevatorPID);
+		SmartDashboard.putNumber("Elevator Height", pot.getLevel());
+		SmartDashboard.putNumber("Elevator Raw", pot.elevatorPot.get());
 	}
 
 	public void teleopInit() {
@@ -113,10 +132,11 @@ public class Robot extends IterativeRobot {
 		
 		/*Disable the PIDs*/
 		straight.straightPID.disable();
-		turn.turnPID.disable();
 		straightDist.keepStraightPID.disable();
-		distance.rampPID.disable();
+		turn.turnPID.disable();
+		distance.distancePID.disable();
 		ultrasonic.ultrasonicPID.disable();
+		pot.elevatorPID.disable();
 	}
 
 	public void teleopPeriodic() {
@@ -131,7 +151,9 @@ public class Robot extends IterativeRobot {
 
 		// air.cycleThrough();
 
-		smart.displaySensors();
+		//smart.displaySensors();
+		
+		SmartDashboard.putNumber("Gyro", turn.gyro.getAngle());
 	}
 
 	public void testInit() {

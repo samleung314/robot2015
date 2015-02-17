@@ -51,8 +51,8 @@ public class Controllers {
 		
 
 		// Joysticks
-		leftJoyY = -Constants.driveMuliplier * leftJoy.getY();
-		rightJoyY = -Constants.driveMuliplier * rightJoy.getY();
+		leftJoyY = leftJoy.getY();
+		rightJoyY = rightJoy.getY();
 		leftTrigger = leftJoy.getTrigger();
 		rightJoyFour = rightJoy.getRawButton(4);
 		rightJoyFive = rightJoy.getRawButton(5);
@@ -82,7 +82,7 @@ public class Controllers {
 
 	// Driving with the joystick controllers
 	public void joystickDrive() {
-		robot.drive.chasisDrive.tankDrive(leftJoyY, rightJoyY);
+		robot.drive.chasisDrive.tankDrive(-Constants.driveMuliplier * leftJoyY, -Constants.driveMuliplier * rightJoyY);
 	}
 
 	public void ultraSonicDrive(double tolerance) {
@@ -138,8 +138,8 @@ public class Controllers {
 
 		if (xBoxLeftBump) robot.elevator.elevatorRelease();
 		else if (xBoxRightBump) robot.elevator.elevatorLock();
-		else if(xBoxA) robot.air.flippersIn();
-		else if(xBoxB) robot.air.flippersOut();
+		else if(xBoxA) robot.air.flippersGrip();
+		else if(xBoxB) robot.air.flippersRelease();
 		else if(xBoxX) robot.air.armsRetract();
 		else if(xBoxY) robot.air.armsExtend();
 	}
