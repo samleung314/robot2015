@@ -149,8 +149,8 @@ public class Robot extends IterativeRobot {
 		air.chargeAir();
 		
 		control.getControllers();
-		control.riceOperate();
-		control.forestDrive();
+		control.joystickDrive();
+		control.controlElevator();
 
 		//smart.displaySensors();
 		
