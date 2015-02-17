@@ -226,7 +226,7 @@ public class AutonThreeTote extends Command {
 			break;
 
 		case 2:
-			elevatorZero = robot.pot.elevatePID(liftZero);
+			elevatorZero = robot.pot.elevatePIDLock(liftZero);
 			nextStep(elevatorZero);
 			currentStep = "Elevator zero";
 			break;
@@ -257,7 +257,7 @@ public class AutonThreeTote extends Command {
 			break;
 
 		case 7:
-			elevateDownA = robot.pot.elevatePID(liftZero);
+			elevateDownA = robot.pot.elevatePIDLock(liftZero);
 			nextStep(elevateDownA);
 			currentStep = "Drop elevator A";
 			break;
