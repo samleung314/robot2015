@@ -124,7 +124,7 @@ public class Robot extends IterativeRobot {
 	
 	public void runOnce() {
 		if(!once) {
-			once = turn.PIDturnDegrees(90);
+			once = straightDist.driveDistance(smart.autoDist);
 		}
 	}
 
@@ -147,8 +147,8 @@ public class Robot extends IterativeRobot {
 		air.chargeAir();
 		
 		control.getControllers();
-		control.controlElevator();
-		control.joystickDrive();
+		control.riceOperate();
+		control.forestDrive();
 
 		//smart.displaySensors();
 		
