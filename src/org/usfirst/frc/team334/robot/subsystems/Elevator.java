@@ -19,7 +19,7 @@ public class Elevator {
 
 	private final DigitalInput highSwitches, lowSwitches;
 
-	public boolean locked, moving = false, highLimit, lowLimit;
+	public boolean locked, highLimit, lowLimit;
 	public double minpot, maxpot, desiredpot;
 
 	public Elevator(Robot robot) {
@@ -44,10 +44,7 @@ public class Elevator {
 	public boolean elevatorAutoRelease() { // Releases the elevator break
 		locked = false;
 		robot.air.dogRelease();
-		Timer.delay(0.5);
-		robot.elevator.elevatorVics.set(1);
-		Timer.delay(0.1);
-		robot.elevator.elevatorVics.set(0);
+		Timer.delay(0.3);
 		return true;
 	}
 

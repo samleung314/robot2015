@@ -13,7 +13,6 @@ import edu.wpi.first.wpilibj.smartdashboard.SmartDashboard;
 
 public class Robot extends IterativeRobot {
 
-	public Auton auto;
 	public Air air;
 	public Controllers control;
 	public Drivetrain drive;
@@ -45,7 +44,6 @@ public class Robot extends IterativeRobot {
 		air = new Air(this);
 		drive = new Drivetrain(this);
 		encode = new Encoders(this);
-		auto = new Auton(this);
 		distance = new DistancePID(this);
 		turn = new TurnPID(this);
 		ultrasonic = new UltrasonicPID(this);
@@ -93,8 +91,8 @@ public class Robot extends IterativeRobot {
 		Scheduler.getInstance().run();
 		//elevatorTuning();
 		//runOnce();
-		//distanceTuning(smart.autoDist, smart.autoSpeed);
-		//turnTuning(smart.autoDegrees, smart.autoSpeed);
+		//distanceTuning(smart.autoDist);
+		//turnTuning(smart.autoDegrees);
 		
 		SmartDashboard.putNumber("Elevator Height", pot.getLevel());
 		
@@ -110,7 +108,7 @@ public class Robot extends IterativeRobot {
 		
 	}
 	
-	public void distanceTuning(double dist, double speed) {
+	public void distanceTuning(double dist) {
 		if(!testDistance) {
 			testDistance = straight.driveDistance(dist);
 		}
@@ -118,7 +116,7 @@ public class Robot extends IterativeRobot {
 		SmartDashboard.putBoolean("DISTANCE?", testDistance);
 	}
 	
-	public void turnTuning(double degrees, double speed) {
+	public void turnTuning(double degrees) {
 		if(!testTurn) {
 			testTurn = turn.PIDturnDegrees(degrees);
 		}

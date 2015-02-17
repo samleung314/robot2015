@@ -6,7 +6,6 @@ import org.usfirst.frc.team334.robot.Constants;
 import edu.wpi.first.wpilibj.AnalogPotentiometer;
 import edu.wpi.first.wpilibj.PIDController;
 import edu.wpi.first.wpilibj.PIDSource;
-import edu.wpi.first.wpilibj.Timer;
 
 public class ElevatorPID implements PIDSource{
 	
@@ -32,19 +31,36 @@ public class ElevatorPID implements PIDSource{
 	}
 	
 	public boolean elevatePID(double height) {
-		elevatorPID.setOutputRange(-0.5, 0.7);
+		elevatorPID.setOutputRange(-1, 1);
 		elevatorPID.setSetpoint(height);
 		elevatorPID.enable();
-		Timer.delay(0.2); //Lets elevator settle
 		
 		if(elevatorPID.onTarget()) {
-			//elevatorPID.disable();
-			//robot.elevator.elevatorVics.set(0);
 			return true;
 		}
 		else {
 			return false;
 		}
+	}
+	
+	public boolean elevatePIDLock(double height) {
+		if(robot.elevator.locked){
+			robot.elevator.elevatorAutoRelease();
+		}
+		elevatorPID.setOutputRange(-1, 1);
+		elevatorPID.setSetpoint(height);
+		elevatorPID.enable();
+		
+		if(elevatorPID.onTarget()) {
+			elevatorPID.disable();
+			robot.elevator.elevatorVics.set(0);
+			
+			if(height > 0 ) {
+				robot.elevator.elevatorLock();
+			}
+		}
+		
+		return elevatorPID.onTarget();
 	}
 	
 	public boolean elevatePIDTuning(double height, double speed) {
