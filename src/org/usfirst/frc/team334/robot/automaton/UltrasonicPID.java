@@ -18,7 +18,7 @@ public class UltrasonicPID implements PIDOutput {
 	public DigitalInput ultraInput;
 	public DigitalOutput ultraOutput;
     
-	double p, i, d, output;
+	double p, i, d, ultraSpeed;
     
 	private double rampVal,rawDist;
 	private boolean inPosition;
@@ -39,17 +39,17 @@ public class UltrasonicPID implements PIDOutput {
 	
 	@Override
 	public void pidWrite(double output) {
-		this.output = output;
+		this.ultraSpeed = output;
 	}
 
 	public boolean driveDistance(int distance) {
 		ultrasonicPID.setSetpoint(distance);
 		ultrasonicPID.enable();
-		robot.drive.doubleVicsDrive(output, output);
+		robot.drive.victorDrive(ultraSpeed, ultraSpeed);
 
 		if (hitDistance()) {
 			ultrasonicPID.disable();
-			robot.drive.doubleVicsDrive(0, 0);
+			robot.drive.victorDrive(0, 0);
 			return true;
 		}
 		return false;
@@ -59,9 +59,9 @@ public class UltrasonicPID implements PIDOutput {
 		return ultrasonicPID.onTarget();
 	}
 	
-	public double UltraRampTele(double tolerance) {
+	public double ultraRampTele(double tolerance) {
 
-		rawDist = RawDist();
+		rawDist = rawDist();
 
 		if (rawDist < Constants.ultraZeroPoint) {
 			rawDist = Constants.ultraZeroPoint;
@@ -80,18 +80,15 @@ public class UltrasonicPID implements PIDOutput {
 			rampVal = Constants.cutoffMult;
 		}
         
-		if(Constants.ultraZeroPoint + tolerance > RawDist())
-		{
-			rampVal=0;
-			
+		if(Constants.ultraZeroPoint + tolerance > rawDist()){
+			rampVal = 0;
 		}
 		return rampVal;
 	}
 
-	public boolean UltraRampAuto(double tolerance) {
-
+	public boolean ultraRampAutoOLD(double tolerance) {
 		
-		rawDist = RawDist();
+		rawDist = rawDist();
 
 		if (rawDist < Constants.ultraZeroPoint) {
 			rawDist = Constants.ultraZeroPoint;
@@ -111,18 +108,60 @@ public class UltrasonicPID implements PIDOutput {
 		}
         
 		rampVal = rampVal * Constants.ultraAutonMaxSpeed;
-		robot.drive.doubleVicsDrive(rampVal, rampVal);  //PIDs ????? drive straight
+		robot.drive.victorDrive(rampVal, rampVal);  //PIDs ????? drive straight
 		
-		inPosition = (Constants.ultraZeroPoint + tolerance > RawDist());
+		inPosition = (Constants.ultraZeroPoint + tolerance >= rawDist());
 
 		if (inPosition) {
-			robot.drive.doubleVicsDrive(0, 0);
+			robot.drive.victorDrive(0, 0);	
+			return inPosition;
+		}
+		return inPosition;
+	}
+	
+	public boolean ultraRampAuto(double tolerance) {
+		robot.straight.keepStraightPID.enable();
+		rawDist = rawDist();
+
+		if (rawDist < Constants.ultraZeroPoint) {
+			rawDist = Constants.ultraZeroPoint;
+		}
+
+		if (rawDist < Constants.rampDist) {
+			// $\frac{\left(\cos \left(x+\pi \right)+1\right)}{2}$ for DESMOS
+			rampVal = ((Math.cos((((rawDist - Constants.ultraZeroPoint) / 
+						(Constants.rampDist - Constants.ultraZeroPoint)) * Math.PI)
+							+ Math.PI) + 1) / 2);
+		} else {
+			rampVal = 1;
+		}
+
+		if (rampVal < Constants.cutoffMult) {
+			rampVal = Constants.cutoffMult;
+		}
+        
+		rampVal = rampVal * Constants.ultraAutonMaxSpeed;
+		
+		double leftOutput = rampVal + robot.straight.straightSpeed;
+		double rightOutput = rampVal - robot.straight.straightSpeed;
+		
+		robot.drive.victorDrive(leftOutput, rightOutput);
+		
+		inPosition = (Constants.ultraZeroPoint + tolerance >= rawDist());
+		
+
+		if (inPosition) {
+			robot.straight.keepStraightPID.disable();
+			robot.drive.victorDrive(0, 0);
+			robot.encode.resetEncoders();
+			robot.turn.gyro.reset();
+			return inPosition;
 		}
 		return inPosition;
 	}
 
-	public double RawDist() {
-		return (ultrasonic.getRangeInches());
+	public double rawDist() {
+		return ultrasonic.getRangeInches();
 
 	}
 }

@@ -116,7 +116,7 @@ public class AutonTwoContainer extends Command {
 
 		/*---------------------------------Drop first container---------------------------*/
 		case 7:
-			backwardA = robot.straightDist.driveDistance(backDistA);
+			backwardA = robot.straight.driveDistance(backDistA);
 			nextStep(backwardA);
 			currentStep = "Backup to autozone A";
 			break;
@@ -140,7 +140,7 @@ public class AutonTwoContainer extends Command {
 			break;
 
 		case 11:
-			backwardB = robot.straightDist.driveDistance(backDistB);
+			backwardB = robot.straight.driveDistance(backDistB);
 			nextStep(backwardB);
 			currentStep = "Backing up clear of the containter";
 			break;
@@ -153,7 +153,7 @@ public class AutonTwoContainer extends Command {
 		
 	    /*---------------------------------Pickup second container---------------------------*/
 		case 13:
-			forwardA = robot.straightDist.driveDistance(forwardDistA);
+			forwardA = robot.straight.driveDistance(forwardDistA);
 			nextStep(forwardA);
 			currentStep = "Driving forwards to second container";
 			break;
@@ -178,7 +178,7 @@ public class AutonTwoContainer extends Command {
 
 		/*---------------------------------Drop second container---------------------------*/
 		case 17:
-			backwardC = robot.straightDist.driveDistance(backDistC);
+			backwardC = robot.straight.driveDistance(backDistC);
 			nextStep(backwardC);
 			currentStep = "Backup to autozone B";
 			break;

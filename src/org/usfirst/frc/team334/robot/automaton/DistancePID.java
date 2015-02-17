@@ -23,7 +23,7 @@ public class DistancePID implements PIDOutput {
         rampDownTime = new Timer();
 
         distancePID = new PIDController(rampKp, rampKi, rampKd, robot.encode, this);
-        distancePID.setOutputRange(-0.75, 0.50); //Limits the speed to 60% on the victors
+        distancePID.setOutputRange(-1, 1); //Limits the speed to 60% on the victors
         distancePID.setAbsoluteTolerance(Constants.distancePIDTolerance);
     }
 
@@ -39,9 +39,9 @@ public class DistancePID implements PIDOutput {
         double rampedSpeed = currTime * (speed / seconds);
 
         if (currTime < seconds) {
-            robot.drive.doubleVicsDrive(rampedSpeed, rampedSpeed);
+            robot.drive.victorDrive(rampedSpeed, rampedSpeed);
         } else if (currTime >= seconds) {
-            robot.drive.doubleVicsDrive(speed, speed);
+            robot.drive.victorDrive(speed, speed);
         }
     }
 
@@ -52,9 +52,9 @@ public class DistancePID implements PIDOutput {
         double rampedSpeed = currentSpeed - (currTime * (currentSpeed / seconds));
 
         if (currTime < seconds) {
-            robot.drive.doubleVicsDrive(rampedSpeed, rampedSpeed);
+            robot.drive.victorDrive(rampedSpeed, rampedSpeed);
         } else if (currTime >= seconds) {
-            robot.drive.doubleVicsDrive(0, 0);
+            robot.drive.victorDrive(0, 0);
         }
     }
 }

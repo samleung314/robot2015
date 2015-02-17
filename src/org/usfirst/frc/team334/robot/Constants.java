@@ -3,11 +3,9 @@ package org.usfirst.frc.team334.robot;
 public class Constants {
 	
 	/*Victors*/
-	public static final int leftVictorA = 4;
-	public static final int leftVictorB = 5;
+	public static final int leftVictor = 5;
 	
-	public static final int rightVictorA = 1;
-	public static final int rightVictorB = 2;
+	public static final int rightVictor = 2;
 	
 	public static final int elevatorVictorA = 0;
 	public static final int elevatorVictorB = 3;
@@ -21,15 +19,14 @@ public class Constants {
 	public static final double highGearSpeed = 1;
 	public static final double lowGearSpeed = 0.65;
 	
-	public static final double ultraAutonMaxSpeed = .5;
-	
-	/*Sensors*/
+	/*Ultrasonic*/
 	public static final double  ultraZeroPoint = 2.75;
 	public static final double  rampDist = 20;
 	
-	public static final double cutoffMult = 0.6;
-    public static final double canTolerance = 9;
+	public static final double cutoffMult = 0.3;
+    public static final double canTolerance = 5;
     public static final double toteTolerance = 1;
+    public static final double ultraAutonMaxSpeed = .6;
 
 	
 	/*Digital I/O*/

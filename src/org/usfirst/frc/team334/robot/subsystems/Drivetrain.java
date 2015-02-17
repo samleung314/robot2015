@@ -9,43 +9,23 @@ public class Drivetrain {
 
     Robot robot;
 
-    private final VictorSP leftVicA;
-    private final VictorSP leftVicB;
-
-    private final VictorSP rightVicA;
-    private final VictorSP rightVicB;
-
-    public DoubleVics leftVics;
-    public DoubleVics rightVics;
+    public final VictorSP leftVic;
+    public final VictorSP rightVic;
 
     public RobotDrive chasisDrive;
 
     public Drivetrain(Robot robot) {
         this.robot = robot;
 
-        leftVicA = new VictorSP(Constants.leftVictorA);
-        leftVicB = new VictorSP(Constants.leftVictorB);
+        leftVic = new VictorSP(Constants.leftVictor);
+        rightVic = new VictorSP(Constants.rightVictor);
 
-        rightVicA = new VictorSP(Constants.rightVictorA);
-        rightVicB = new VictorSP(Constants.rightVictorB);
-
-        leftVics = new DoubleVics(leftVicA, leftVicB);
-        rightVics = new DoubleVics(rightVicA, rightVicB);
-
-        chasisDrive = new RobotDrive(leftVics, rightVics);
+        chasisDrive = new RobotDrive(leftVic, rightVic);
     }
 
-    public void manualVicsDrive(double leftSpeed, double rightSpeed) {
-        leftVicA.set(leftSpeed);
-        leftVicB.set(leftSpeed);
-
-        rightVicA.set(-rightSpeed);
-        rightVicB.set(-rightSpeed);
-    }
-
-    public void doubleVicsDrive(double leftSpeed, double rightSpeed) {
-        leftVics.set(leftSpeed);
-        rightVics.set(-rightSpeed);
+    public void victorDrive(double leftSpeed, double rightSpeed) {
+    	leftVic.set(leftSpeed);
+    	rightVic.set(-rightSpeed);
     }
 
 }

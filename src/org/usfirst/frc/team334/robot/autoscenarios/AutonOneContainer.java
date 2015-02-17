@@ -90,7 +90,7 @@ public class AutonOneContainer extends Command {
 					currentStep = "Turning 90 degrees A";
 					break;
 					
-    		case 6: forwardA = robot.straightDist.driveDistance(forwardDistA);
+    		case 6: forwardA = robot.straight.driveDistance(forwardDistA);
 					nextStep(forwardA);
 					currentStep = "Moving to the landmark";
 					break;

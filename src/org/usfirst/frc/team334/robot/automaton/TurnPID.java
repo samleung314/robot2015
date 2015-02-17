@@ -33,21 +33,21 @@ public class TurnPID implements PIDOutput {
 
             if (degrees < 0) { //Negative Degrees (CCW Direction)
                 if (gyro.getAngle() > degrees) {
-                    robot.drive.doubleVicsDrive(-turnSpeed, turnSpeed); //Turn CCW
+                    robot.drive.victorDrive(-turnSpeed, turnSpeed); //Turn CCW
                 } else if (gyro.getAngle() < degrees) {
-                    robot.drive.doubleVicsDrive(turnSpeed, -turnSpeed); //Turn CW
+                    robot.drive.victorDrive(turnSpeed, -turnSpeed); //Turn CW
                 }
             } else if (degrees > 0) {//Positive Degrees (CW Direction)
                 if (gyro.getAngle() > degrees) {
-                    robot.drive.doubleVicsDrive(turnSpeed, -turnSpeed); //Turn CCW
+                    robot.drive.victorDrive(turnSpeed, -turnSpeed); //Turn CCW
                 } else if (gyro.getAngle() < degrees) {
-                    robot.drive.doubleVicsDrive(-turnSpeed, turnSpeed); //Turn CW
+                    robot.drive.victorDrive(-turnSpeed, turnSpeed); //Turn CW
                 }
             }
             System.out.println("FALSE");
             return false;
         } else {
-            robot.drive.doubleVicsDrive(0, 0);
+            robot.drive.victorDrive(0, 0);
             gyro.reset();
             System.out.println("TRUE");
             return true;
@@ -58,10 +58,10 @@ public class TurnPID implements PIDOutput {
     	if (gyro.getAngle() != degrees) {
     		
 	    	if (gyro.getAngle() > degrees) {
-	    		robot.drive.doubleVicsDrive(-turnSpeed, turnSpeed); //Turn CCW
+	    		robot.drive.victorDrive(-turnSpeed, turnSpeed); //Turn CCW
 	    	}
 	    	else if (gyro.getAngle() < degrees) {
-	    		robot.drive.doubleVicsDrive(turnSpeed, -turnSpeed);//Turn CW
+	    		robot.drive.victorDrive(turnSpeed, -turnSpeed);//Turn CW
 	    	}
 	    	return false;
     	}
@@ -73,11 +73,11 @@ public class TurnPID implements PIDOutput {
     public boolean PIDturnDegrees(double degrees) { //Method for making robot turn a number of degrees using a PID controller
         turnPID.setSetpoint(degrees);
         turnPID.enable();
-        robot.drive.doubleVicsDrive(turnOutput, -turnOutput);
+        robot.drive.victorDrive(turnOutput, -turnOutput);
         
         if(turnPID.onTarget()) {//Returns true when robot is within tolerance
         	turnPID.disable();
-        	robot.drive.doubleVicsDrive(0, 0);
+        	robot.drive.victorDrive(0, 0);
         	gyro.reset();
         	return true;
         }

@@ -1,5 +1,6 @@
 package org.usfirst.frc.team334.robot.autoscenarios;
 
+import org.usfirst.frc.team334.robot.Constants;
 import org.usfirst.frc.team334.robot.Robot;
 
 import edu.wpi.first.wpilibj.smartdashboard.SmartDashboard;
@@ -43,13 +44,9 @@ Robot robot;
 	
 	double liftZero = 0,
 		   liftHeightA = 16, //tote 1 lift
-		   startRamp = 20,
-	       toteDist = .5,
 		   liftHeightB = 16, //tote 2 lift 
 		   liftHeightC = 7, //tote 3 lift 
-		   //forwardDistA = 80.5, //to second tote
-		   // forwardDistB = 80.5, //to last tote
-	       forwardDistC = 141.5, //to dump zone
+	       forwardDistC = 155, //to dump zone
 		   turnDegreesA = 90;
 	
 	int step;
@@ -81,8 +78,8 @@ Robot robot;
     	SmartDashboard.putString("Current Step", currentStep);
     	System.out.println("---------->" + currentStep);
   
-		switch (step) {
-		/*---------------------------------Starting Position--------------------------------*/
+    	switch (step) {
+		//---------------------------------Starting Position--------------------------------
 		case 1:
 			flippersStart = robot.air.flippersAutoRelease();
 			nextStep(flippersStart);
@@ -94,7 +91,7 @@ Robot robot;
 			nextStep(elevatorZero);
 			currentStep = "Elevator zero";
 			break;
-		/*---------------------------------Pickup first tote--------------------------------*/ 
+		//---------------------------------Pickup first tote-------------------------------- 
 		case 3:
 			flippersGripA = robot.air.flippersAutoGrip();
 			nextStep(flippersGripA);
@@ -103,135 +100,100 @@ Robot robot;
 
 		case 4:
 			liftToteA = robot.pot.elevatePID(liftHeightA);
-			nextStep(liftToteA);
+			nextStep(robot.pot.elevatorPID.onTarget());
 			currentStep = "Lift tote A";
 			break;
 
 		case 5:
-			//elevatorBrakeA = robot.elevator.elevatorLock();
-			nextStep(true);
-			currentStep = "Brake elevator A";
-			break;
-
-		case 6:
-			ultraTravelForwardA = robot.ultrasonic.UltraRampAuto(toteDist);
+			ultraTravelForwardA = robot.ultrasonic.ultraRampAuto(Constants.toteTolerance);
 			nextStep(ultraTravelForwardA);
 			currentStep = "Move to second tote";
 			break;
 			
-		/*---------------------------------Pickup second tote--------------------------------*/ 
-		case 7:
-			//elevatorReleaseA = robot.elevator.elevatorAutoRelease();
-			nextStep(true);
-			currentStep = "Release elevator A";
-			break;
-			
-		case 8:
+		//---------------------------------Pickup second tote-------------------------------- 
+		case 6:
 			flippersReleaseA = robot.air.flippersAutoRelease();
 			nextStep(flippersReleaseA);
 			currentStep = "Flippers release A";
 			break;
 
-		case 9:
+		case 7:
 			elevateDownA = robot.pot.elevatePID(liftZero);
 			nextStep(elevateDownA);
 			currentStep = "Drop elevator A";
 			break;
 			
-		case 10:
+		case 8:
 			flippersGripB = robot.air.flippersAutoGrip();
 			nextStep(flippersGripB);
 			currentStep = "Flippers grip B";
 			break;
 
-		case 11:
+		case 9:
 			liftToteB = robot.pot.elevatePID(liftHeightB);
 			nextStep(liftToteB);
 			currentStep = "Lift second tote";
 			break;
-
-		case 12:
-			//elevatorBrakeB = robot.elevator.elevatorLock();
-			nextStep(true);
-			currentStep = "Brake elevator B";
-			break;
 			
-		/*---------------------------------Pickup third tote--------------------------------*/ 
-		case 13:
-			ultraTravelForwardB = robot.ultrasonic.UltraRampAuto(toteDist);
+		//---------------------------------Pickup third tote-------------------------------- 
+		case 10:
+			ultraTravelForwardB = robot.ultrasonic.ultraRampAuto(Constants.toteTolerance);
 			nextStep(ultraTravelForwardB);
 			currentStep = "Move to third tote";
 			break;
-
-		case 14:
-			//elevatorReleaseB = robot.elevator.elevatorAutoRelease();
-			nextStep(true);
-			currentStep = "Release elevator B";
-			break;
 			
-		case 15:
+		case 11:
 			flippersGripB = robot.air.flippersAutoRelease();
 			nextStep(flippersGripB);
 			currentStep = "Flippers release B";
 			break;
 
-		case 16:
+		case 12:
 			elevateDownB = robot.pot.elevatePID(liftZero);
 			nextStep(elevateDownB);
 			currentStep = "Drop elevator B";
 			break;
 			
-		case 17:
+		case 13:
 			flippersGripC = robot.air.flippersAutoGrip();
 			nextStep(flippersGripC);
 			currentStep = "Flippers grip C";
 			break;
 
-		case 18:
+		case 14:
 			liftToteC = robot.pot.elevatePID(liftHeightC);
 			nextStep(liftToteC);
 			currentStep = "Lifting third tote";
 			break;
 
-		case 19:
-			//elevatorBrakeC = robot.elevator.elevatorLock();
-			nextStep(true);
-			currentStep = "Braking elevator";
-			break;
-			
-		/*---------------------------------Move to autozone--------------------------------*/ 
-		case 20:
+		//---------------------------------Move to autozone-------------------------------- 
+		case 15:
 			turnA = robot.turn.PIDturnDegrees(turnDegreesA);
 			nextStep(turnA);
 			currentStep = "Turning towards autozone";
 			break;
 
-		case 21:
-			travelForwardC = robot.straightDist.driveDistance(forwardDistC);
+		case 16:
+			travelForwardC = robot.straight.driveDistance(forwardDistC);
 			nextStep(travelForwardC);
 			currentStep = "Driving into autozone";
 			break;
 		
-		/*---------------------------------Drop stack--------------------------------*/ 
-		case 22:
-			//elevatorReleaseC = robot.elevator.elevatorAutoRelease();
-			nextStep(true);
-			currentStep = "Release elevator C";
-			break;
+		//---------------------------------Drop stack-------------------------------- 
 
-		case 23:
-			elevateDownC = robot.pot.elevatePID(liftZero);
-			nextStep(elevateDownC);
-			currentStep = "Dropping off tote stack";
-			break;
-			
-		case 24:
+		case 17:
 			flippersReleaseB = robot.air.flippersAutoRelease();
 			nextStep(flippersReleaseB);
 			currentStep = "Flippers release B";
 			break;
+			
+		case 18:
+			elevateDownC = robot.pot.elevatePID(liftZero);
+			nextStep(elevateDownC);
+			currentStep = "Dropping off tote stack";
+			break;
 
-		case 25:
+		case 19:
 			autonDone = true;
 			currentStep = "Autonomous Three Done";
 			break;
@@ -239,7 +201,7 @@ Robot robot;
 		default:
 			System.out.println("Auton Three is defaulting");
 			break;
-		}
+		} 
     }
     
     private void nextStep(boolean action) {

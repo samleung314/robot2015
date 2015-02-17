@@ -49,7 +49,7 @@ public class AutonOneUltra extends Command {
     	System.out.println("------------> " + currentStep);
     	
     	switch (step) {
-    	    case 1: ultraForward = robot.ultrasonic.UltraRampAuto(tolerance);
+    	    case 1: ultraForward = robot.ultrasonic.ultraRampAuto(tolerance);
     	    	    nextStep(ultraForward);
     	    	    currentStep = "Moving to Container";
     	    	    break;
@@ -69,7 +69,7 @@ public class AutonOneUltra extends Command {
 					currentStep = "Turning 90 degrees counter-clockwise";
 					break;
 					
-    		case 5: forwardA = robot.straightDist.driveDistance(forwardDistA);
+    		case 5: forwardA = robot.straight.driveDistance(forwardDistA);
 					nextStep(forwardA);
 					currentStep = "Moving to the landmark";
 					break;

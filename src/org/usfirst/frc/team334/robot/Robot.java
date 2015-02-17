@@ -23,8 +23,7 @@ public class Robot extends IterativeRobot {
 	
 	public ElevatorPID pot;
 	public DistancePID distance;
-	public StraightPID straight;
-	public StraightDistancePID straightDist;
+	public StraightDistancePID straight;
 	public TurnPID turn;
 	public UltrasonicPID ultrasonic;
 
@@ -32,12 +31,13 @@ public class Robot extends IterativeRobot {
 	public AutonOneContainer oneContainer;
 	public AutonTwoContainer twoContainer;
 	public AutonThreeTote threeTotes;
+	public AutonThreeToteUltra threeTotesUltra;
 	public AutonTest autonTest;
 
 	public Command autoCommand;
 	public SendableChooser autoChoose;
 
-	boolean lifted, clamp, once;
+	boolean lifted, clamp, once, testDistance, testTurn;
 
 	public void robotInit() {
 
@@ -49,8 +49,7 @@ public class Robot extends IterativeRobot {
 		distance = new DistancePID(this);
 		turn = new TurnPID(this);
 		ultrasonic = new UltrasonicPID(this);
-		straight = new StraightPID(this);
-		straightDist = new StraightDistancePID(this);
+		straight = new StraightDistancePID(this);
 		control = new Controllers(this);
 		elevator = new Elevator(this);
 		pot = new ElevatorPID(this);
@@ -60,6 +59,7 @@ public class Robot extends IterativeRobot {
 		oneContainer = new AutonOneContainer(this);
 		twoContainer = new AutonTwoContainer(this);
 		threeTotes = new AutonThreeTote(this);
+		threeTotesUltra = new AutonThreeToteUltra(this);
 		autonTest = new AutonTest(this);
 
 		/* Sendable Chooser Setup */
@@ -70,6 +70,7 @@ public class Robot extends IterativeRobot {
 		autoChoose.addObject("ONE Container", oneContainer);
 		autoChoose.addObject("TWO Containers", twoContainer);
 		autoChoose.addObject("THREE Totes", threeTotes);
+		autoChoose.addObject("THREE Totes ULTRA", threeTotesUltra);
 		autoChoose.addObject("TESTING", autonTest);
 		SmartDashboard.putData("Choose Auton Mode", autoChoose);
 	}
@@ -80,7 +81,8 @@ public class Robot extends IterativeRobot {
 		encode.resetEncoders();
 		turn.gyro.reset();
 		
-		lifted = clamp = once = false;
+		lifted = clamp = false;
+	    testDistance = testTurn =  false;
 
 		Scheduler.getInstance().removeAll(); //Need to clear previously selected commands so only a single command runs
 		autoCommand = (Command) autoChoose.getSelected();
@@ -91,41 +93,47 @@ public class Robot extends IterativeRobot {
 		Scheduler.getInstance().run();
 		//elevatorTuning();
 		//runOnce();
+		//distanceTuning(smart.autoDist, smart.autoSpeed);
+		//turnTuning(smart.autoDegrees, smart.autoSpeed);
 		
 		SmartDashboard.putNumber("Elevator Height", pot.getLevel());
-		
-		SmartDashboard.putNumber("Turn Output", turn.turnOutput);
 		
 		SmartDashboard.putNumber("Gyro", turn.gyro.getAngle());
 		
 		SmartDashboard.putNumber("Distance", encode.averageDist());
 		
 		SmartDashboard.putData("DistancePID", distance.distancePID);
-		SmartDashboard.putData("StraightPID", straightDist.keepStraightPID);
+		SmartDashboard.putData("StraightPID", straight.keepStraightPID);
 		
 		SmartDashboard.putData("ElevatorPID", pot.elevatorPID);
 		SmartDashboard.putData("TurnPID", turn.turnPID);
 		
 	}
 	
+	public void distanceTuning(double dist, double speed) {
+		if(!testDistance) {
+			testDistance = straight.driveDistance(dist);
+		}
+		
+		SmartDashboard.putBoolean("DISTANCE?", testDistance);
+	}
+	
+	public void turnTuning(double degrees, double speed) {
+		if(!testTurn) {
+			testTurn = turn.PIDturnDegrees(degrees);
+		}
+		
+		SmartDashboard.putBoolean("TURNED?", testTurn);
+	}
+	
 	public void elevatorTuning() {
 		if(!clamp) {
 			clamp = air.flippersAutoGrip();
 		} else if(clamp && !lifted) {
-			lifted = pot.elevatePID(14);
+			lifted = pot.elevatePID(30);
 		}
 		
-		SmartDashboard.putBoolean("At height?", lifted);
-		
-		SmartDashboard.putData("ElevatorPID", pot.elevatorPID);
-		SmartDashboard.putNumber("Elevator Height", pot.getLevel());
-		SmartDashboard.putNumber("Elevator Raw", pot.elevatorPot.get());
-	}
-	
-	public void runOnce() {
-		if(!once) {
-			once = straightDist.driveDistance(smart.autoDist);
-		}
+		SmartDashboard.putBoolean("LIFTED?", lifted);
 	}
 
 	public void teleopInit() {
@@ -135,8 +143,7 @@ public class Robot extends IterativeRobot {
 		turn.gyro.reset();
 		
 		/*Disable the PIDs*/
-		straight.straightPID.disable();
-		straightDist.keepStraightPID.disable();
+		straight.keepStraightPID.disable();
 		turn.turnPID.disable();
 		distance.distancePID.disable();
 		ultrasonic.ultrasonicPID.disable();
@@ -156,13 +163,4 @@ public class Robot extends IterativeRobot {
 		SmartDashboard.putNumber("Elevator Height", pot.getLevel());
 		SmartDashboard.putNumber("Elevator Raw", pot.elevatorPot.get());
 	}
-
-	public void testInit() {
-
-	}
-
-	public void testPeriodic() {
-
-	}
-
 }

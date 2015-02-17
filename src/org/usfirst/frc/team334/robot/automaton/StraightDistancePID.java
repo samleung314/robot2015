@@ -20,8 +20,7 @@ public class StraightDistancePID implements PIDOutput {
 	public StraightDistancePID(Robot robot) {
 		this.robot = robot;
 
-		keepStraightPID = new PIDController(straightKp, straightKi, straightKd,
-				robot.turn.gyro, this);
+		keepStraightPID = new PIDController(straightKp, straightKi, straightKd, robot.turn.gyro, this);
 		keepStraightPID.setSetpoint(0);
 		keepStraightPID.setContinuous();
 		keepStraightPID.setOutputRange(-1, 1);
@@ -41,13 +40,13 @@ public class StraightDistancePID implements PIDOutput {
 		double leftOutput = robot.distance.rampSpeed + straightSpeed;
 		double rightOutput = robot.distance.rampSpeed - straightSpeed;
 
-		robot.drive.doubleVicsDrive(leftOutput, rightOutput);
+		robot.drive.victorDrive(leftOutput, rightOutput);
 
 		if (robot.distance.distancePID.onTarget()) { // Returns true when robot is
 													// within tolerance
 			robot.distance.distancePID.disable();
 			keepStraightPID.disable();
-			robot.drive.doubleVicsDrive(0, 0);
+			robot.drive.victorDrive(0, 0);
 			robot.encode.resetEncoders();
 			robot.turn.gyro.reset();
 			

@@ -50,7 +50,7 @@ public class AutonThreeTote extends Command {
 		   liftHeightA = 16, //tote 1 lift
 		   liftHeightB = 16, //tote 2 lift 
 		   liftHeightC = 10, //tote 3 lift
-		   forwardDistA = 166,//85, //to second tote
+		   forwardDistA = 80,//85, //to second tote
 		   forwardDistB = 81, //to last tote
 	       forwardDistC = 155, //to dump zone
 		   turnDegreesA = 90;
@@ -86,7 +86,6 @@ public class AutonThreeTote extends Command {
   
     	//driveTurn();
     	normal();
-   
     }
     
     private void normal() {
@@ -117,7 +116,7 @@ public class AutonThreeTote extends Command {
 			break;
 
 		case 5:
-			travelForwardA = robot.straightDist.driveDistance(forwardDistA);
+			travelForwardA = robot.straight.driveDistance(forwardDistA);
 			nextStep(travelForwardA);
 			currentStep = "Move to second tote";
 			break;
@@ -149,7 +148,7 @@ public class AutonThreeTote extends Command {
 			
 		//---------------------------------Pickup third tote-------------------------------- 
 		case 10:
-			travelForwardB = robot.straightDist.driveDistance(forwardDistB);
+			travelForwardB = robot.straight.driveDistance(forwardDistB);
 			nextStep(travelForwardB);
 			currentStep = "Move to third tote";
 			break;
@@ -186,7 +185,7 @@ public class AutonThreeTote extends Command {
 			break;
 
 		case 16:
-			travelForwardC = robot.straightDist.driveDistance(forwardDistC);
+			travelForwardC = robot.straight.driveDistance(forwardDistC);
 			nextStep(travelForwardC);
 			currentStep = "Driving into autozone";
 			break;
@@ -236,7 +235,7 @@ public class AutonThreeTote extends Command {
     		break;
     		
     	case 5:
-    		nextStep(robot.straightDist.driveDistance(forwardDistA));
+    		nextStep(robot.straight.driveDistance(forwardDistA));
     		break;
     		
     	case 6:
@@ -244,7 +243,7 @@ public class AutonThreeTote extends Command {
 			break;
 
 		case 7:
-			nextStep(robot.straightDist.driveDistance(forwardDistC));
+			nextStep(robot.straight.driveDistance(forwardDistC));
 			break;
 			
 		case 8:
