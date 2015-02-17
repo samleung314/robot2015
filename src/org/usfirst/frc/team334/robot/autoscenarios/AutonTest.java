@@ -51,7 +51,7 @@ public class AutonTest extends Command {
 	    			nextStep(brakeA);
 	    			break;
 	    			
-	    	case 4: unbrakeA = robot.elevator.elevatorReleaseAuto();
+	    	case 4: unbrakeA = robot.elevator.elevatorAutoRelease();
 	    			nextStep(unbrakeA);
 	    			break;
 	    			

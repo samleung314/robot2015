@@ -31,7 +31,22 @@ public class ElevatorPID implements PIDSource{
 	}
 	
 	public boolean elevatePID(double height) {
-		elevatorPID.setOutputRange(-0.5, 0.7);
+		elevatorPID.setOutputRange(-0.5, 1);
+		elevatorPID.setSetpoint(height);
+		elevatorPID.enable();
+		
+		if(elevatorPID.onTarget()) {
+			elevatorPID.disable();
+			robot.elevator.elevatorVics.set(0);
+			return true;
+		}
+		else {
+			return false;
+		}
+	}
+	
+	public boolean elevatePIDTuning(double height, double speed) {
+		elevatorPID.setOutputRange(-0.5, speed);
 		elevatorPID.setSetpoint(height);
 		elevatorPID.enable();
 		
@@ -60,25 +75,26 @@ public class ElevatorPID implements PIDSource{
 		}
 	}
 	
-	public void setElevatorLevel(int level) { //Used for moving elevator to 6 predetermined levels
+	public void setElevatorLevel(int level) { // Used for moving elevator to 6
+												// predetermined levels
 		switch (level) {
 		case 1:
-			elevatorPID.setSetpoint(Constants.elevatorLevelOne);
+			elevatePID(Constants.elevatorLevelOne);
 			break;
 		case 2:
-			elevatorPID.setSetpoint(Constants.elevatorLevelTwo);
+			elevatePID(Constants.elevatorLevelTwo);
 			break;
 		case 3:
-			elevatorPID.setSetpoint(Constants.elevatorLevelThree);
+			elevatePID(Constants.elevatorLevelThree);
 			break;
 		case 4:
-			elevatorPID.setSetpoint(Constants.elevatorLevelFour);
+			elevatePID(Constants.elevatorLevelFour);
 			break;
 		case 5:
-			elevatorPID.setSetpoint(Constants.elevatorLevelFive);
+			elevatePID(Constants.elevatorLevelFive);
 			break;
 		case 6:
-			elevatorPID.setSetpoint(Constants.elevatorLevelSix);
+			elevatePID(Constants.elevatorLevelSix);
 			break;
 		}
 	}

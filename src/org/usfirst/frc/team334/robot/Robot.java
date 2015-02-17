@@ -14,26 +14,25 @@ import edu.wpi.first.wpilibj.smartdashboard.SmartDashboard;
 
 public class Robot extends IterativeRobot {
 
-	// Why not just make all these public and use the class objects from Robot
-	// instead of passing them into each other?
 	public Auton auto;
 	public Air air;
 	public Controllers control;
 	public Drivetrain drive;
 	public Elevator elevator;
 	public Encoders encode;
+	public Smartdashboard smart;
+	
 	public ElevatorPID pot;
 	public DistancePID distance;
 	public StraightPID straight;
 	public StraightDistancePID straightDist;
 	public TurnPID turn;
 	public UltrasonicPID ultrasonic;
-	public Smartdashboard smart;
 
 	public AutonOneTote oneTote;
 	public AutonOneContainer oneContainer;
-	public AutonTwo twoContainer;
-	public AutonThree threeTotes;
+	public AutonTwoContainer twoContainer;
+	public AutonThreeTote threeTotes;
 	public AutonTest autonTest;
 
 	public Command autoCommand;
@@ -60,8 +59,8 @@ public class Robot extends IterativeRobot {
 
 		oneTote = new AutonOneTote(this);
 		oneContainer = new AutonOneContainer(this);
-		twoContainer = new AutonTwo(this);
-		threeTotes = new AutonThree(this);
+		twoContainer = new AutonTwoContainer(this);
+		threeTotes = new AutonThreeTote(this);
 		autonTest = new AutonTest(this);
 
 		/* Sendable Chooser Setup */
@@ -78,7 +77,6 @@ public class Robot extends IterativeRobot {
 
 	public void autonomousInit() {
 		elevator.elevatorRelease(); // Elevator starts unlocked
-		air.flippersRelease(); //Flippers start ungripping
 		smart.getPrefs();
 		encode.resetEncoders();
 		turn.gyro.reset();
@@ -112,8 +110,7 @@ public class Robot extends IterativeRobot {
 	
 	public void elevatorTuning() {
 		if(!clamp) {
-			clamp = air.flippersGrip();
-			Timer.delay(0.5);
+			clamp = air.flippersAutoGrip();
 		} else if(clamp && !lifted) {
 			lifted = pot.elevatePID(smart.autoHeight);
 		}
@@ -127,6 +124,7 @@ public class Robot extends IterativeRobot {
 
 	public void teleopInit() {
 		elevator.elevatorRelease(); // Elevator starts unlocked
+		air.flippersRelease(); //Flippers start released
 		encode.resetEncoders();
 		turn.gyro.reset();
 		
@@ -144,12 +142,7 @@ public class Robot extends IterativeRobot {
 		
 		control.getControllers();
 		control.controlElevator();
-		//elevate.noSafety(0.5*control.xBoxLeftY); // Use only for testing
 		control.joystickDrive();
-
-		// control.testSolenoids();
-
-		// air.cycleThrough();
 
 		//smart.displaySensors();
 		

@@ -22,12 +22,6 @@ public class Constants {
 	public static final double lowGearSpeed = 0.45;
 	
 	/*Sensors*/
-	public static final int highSwitchLeft = 6;
-	public static final int lowSwitchLeft = 7;
-	
-	public static final int highSwitchRight = 8;
-	public static final int lowSwitchRight = 9;
-	
 	public static final double  ultraZeroPoint = 2;
 
 	public static final double cutoffMult = 0.6;
@@ -44,6 +38,9 @@ public class Constants {
 
 	public static final int ultrasonicInput = 0;
 	public static final int ultrasonicOutput = 1;
+	
+	public static final int highSwitches = 6;
+	public static final int lowSwitches = 7;
 	
 	/*Analog*/
 	//Note: Analog ports 0,1 are reserved for accumulator sensors such as the gyroscope
@@ -94,10 +91,10 @@ public class Constants {
     //Difference of pot limits: 0.904 - 0.216 = 0.688
     
     /*Elevator Levels (all in inches)*/
-    public static final double elevatorLevelOne = 1;
-    public static final double elevatorLevelTwo = 2;
-    public static final double elevatorLevelThree = 3;
-    public static final double elevatorLevelFour = 4;
-    public static final double elevatorLevelFive = 5;
-    public static final double elevatorLevelSix = 6;
+    public static final double elevatorLevelOne = 0;
+    public static final double elevatorLevelTwo = 14;
+    public static final double elevatorLevelThree = 28;
+    public static final double elevatorLevelFour = 42;
+    public static final double elevatorLevelFive = elevatorHeight;
+    public static final double elevatorLevelSix = elevatorHeight;
 }

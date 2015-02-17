@@ -77,6 +77,18 @@ public class Air {
 		solE.set(Value.kReverse);
 		return true;
 	}
+	
+	public boolean flippersAutoGrip() {
+		solE.set(Value.kForward);
+		Timer.delay(0.5);
+		return true;
+	}
+	
+	public boolean flippersAutoRelease() {
+		solE.set(Value.kReverse);
+		Timer.delay(0.5);
+		return true;
+	}
 
 	public void dogLock() { //Engages the Dog Gear piston
 		solF.set(Value.kForward);

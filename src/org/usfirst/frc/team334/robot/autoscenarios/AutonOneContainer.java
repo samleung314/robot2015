@@ -13,33 +13,37 @@ public class AutonOneContainer extends Command {
 
 	Robot robot; 
 	
+	Timer autonTime;
+	
 	//Booleans are false when not completed. Will be true once completed.
 	boolean autonDone,
 			flippersReleaseA,
 			elevatorZero,
+			
 			flippersGripA,
 			elevatorUpA,
 			elevatorBrakeA,
-			elevatorUnlockA,
+			
 			turnA,
 			forwardA,
+			
+			elevatorUnlockA,
 			elevatorDownA,
-			flippersReleaseB,
-	
-			pickupA, dropdownA;
+			flippersAutoReleaseB;
 	
 	double liftZero = 0,
-		   liftHeightA = 14, 
-		   turnDegA = 90,
-		   forwardDistA = 117.5,
-		   dropHeightA = -14;
+		   liftHeightA = 30, 
+		   turnDegA = -90,
+		   forwardDistA = 141.5;
 	
 	int step;
 	
-	String currentStep = "Not starte";
+	String currentStep = "Not started";
 	
     public AutonOneContainer(Robot robot) {
     	this.robot = robot;
+    	
+    	autonTime = new Timer();
     }
     
     // Called just before this Command runs the first time
@@ -47,9 +51,9 @@ public class AutonOneContainer extends Command {
     	step = 1;
     	
     	autonDone = flippersReleaseA = elevatorZero = flippersGripA = elevatorUpA = elevatorBrakeA = 
-    	elevatorUnlockA = turnA = forwardA = elevatorDownA = flippersReleaseB = false;
+    	elevatorUnlockA = turnA = forwardA = elevatorDownA = flippersAutoReleaseB = false;
     	
-    	pickupA = dropdownA = false;
+    	autonTime.start();
     }
 
     // Called repeatedly when this Command is scheduled to run
@@ -57,10 +61,10 @@ public class AutonOneContainer extends Command {
     	SmartDashboard.putString("Mode", "Auto One");
     	SmartDashboard.putString("Current Step", currentStep);
     	System.out.println("------------> " + currentStep);
-    	
-    	/*switch (step) {
-    		case 1: flippersReleaseA = robot.air.flippersRelease();
-					Timer.delay(0.5);
+		
+    	switch (step) {
+    	/*---------------------------------Starting Position--------------------------------*/ 
+    		case 1: flippersReleaseA = robot.air.flippersAutoRelease();
 					nextStep(flippersReleaseA);
 					currentStep = "Flippers release A";
 					break;
@@ -69,9 +73,8 @@ public class AutonOneContainer extends Command {
 					nextStep(elevatorZero);
 					currentStep = "Elevator zero";
 					break;
-					
-    		case 3: flippersGripA = robot.air.flippersGrip();
-    				Timer.delay(0.5);
+		/*---------------------------------Pickup tote------------------------------------*/ 
+    		case 3: flippersGripA = robot.air.flippersAutoGrip();
     				nextStep(flippersGripA);
     				currentStep = "Flippers grip A";
     				break;
@@ -83,23 +86,22 @@ public class AutonOneContainer extends Command {
     				
     		case 5: elevatorBrakeA = robot.elevator.elevatorLock();
     				nextStep(elevatorBrakeA);
-    				currentStep = "Braking the elevator";
+    				currentStep = "Braking the elevator A";
     				break;
-    				
+    	/*---------------------------------Move to autozone--------------------------------*/ 
     		case 6: turnA = robot.turn.PIDturnDegrees(turnDegA);
 					nextStep(turnA);
-					currentStep = "Turning 90 degrees";
+					currentStep = "Turning 90 degrees A";
 					break;
 					
     		case 7: forwardA = robot.straightDist.driveDistance(forwardDistA);
 					nextStep(forwardA);
 					currentStep = "Moving to the landmark";
 					break;
-			
-    		case 8: elevatorUnlockA = robot.elevator.elevatorRelease();
-    				Timer.delay(0.5);
+		/*---------------------------------Dropping down tote--------------------------------*/ 		
+    		case 8: elevatorUnlockA = robot.elevator.elevatorAutoRelease();
 					nextStep(elevatorUnlockA);
-					currentStep = "Unlocking the elevator";
+					currentStep = "Unlocking the elevator A";
 					break;
 			
     		case 9: elevatorDownA = robot.pot.elevatePID(liftZero);
@@ -107,9 +109,9 @@ public class AutonOneContainer extends Command {
     				currentStep = "Dropping container";
     				break;
     				
-    		case 10: flippersReleaseB = robot.air.flippersRelease();
-					nextStep(flippersReleaseB);
-					currentStep = "Flippers in";
+    		case 10: flippersAutoReleaseB = robot.air.flippersAutoRelease();
+					nextStep(flippersAutoReleaseB);
+					currentStep = "Flippers release B";
 					break;
 					
     		case 11: autonDone = true;
@@ -117,39 +119,50 @@ public class AutonOneContainer extends Command {
 					
 			default: System.out.println("Auton One is defaulting");
 					break;
-    	}*/
+    	}
     	
+    	/*
 		switch (step) {
 		case 1:
-			pickupA = robot.auto.dropLiftContainer();
-			nextStep(pickupA);
+			pickUpA = robot.auto.dropLiftTote();
+			nextStep(pickUpA);
+			System.out.println("pickupA time: " + autonTime.get());
+			currentStep = "Pick up tote";
 			break;
 
 		case 2:
 			turnA = robot.turn.PIDturnDegrees(turnDegA);
 			nextStep(turnA);
+			System.out.println("turnA time: " + autonTime.get());
 			currentStep = "Turning 90 degrees";
 			break;
 
 		case 3:
 			forwardA = robot.straightDist.driveDistance(forwardDistA);
 			nextStep(forwardA);
+			System.out.println("forwardA time: " + autonTime.get());
 			currentStep = "Moving to the landmark";
 			break;
 
 		case 4:
-			dropdownA = robot.auto.putDownStack();
-			nextStep(dropdownA);
+			dropDownA = robot.auto.putDownStack();
+			System.out.println("dropdownA time: " + autonTime.get());
+			nextStep(dropDownA);
+			currentStep = "Drop down tote";
 			break;
 
 		case 5:
 			autonDone = true;
+			System.out.println("Total time: " + autonTime.get());
+			autonTime.stop();
+			autonTime.reset();
 			break;
 
 		default:
 			System.out.println("Auton One is defaulting");
 			break;
 		}
+		*/
     }
     
     private void nextStep(boolean action) {

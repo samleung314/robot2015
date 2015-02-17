@@ -17,7 +17,7 @@ public class Elevator {
 
 	public DoubleVics elevatorVics;
 
-	private final DigitalInput highSwitchLeft, lowSwitchLeft, highSwitchRight, lowSwitchRight;
+	private final DigitalInput highSwitches, lowSwitches;
 
 	public boolean locked, moving = false, highLimit, lowLimit;
 	public double minpot, maxpot, desiredpot;
@@ -31,11 +31,8 @@ public class Elevator {
 		elevatorVics = new DoubleVics(elevatorVicA, elevatorVicB);
 		
 		//Limit switches return raw value of false when pressed
-		highSwitchLeft = new DigitalInput(Constants.highSwitchLeft);
-		lowSwitchLeft = new DigitalInput(Constants.lowSwitchLeft);
-		
-		highSwitchRight = new DigitalInput(Constants.highSwitchRight);
-	    lowSwitchRight = new DigitalInput(Constants.lowSwitchRight);
+		highSwitches = new DigitalInput(Constants.highSwitches);
+		lowSwitches= new DigitalInput(Constants.lowSwitches);
 	}
 
 	public boolean elevatorRelease() { // Releases the elevator break
@@ -44,10 +41,10 @@ public class Elevator {
 		return true;
 	}
 	
-	public boolean elevatorReleaseAuto() { // Releases the elevator break
+	public boolean elevatorAutoRelease() { // Releases the elevator break
 		locked = false;
 		robot.air.dogRelease();
-		Timer.delay(0.4);
+		Timer.delay(0.5);
 		robot.elevator.elevatorVics.set(1);
 		Timer.delay(0.1);
 		robot.elevator.elevatorVics.set(0);
@@ -61,12 +58,23 @@ public class Elevator {
 		return true;
 	}
 	
-	public boolean topOut() { //Returns true if either left/right limit switch pressed
-		return (!highSwitchLeft.get() || !highSwitchRight.get());
+	public boolean topOut() { //Returns true if either top left/right limit switches pressed
+		return (!highSwitches.get());
 	}
 	
-	public boolean bottomOut() { //Returns true if either left/right limit switch pressed
-		return (!lowSwitchLeft.get() || !lowSwitchRight.get());
+	public boolean bottomOut() { //Returns true if either bottom left/right limit switches pressed
+		return (!lowSwitches.get());
+	}
+	
+	public boolean zeroElevator() {
+		if(!bottomOut()) {
+			elevatorVics.set(-0.3);
+			return bottomOut();
+		}
+		else {
+			elevatorVics.set(0);
+			return bottomOut();
+		}
 	}
 
     public void doubleVicsElevator(double speed) {

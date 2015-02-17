@@ -19,22 +19,22 @@ public class AutonOneTote extends Command {
 	boolean autonDone,
 			flippersReleaseA,
 			elevatorZero,
+			
 			flippersGripA,
 			elevatorUpA,
 			elevatorBrakeA,
-			elevatorUnlockA,
+			
 			turnA,
 			forwardA,
+			
+			elevatorUnlockA,
 			elevatorDownA,
-			flippersReleaseB,
-	
-			pickUpA, dropDownA;
+			flippersAutoReleaseB;
 	
 	double liftZero = 0,
 		   liftHeightA = 14, 
 		   turnDegA = 90,
-		   forwardDistA = 141.5,
-		   dropHeightA = -14;
+		   forwardDistA = 141.5;
 	
 	int step;
 	
@@ -51,9 +51,7 @@ public class AutonOneTote extends Command {
     	step = 1;
     	
     	autonDone = flippersReleaseA = elevatorZero = flippersGripA = elevatorUpA = elevatorBrakeA = 
-    	elevatorUnlockA = turnA = forwardA = elevatorDownA = flippersReleaseB = false;
-    	
-    	pickUpA = dropDownA = false;
+    	elevatorUnlockA = turnA = forwardA = elevatorDownA = flippersAutoReleaseB = false;
     	
     	autonTime.start();
     }
@@ -63,6 +61,65 @@ public class AutonOneTote extends Command {
     	SmartDashboard.putString("Mode", "Auto One");
     	SmartDashboard.putString("Current Step", currentStep);
     	System.out.println("------------> " + currentStep);
+		
+    	switch (step) {
+    	/*---------------------------------Starting Position--------------------------------*/ 
+    		case 1: flippersReleaseA = robot.air.flippersAutoRelease();
+					nextStep(flippersReleaseA);
+					currentStep = "Flippers release A";
+					break;
+    	
+	    	case 2: elevatorZero = robot.pot.elevatePID(liftZero);
+					nextStep(elevatorZero);
+					currentStep = "Elevator zero";
+					break;
+		/*---------------------------------Pickup tote------------------------------------*/ 
+    		case 3: flippersGripA = robot.air.flippersAutoGrip();
+    				nextStep(flippersGripA);
+    				currentStep = "Flippers grip A";
+    				break;
+    				
+    		case 4: elevatorUpA = robot.pot.elevatePID(liftHeightA);
+					nextStep(elevatorUpA);
+					currentStep = "Lifting container A";
+					break;
+    				
+    		case 5: elevatorBrakeA = robot.elevator.elevatorLock();
+    				nextStep(elevatorBrakeA);
+    				currentStep = "Braking the elevator A";
+    				break;
+    	/*---------------------------------Move to autozone--------------------------------*/ 
+    		case 6: turnA = robot.turn.PIDturnDegrees(turnDegA);
+					nextStep(turnA);
+					currentStep = "Turning 90 degrees A";
+					break;
+					
+    		case 7: forwardA = robot.straightDist.driveDistance(forwardDistA);
+					nextStep(forwardA);
+					currentStep = "Moving to the landmark";
+					break;
+		/*---------------------------------Dropping down tote--------------------------------*/ 		
+    		case 8: elevatorUnlockA = robot.elevator.elevatorAutoRelease();
+					nextStep(elevatorUnlockA);
+					currentStep = "Unlocking the elevator A";
+					break;
+			
+    		case 9: elevatorDownA = robot.pot.elevatePID(liftZero);
+    				nextStep(elevatorDownA);
+    				currentStep = "Dropping container";
+    				break;
+    				
+    		case 10: flippersAutoReleaseB = robot.air.flippersAutoRelease();
+					nextStep(flippersAutoReleaseB);
+					currentStep = "Flippers release B";
+					break;
+					
+    		case 11: autonDone = true;
+					 break;	
+					
+			default: System.out.println("Auton One is defaulting");
+					break;
+    	}
     	
     	/*
 		switch (step) {
@@ -106,67 +163,6 @@ public class AutonOneTote extends Command {
 			break;
 		}
 		*/
-		
-    	switch (step) {
-    		case 1: flippersReleaseA = robot.air.flippersRelease();
-					Timer.delay(0.5);
-					nextStep(flippersReleaseA);
-					currentStep = "Flippers release A";
-					break;
-    	
-	    	case 2: elevatorZero = robot.pot.elevatePID(liftZero);
-					nextStep(elevatorZero);
-					currentStep = "Elevator zero";
-					break;
-					
-    		case 3: flippersGripA = robot.air.flippersGrip();
-    				Timer.delay(0.5);
-    				nextStep(flippersGripA);
-    				currentStep = "Flippers grip A";
-    				break;
-    				
-    		case 4: elevatorUpA = robot.pot.elevatePID(liftHeightA);
-					nextStep(elevatorUpA);
-					currentStep = "Lifting container A";
-					break;
-    				
-    		case 5: elevatorBrakeA = robot.elevator.elevatorLock();
-    				nextStep(elevatorBrakeA);
-    				currentStep = "Braking the elevator";
-    				break;
-    				
-    		case 6: turnA = robot.turn.PIDturnDegrees(turnDegA);
-					nextStep(turnA);
-					currentStep = "Turning 90 degrees";
-					break;
-					
-    		case 7: forwardA = robot.straightDist.driveDistance(forwardDistA);
-					nextStep(forwardA);
-					currentStep = "Moving to the landmark";
-					break;
-			
-    		case 8: elevatorUnlockA = robot.elevator.elevatorRelease();
-    				Timer.delay(0.5);
-					nextStep(elevatorUnlockA);
-					currentStep = "Unlocking the elevator";
-					break;
-			
-    		case 9: elevatorDownA = robot.pot.elevatePID(liftZero);
-    				nextStep(elevatorDownA);
-    				currentStep = "Dropping container";
-    				break;
-    				
-    		case 10: flippersReleaseB = robot.air.flippersRelease();
-					nextStep(flippersReleaseB);
-					currentStep = "Flippers in";
-					break;
-					
-    		case 11: autonDone = true;
-					 break;	
-					
-			default: System.out.println("Auton One is defaulting");
-					break;
-    	}
     }
     
     private void nextStep(boolean action) {
