@@ -87,7 +87,7 @@ public class Controllers {
 
 	public void ultraSonicDrive(double tolerance) {
 		
-		mult = robot.ultrasonic.UltraRampTele(Constants.teleopRampDist, tolerance);
+		mult = robot.ultrasonic.UltraRampTele(tolerance);
 		
 		if (!leftTrigger && !rightTrigger) {
 			

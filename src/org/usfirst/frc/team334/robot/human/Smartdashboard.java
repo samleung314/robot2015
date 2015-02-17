@@ -13,6 +13,8 @@ public class Smartdashboard {
     
     public double autoDist, autoSpeed, autoDegrees, autoHeight;
     
+    //public double ultraTote, ultraContatiner, MinMult, ultraZeroPoint,teleStartRamp;
+    
     public Smartdashboard(Robot robot) {
         this.robot = robot;
     }
@@ -45,6 +47,15 @@ public class Smartdashboard {
     	autoSpeed = pref.getDouble("Speed", 0);
     	autoDegrees = pref.getDouble("Degrees", 0);
     	autoHeight = pref.getDouble("Height", 30);
+    	/*
+    	ultraTote = pref.getDouble("tote", 4);
+    	ultraContatiner = pref.getDouble("contatiner", 12);
+    	MinMult = pref.getDouble("min mult (must be less than 1!!!!!)", .6);
+    	ultraZeroPoint = pref.getDouble("zero point", 2);
+    	teleStartRamp = pref.getDouble("start ramp dist tele", 2);
+    	*/
+    	
+    	
     	pref.save();
     }
 }

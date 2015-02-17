@@ -59,7 +59,7 @@ public class UltrasonicPID implements PIDOutput {
 		return ultrasonicPID.onTarget();
 	}
 	
-	public double UltraRampTele(double rampDist, double tolerance) {
+	public double UltraRampTele(double tolerance) {
 
 		rawDist = RawDist();
 
@@ -67,10 +67,10 @@ public class UltrasonicPID implements PIDOutput {
 			rawDist = Constants.ultraZeroPoint;
 		}
 
-		if (rawDist < rampDist) {
+		if (rawDist < Constants.rampDist) {
 			// $\frac{\left(\cos \left(x+\pi \right)+1\right)}{2}$ for DESMOS
 			rampVal = ((Math
-					.cos((((rawDist - Constants.ultraZeroPoint) / (rampDist - Constants.ultraZeroPoint)) * Math.PI)
+					.cos((((rawDist - Constants.ultraZeroPoint) / (Constants.rampDist - Constants.ultraZeroPoint)) * Math.PI)
 							+ Math.PI) + 1) / 2);
 		} else {
 			rampVal = 1;
@@ -88,18 +88,19 @@ public class UltrasonicPID implements PIDOutput {
 		return rampVal;
 	}
 
-	public boolean UltraRampAuto(double rampDist, double tolerance) {
+	public boolean UltraRampAuto(double tolerance) {
 
+		
 		rawDist = RawDist();
 
 		if (rawDist < Constants.ultraZeroPoint) {
 			rawDist = Constants.ultraZeroPoint;
 		}
 
-		if (rawDist < rampDist) {
+		if (rawDist < Constants.rampDist) {
 			// $\frac{\left(\cos \left(x+\pi \right)+1\right)}{2}$ for DESMOS
 			rampVal = ((Math.cos((((rawDist - Constants.ultraZeroPoint) / 
-						(rampDist - Constants.ultraZeroPoint)) * Math.PI)
+						(Constants.rampDist - Constants.ultraZeroPoint)) * Math.PI)
 							+ Math.PI) + 1) / 2);
 		} else {
 			rampVal = 1;
@@ -108,7 +109,8 @@ public class UltrasonicPID implements PIDOutput {
 		if (rampVal < Constants.cutoffMult) {
 			rampVal = Constants.cutoffMult;
 		}
-
+        
+		rampVal = rampVal * Constants.ultraAutonMaxSpeed;
 		robot.drive.doubleVicsDrive(rampVal, rampVal);  //PIDs ????? drive straight
 		
 		inPosition = (Constants.ultraZeroPoint + tolerance > RawDist());

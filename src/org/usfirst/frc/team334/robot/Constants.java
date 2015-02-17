@@ -21,12 +21,15 @@ public class Constants {
 	public static final double highGearSpeed = 0.65;
 	public static final double lowGearSpeed = 0.45;
 	
+	public static final double ultraAutonMaxSpeed = .5;
+	
 	/*Sensors*/
-	public static final double  ultraZeroPoint = 2;
-
+	public static final double  ultraZeroPoint = 2.75;
+	public static final double  rampDist = 20;
+	
 	public static final double cutoffMult = 0.6;
-    public static final double canTolerance = 12;
-    public static final double toteTolerance = 4;
+    public static final double canTolerance = 9;
+    public static final double toteTolerance = 1;
 
 	
 	/*Digital I/O*/
@@ -79,8 +82,6 @@ public class Constants {
     public static final double elevatorPotHIGHLimit = 0.281;
     public static final double elevatorRawLength = elevatorPotLOWLimit - elevatorPotHIGHLimit;
     public static final double elevatorHeight = 51 + ((double)3/4); //Inches
-    
-    public static final double teleopRampDist = 20;
     
     public static final double distancePIDTolerance = 1.5; //+- 0.5 inch from target
     public static final double elevatorPIDTolerance = 0.7; //+- 0.5 inch from target
