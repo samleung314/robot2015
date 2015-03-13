@@ -102,7 +102,7 @@ public class AutonTwoContainer extends Command {
 			break;
 
 		case 4:
-			elevateUpA = robot.pot.elevatePIDLock(liftHeightA);
+			elevateUpA = robot.pot.elevatePID(liftHeightA);
 			nextStep(elevateUpA);
 			currentStep = "Lifting first containter";
 			break;
@@ -158,7 +158,7 @@ public class AutonTwoContainer extends Command {
 			break;
 
 		case 13:
-			elevatorUpB = robot.pot.elevatePIDLock(liftHeightB);
+			elevatorUpB = robot.pot.elevatePID(liftHeightB);
 			nextStep(elevatorUpB);
 			currentStep = "Lifting second containter";
 			break;

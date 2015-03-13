@@ -86,6 +86,7 @@ public class AutonThreeTote extends Command {
   
     	//driveTurn();
     	//withBrake();
+    	//withBrakeFix();
     	noBrake();
     }
     
@@ -238,7 +239,7 @@ public class AutonThreeTote extends Command {
 			break;
 
 		case 4:
-			liftToteA = robot.pot.elevatePIDLock(liftHeightA);
+			liftToteA = robot.pot.elevatePIDLockFix(liftHeightA);
 			nextStep(robot.pot.elevatorPID.onTarget());
 			currentStep = "Lift tote A";
 			break;
@@ -269,7 +270,7 @@ public class AutonThreeTote extends Command {
 			break;
 
 		case 9:
-			liftToteB = robot.pot.elevatePIDLock(liftHeightB);
+			liftToteB = robot.pot.elevatePIDLockFix(liftHeightB);
 			nextStep(liftToteB);
 			currentStep = "Lift second tote";
 			break;
@@ -288,7 +289,7 @@ public class AutonThreeTote extends Command {
 			break;
 
 		case 12:
-			elevateDownB = robot.pot.elevatePIDLock(liftZero);
+			elevateDownB = robot.pot.elevatePIDLockFix(liftZero);
 			nextStep(elevateDownB);
 			currentStep = "Drop elevator B";
 			break;
@@ -300,7 +301,7 @@ public class AutonThreeTote extends Command {
 			break;
 
 		case 14:
-			liftToteC = robot.pot.elevatePIDLock(liftHeightC);
+			liftToteC = robot.pot.elevatePIDLockFix(liftHeightC);
 			nextStep(liftToteC);
 			currentStep = "Lifting third tote";
 			break;
@@ -327,7 +328,134 @@ public class AutonThreeTote extends Command {
 			break;
 			
 		case 18:
-			elevateDownC = robot.pot.elevatePIDLock(liftZero);
+			elevateDownC = robot.pot.elevatePIDLockFix(liftZero);
+			nextStep(elevateDownC);
+			currentStep = "Dropping off tote stack";
+			break;
+
+		case 19:
+			autonDone = true;
+			currentStep = "Autonomous Three Done";
+			break;
+
+		default:
+			System.out.println("Auton Three is defaulting");
+			break;
+    	}
+    }
+    
+    private void withBrakeFix() {
+    	switch (step) {
+		//---------------------------------Starting Position--------------------------------
+		case 1:
+			flippersStart = robot.air.flippersAutoRelease();
+			nextStep(flippersStart);
+			currentStep = "Flippers start";
+			break;
+
+		case 2:
+			elevatorZero = robot.pot.elevatePIDLockFix(liftZero);
+			nextStep(elevatorZero);
+			currentStep = "Elevator zero";
+			break;
+		//---------------------------------Pickup first tote-------------------------------- 
+		case 3:
+			flippersGripA = robot.air.flippersAutoGrip();
+			nextStep(flippersGripA);
+			currentStep = "Flippers grip A";
+			break;
+
+		case 4:
+			liftToteA = robot.pot.elevatePIDLockFix(liftHeightA);
+			nextStep(robot.pot.elevatorPID.onTarget());
+			currentStep = "Lift tote A";
+			break;
+
+		case 5:
+			travelForwardA = robot.straight.driveDistance(forwardDistA);
+			nextStep(travelForwardA);
+			currentStep = "Move to second tote";
+			break;
+			
+		//---------------------------------Pickup second tote-------------------------------- 
+		case 6:
+			flippersReleaseA = robot.air.flippersAutoRelease();
+			nextStep(flippersReleaseA);
+			currentStep = "Flippers release A";
+			break;
+
+		case 7:
+			elevateDownA = robot.pot.elevatePIDLockFix(liftZero);
+			nextStep(elevateDownA);
+			currentStep = "Drop elevator A";
+			break;
+			
+		case 8:
+			flippersGripB = robot.air.flippersAutoGrip();
+			nextStep(flippersGripB);
+			currentStep = "Flippers grip B";
+			break;
+
+		case 9:
+			liftToteB = robot.pot.elevatePIDLockFix(liftHeightB);
+			nextStep(liftToteB);
+			currentStep = "Lift second tote";
+			break;
+			
+		//---------------------------------Pickup third tote-------------------------------- 
+		case 10:
+			travelForwardB = robot.straight.driveDistance(forwardDistB);
+			nextStep(travelForwardB);
+			currentStep = "Move to third tote";
+			break;
+			
+		case 11:
+			flippersGripB = robot.air.flippersAutoRelease();
+			nextStep(flippersGripB);
+			currentStep = "Flippers release B";
+			break;
+
+		case 12:
+			elevateDownB = robot.pot.elevatePIDLockFix(liftZero);
+			nextStep(elevateDownB);
+			currentStep = "Drop elevator B";
+			break;
+			
+		case 13:
+			flippersGripC = robot.air.flippersAutoGrip();
+			nextStep(flippersGripC);
+			currentStep = "Flippers grip C";
+			break;
+
+		case 14:
+			liftToteC = robot.pot.elevatePIDLockFix(liftHeightC);
+			nextStep(liftToteC);
+			currentStep = "Lifting third tote";
+			break;
+
+		//---------------------------------Move to autozone-------------------------------- 
+		case 15:
+			turnA = robot.turn.PIDturnDegrees(turnDegreesA);
+			nextStep(turnA);
+			currentStep = "Turning towards autozone";
+			break;
+
+		case 16:
+			travelForwardC = robot.straight.driveDistance(forwardDistC);
+			nextStep(travelForwardC);
+			currentStep = "Driving into autozone";
+			break;
+		
+		//---------------------------------Drop stack-------------------------------- 
+
+		case 17:
+			flippersReleaseB = robot.air.flippersAutoRelease();
+			nextStep(flippersReleaseB);
+			currentStep = "Flippers release B";
+			break;
+			
+		case 18:
+			elevateDownC = robot.pot.elevatePIDLockFix(liftZero);
 			nextStep(elevateDownC);
 			currentStep = "Dropping off tote stack";
 			break;
