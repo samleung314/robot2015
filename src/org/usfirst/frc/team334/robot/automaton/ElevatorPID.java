@@ -36,6 +36,8 @@ public class ElevatorPID implements PIDSource{
 		elevatorPID.enable();
 		
 		if(elevatorPID.onTarget()) {
+			elevatorPID.disable();
+			robot.elevator.elevatorSingle.set(0);
 			return true;
 		}
 		else {

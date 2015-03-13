@@ -29,7 +29,9 @@ public class AutonOneContainer extends Command {
 			
 			elevatorUnlockA,
 			elevatorDownA,
-			flippersAutoReleaseB;
+			flippersAutoReleaseB,
+			
+			forwardTest;
 	
 	double liftZero = 0,
 		   liftHeightA = 30, 
@@ -53,6 +55,8 @@ public class AutonOneContainer extends Command {
     	autonDone = flippersReleaseA = elevatorZero = flippersGripA = elevatorUpA = elevatorBrakeA = 
     	elevatorUnlockA = turnA = forwardA = elevatorDownA = flippersAutoReleaseB = false;
     	
+    	forwardTest = false;
+    	
     	autonTime.start();
     }
 
@@ -62,8 +66,13 @@ public class AutonOneContainer extends Command {
     	SmartDashboard.putString("Current Step", currentStep);
     	System.out.println("------------> " + currentStep);
 		
+    	distancePID(robot.smart.autoDist);
     	//withBrake();
-    	noBrake();
+    	//noBrake();
+    }
+    
+    private void distancePID(double distance) {
+    	forwardTest = robot.straight.driveDistance(distance);
     }
     
     private void noBrake() {

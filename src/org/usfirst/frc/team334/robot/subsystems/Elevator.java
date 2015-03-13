@@ -14,6 +14,7 @@ public class Elevator {
 
 	private final VictorSP elevatorVicA;
 	private final VictorSP elevatorVicB;
+	public final VictorSP elevatorSingle;
 
 	public DoubleVics elevatorVics;
 
@@ -25,10 +26,12 @@ public class Elevator {
 	public Elevator(Robot robot) {
 		this.robot = robot;
 
-		elevatorVicA = new VictorSP(Constants.elevatorVictorA);
+		elevatorVicA = new VictorSP(4);
 		elevatorVicB = new VictorSP(Constants.elevatorVictorB);
 
 		elevatorVics = new DoubleVics(elevatorVicA, elevatorVicB);
+		
+		elevatorSingle = new VictorSP(Constants.elevatorVictorA);
 		
 		//Limit switches return raw value of false when pressed
 		highSwitches = new DigitalInput(Constants.highSwitches);
@@ -65,11 +68,11 @@ public class Elevator {
 	
 	public boolean zeroElevator() {
 		if(!bottomOut()) {
-			elevatorVics.set(-0.3);
+			elevatorSingle.set(1);
 			return bottomOut();
 		}
 		else {
-			elevatorVics.set(0);
+			elevatorSingle.set(0);
 			return bottomOut();
 		}
 	}
@@ -88,12 +91,17 @@ public class Elevator {
         }
     }
     
+    public void singleVicElevator(double speed) {
+    	if (!topOut() && speed <= 0) {
+    		elevatorSingle.set(speed); //By default, up is negative and down is positive. 
+        } else if (!bottomOut() && speed >= 0) {
+            elevatorSingle.set(speed);
+        } else {
+        	elevatorSingle.set(0);
+        }
+    }
+    
     public void noSafety(double speed) { //USE ONLY FOR TESTING. ENSURE IT'S SAFE
-    	if (!locked) {
-    		elevatorVics.set(speed);
-    	}
-    	else {
-    		elevatorVics.set(0);
-    	}
+    	elevatorSingle.set(speed);
     }
 }

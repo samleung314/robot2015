@@ -17,7 +17,10 @@ public class Controllers {
 	/* xBox Controller Inputs */
 	// Pushing up returns negative values, pulling returns positive values
 	public double xBoxLeftY, xBoxRightY, xBoxLeftTrigger, xBoxRightTrigger;
-	boolean xBoxA, xBoxB, xBoxX, xBoxY, xBoxLeftBump, xBoxRightBump, rightJoyFour, rightJoyFive,
+	
+	boolean xBoxA, xBoxB, xBoxX, xBoxY, xBoxLeftBump, xBoxRightBump, 
+	leftJoyTwo, leftJoyThree, leftJoyFour, leftJoyFive, 
+	rightJoyTwo, rightJoyThree, rightJoyFour, rightJoyFive,
 			press;
 
 	public int elevatorLevel = 0;
@@ -25,7 +28,7 @@ public class Controllers {
 	/* Joystick Controllers Input */
 	// Pushing up returns negative values, pulling returns positive values
 	double leftJoyY, rightJoyY;
-	boolean leftTrigger, rightTrigger, leftJoyThree, rightJoyThree, xBoxYClicked = false,
+	boolean leftTrigger, rightTrigger, xBoxYClicked = false,
 			xBoxAClicked = false;
 
 	private double mult;
@@ -55,9 +58,13 @@ public class Controllers {
 		// Joysticks
 		leftJoyY = leftJoy.getY();
 		leftTrigger = leftJoy.getTrigger();
+		leftJoyTwo = leftJoy.getRawButton(2);
 		leftJoyThree = leftJoy.getRawButton(3);
+		leftJoyFour = leftJoy.getRawButton(4);
+		leftJoyFive = leftJoy.getRawButton(5);
 		
 		rightJoyY = rightJoy.getY();
+		rightJoyTwo = rightJoy.getRawButton(2);
 		rightJoyThree = rightJoy.getRawButton(3);
 		rightJoyFour = rightJoy.getRawButton(4);
 		rightJoyFive = rightJoy.getRawButton(5);
@@ -87,8 +94,9 @@ public class Controllers {
 
 	// Driving with the joystick controllers
 	public void joystickDrive() {
-		robot.drive.chasisDrive.tankDrive(-Constants.driveMuliplier * leftJoyY, -Constants.driveMuliplier * rightJoyY);
+		robot.drive.chasisDrive.tankDrive(Constants.driveMuliplier * -leftJoyY, Constants.driveMuliplier * -rightJoyY);
 	}
+	
 	/*
     public void dynamicDrive()
     {
@@ -102,6 +110,7 @@ public class Controllers {
     	}
     }
     */
+	
 	// Used for testing solenoids
 	public void testSolenoids() {
 		if (xBoxA) {
@@ -121,14 +130,44 @@ public class Controllers {
 
 	// Mapping elevator functionality to xBox
 	public void controlElevator() {
-		robot.elevator.doubleVicsElevator(-xBoxLeftY);
+		
+		if (xBoxLeftBump) {
+			robot.elevator.noSafety(xBoxLeftY);
+		}
+		else {
+			robot.elevator.singleVicElevator(xBoxLeftY);
+		}
 
-		if (xBoxLeftBump) robot.elevator.elevatorRelease();
-		else if (xBoxRightBump) robot.elevator.elevatorLock();
-		else if(xBoxA) robot.air.flippersGrip();
+		//if (xBoxLeftBump) robot.elevator.elevatorRelease();
+		//else if (xBoxRightBump) robot.elevator.elevatorLock();
+		
+	    if(xBoxA) robot.air.flippersGrip();
 		else if(xBoxB) robot.air.flippersRelease();
-		else if(xBoxX) robot.air.armsRetract();
-		else if(xBoxY) robot.air.armsExtend();
+		else if(xBoxX) robot.air.armsExtend();
+		else if(xBoxY) robot.air.armsRetract();
+		
+	    /*
+        if(leftJoyThree) robot.air.flippersGrip();
+		else if(leftJoyTwo) robot.air.flippersRelease();
+        
+		else if(rightJoyTwo) robot.air.armsRetract();
+		else if(rightJoyThree) robot.air.armsExtend();
+        
+		else if(rightJoyFour) robot.air.dogLock();
+		else if(rightJoyFive) robot.air.dogRelease();
+		*/
+	}
+	
+	public double returnSpeed() {
+		 if (leftJoyFour) {
+			 return -1; //Up
+		 }
+		 else if (leftJoyFive){
+			 return 1; //Down
+		 }
+		 else {
+			 return 0; //Stop
+		 }
 	}
 
 	public double deadZone(double input) {

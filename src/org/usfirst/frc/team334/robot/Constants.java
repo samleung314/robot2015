@@ -75,8 +75,8 @@ public class Constants {
     /*ETC*/
     public static final double encoderDistancePerPulse = ((double)9/1088) * Math.PI; //(18/34)*((4*Math.PI)/256);
     
-    public static final double elevatorPotLOWLimit = 0.908;
-    public static final double elevatorPotHIGHLimit = 0.281;
+    public static final double elevatorPotLOWLimit = 0.910;
+    public static final double elevatorPotHIGHLimit = 0.210;
     public static final double elevatorRawLength = elevatorPotLOWLimit - elevatorPotHIGHLimit;
     public static final double elevatorHeight = 51 + ((double)3/4); //Inches
     

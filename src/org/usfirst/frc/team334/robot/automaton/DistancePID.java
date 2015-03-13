@@ -12,7 +12,7 @@ public class DistancePID implements PIDOutput {
     Robot robot;
 
     public PIDController distancePID;
-    double rampKp = 0.018, rampKi = 0, rampKd = 0.028, rampSpeed;
+    double rampKp, rampKi, rampKd, rampSpeed;
 
     Timer rampUpTime, rampDownTime;
 

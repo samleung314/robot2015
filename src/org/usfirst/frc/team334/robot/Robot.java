@@ -85,7 +85,7 @@ public class Robot extends IterativeRobot {
 	}
 
 	public void autonomousPeriodic() {
-		Scheduler.getInstance().run();
+		//Scheduler.getInstance().run();
 		//elevatorTuning();
 		//runOnce();
 		//distanceTuning(smart.autoDist);
@@ -133,29 +133,35 @@ public class Robot extends IterativeRobot {
 
 	public void teleopInit() {
 		elevator.elevatorRelease(); // Elevator starts unlocked
-		air.flippersRelease(); //Flippers start released
+		//air.flippersRelease(); //Flippers start released
 		encode.resetEncoders();
 		turn.gyro.reset();
 		
 		/*Disable the PIDs*/
+		distance.distancePID.disable();
+		pot.elevatorPID.disable();
 		straight.keepStraightPID.disable();
 		turn.turnPID.disable();
-		distance.distancePID.disable();
 		ultrasonic.ultrasonicPID.disable();
-		pot.elevatorPID.disable();
 	}
 
 	public void teleopPeriodic() {
 		air.chargeAir();
 		
 		control.getControllers();
-		control.riceOperate();
-		control.forestDrive();
+		control.joystickDrive();
+		control.controlElevator();
+		
+		//control.riceOperate();
+		//control.forestDrive();
 
 		//smart.displaySensors();
 		
-		SmartDashboard.putNumber("Gyro", turn.gyro.getAngle());
-		SmartDashboard.putNumber("Elevator Height", pot.getLevel());
+		/*SmartDashboard.putNumber("Gyro", turn.gyro.getAngle());
+		SmartDashboard.putNumber("Elevator Height", pot.getLevel());*/
 		SmartDashboard.putNumber("Elevator Raw", pot.elevatorPot.get());
+		
+		SmartDashboard.putBoolean("Top Out", elevator.topOut());
+		SmartDashboard.putBoolean("Bottom Out", elevator.bottomOut());
 	}
 }

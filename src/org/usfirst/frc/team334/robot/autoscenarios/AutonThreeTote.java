@@ -99,7 +99,7 @@ public class AutonThreeTote extends Command {
 			break;
 
 		case 2:
-			elevatorZero = robot.pot.elevatePID(liftZero);
+			elevatorZero = robot.elevator.zeroElevator();
 			nextStep(elevatorZero);
 			currentStep = "Elevator zero";
 			break;
@@ -112,7 +112,7 @@ public class AutonThreeTote extends Command {
 
 		case 4:
 			liftToteA = robot.pot.elevatePID(liftHeightA);
-			nextStep(robot.pot.elevatorPID.onTarget());
+			nextStep(liftToteA);
 			currentStep = "Lift tote A";
 			break;
 
@@ -130,7 +130,7 @@ public class AutonThreeTote extends Command {
 			break;
 
 		case 7:
-			elevateDownA = robot.pot.elevatePID(liftZero);
+			elevateDownA = robot.elevator.zeroElevator();
 			nextStep(elevateDownA);
 			currentStep = "Drop elevator A";
 			break;
@@ -161,7 +161,7 @@ public class AutonThreeTote extends Command {
 			break;
 
 		case 12:
-			elevateDownB = robot.pot.elevatePID(liftZero);
+			elevateDownB = robot.elevator.zeroElevator();
 			nextStep(elevateDownB);
 			currentStep = "Drop elevator B";
 			break;
@@ -200,7 +200,7 @@ public class AutonThreeTote extends Command {
 			break;
 			
 		case 18:
-			elevateDownC = robot.pot.elevatePID(liftZero);
+			elevateDownC = robot.elevator.zeroElevator();
 			nextStep(elevateDownC);
 			currentStep = "Dropping off tote stack";
 			break;
@@ -226,7 +226,7 @@ public class AutonThreeTote extends Command {
 			break;
 
 		case 2:
-			elevatorZero = robot.pot.elevatePID(liftZero);
+			elevatorZero = robot.elevator.zeroElevator();
 			nextStep(elevatorZero);
 			currentStep = "Elevator zero";
 			break;
@@ -257,7 +257,7 @@ public class AutonThreeTote extends Command {
 			break;
 
 		case 7:
-			elevateDownA = robot.pot.elevatePID(liftZero);
+			elevateDownA = robot.elevator.zeroElevator();
 			nextStep(elevateDownA);
 			currentStep = "Drop elevator A";
 			break;
