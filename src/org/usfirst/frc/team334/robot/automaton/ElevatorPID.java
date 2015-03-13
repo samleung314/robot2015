@@ -16,13 +16,13 @@ public class ElevatorPID implements PIDSource{
 	public AnalogPotentiometer elevatorPot;
 	public PIDController elevatorPID;
 	
-	double p = 0.2, i = 0.045, d = 0.001;
+	double p = 0.70, i, d;
 	
 	public ElevatorPID(Robot robot) {
 		this.robot = robot;
 		elevatorPot = new AnalogPotentiometer(Constants.elevatorPot);
 		
-		elevatorPID = new PIDController(p, i, d, this, robot.elevator.elevatorVics);
+		elevatorPID = new PIDController(p, i, d, this, robot.elevator.elevatorSingle);
 		elevatorPID.setAbsoluteTolerance(Constants.elevatorPIDTolerance);
 	}
 	
@@ -33,7 +33,7 @@ public class ElevatorPID implements PIDSource{
 	
 	public boolean elevatePID(double height) {
 		elevatorPID.setOutputRange(-1, 1);
-		elevatorPID.setSetpoint(height);
+		elevatorPID.setSetpoint(-height);
 		elevatorPID.enable();
 		
 		if(elevatorPID.onTarget()) {
@@ -150,6 +150,6 @@ public class ElevatorPID implements PIDSource{
 
 	@Override
 	public double pidGet() {
-		return getLevel();
+		return -getLevel();
 	}
 }

@@ -18,10 +18,10 @@ public class Controllers {
 	// Pushing up returns negative values, pulling returns positive values
 	public double xBoxLeftY, xBoxRightY, xBoxLeftTrigger, xBoxRightTrigger;
 	
-	boolean xBoxA, xBoxB, xBoxX, xBoxY, xBoxLeftBump, xBoxRightBump, 
+	boolean xBoxA, xBoxB, xBoxX, xBoxY, xBoxBack, xBoxStart, xBoxLeftBump, xBoxRightBump, 
 	leftJoyTwo, leftJoyThree, leftJoyFour, leftJoyFive, 
 	rightJoyTwo, rightJoyThree, rightJoyFour, rightJoyFive,
-			press;
+	pidRun, press;
 
 	public int elevatorLevel = 0;
 
@@ -29,14 +29,14 @@ public class Controllers {
 	// Pushing up returns negative values, pulling returns positive values
 	double leftJoyY, rightJoyY;
 	boolean leftTrigger, rightTrigger, xBoxYClicked = false,
-			xBoxAClicked = false;
+			xBoxAClicked = pidRun =  false;
 
 	private double mult;
 	
 	public Controllers(Robot robot) {
 		this.robot = robot;
 		
-		press = false;
+		press = pidRun = false;
 	}
 
 	// Updates variables with controller inputs. Needs to be run periodically
@@ -49,6 +49,8 @@ public class Controllers {
 		xBoxB = xBox.getRawButton(2);
 		xBoxX = xBox.getRawButton(3);
 		xBoxY = xBox.getRawButton(4);
+		xBoxBack = xBox.getRawButton(7);
+		xBoxStart = xBox.getRawButton(8);
 		xBoxLeftBump = xBox.getRawButton(5);
 		xBoxRightBump = xBox.getRawButton(6);
 		xBoxLeftTrigger = xBox.getRawAxis(2);
@@ -131,20 +133,26 @@ public class Controllers {
 	// Mapping elevator functionality to xBox
 	public void controlElevator() {
 		
-		if (xBoxLeftBump) {
+		if (xBoxBack) {
 			robot.elevator.noSafety(xBoxLeftY);
 		}
 		else {
 			robot.elevator.singleVicElevator(xBoxLeftY);
 		}
 
-		//if (xBoxLeftBump) robot.elevator.elevatorRelease();
-		//else if (xBoxRightBump) robot.elevator.elevatorLock();
+		if (xBoxLeftBump) {
+			robot.pot.elevatePID(12);
+		}
+		else if (xBoxRightBump) {
+			robot.pot.elevatePID(34);
+		}
 		
-	    if(xBoxA) robot.air.flippersGrip();
+		else if(xBoxA) robot.air.flippersGrip();
 		else if(xBoxB) robot.air.flippersRelease();
 		else if(xBoxX) robot.air.armsExtend();
 		else if(xBoxY) robot.air.armsRetract();
+		
+		pidRun = robot.pot.elevatorPID.onTarget();
 		
 	    /*
         if(leftJoyThree) robot.air.flippersGrip();

@@ -78,10 +78,10 @@ public class Constants {
     public static final double elevatorPotLOWLimit = 0.910;
     public static final double elevatorPotHIGHLimit = 0.210;
     public static final double elevatorRawLength = elevatorPotLOWLimit - elevatorPotHIGHLimit;
-    public static final double elevatorHeight = 57; // + ((double)3/4); //Inches
+    public static final double elevatorHeight = 56 + (double)1/8; // + ((double)3/4); //Inches
     
     public static final double distancePIDTolerance = 1.5; //+- 0.5 inch from target
-    public static final double elevatorPIDTolerance = 1; //+- 0.5 inch from target
+    public static final double elevatorPIDTolerance = 0.6; //+- 0.5 inch from target
     public static final double turnPIDTolerance = 1; //+-1 degree tolerance from target
     public static final double ultraSonicPIDTolerance = .5;
     

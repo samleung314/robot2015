@@ -86,7 +86,7 @@ public class Robot extends IterativeRobot {
 
 	public void autonomousPeriodic() {
 		//Scheduler.getInstance().run();
-		//elevatorTuning();
+		elevatorTuning();
 		//runOnce();
 		//distanceTuning(smart.autoDist);
 		//turnTuning(smart.autoDegrees);
@@ -122,10 +122,8 @@ public class Robot extends IterativeRobot {
 	}
 	
 	public void elevatorTuning() {
-		if(!clamp) {
-			clamp = air.flippersAutoGrip();
-		} else if(clamp && !lifted) {
-			lifted = pot.elevatePID(30);
+		if(!lifted) {
+			lifted = pot.elevatePID(smart.autoHeight);
 		}
 		
 		SmartDashboard.putBoolean("LIFTED?", lifted);
@@ -157,8 +155,8 @@ public class Robot extends IterativeRobot {
 
 		//smart.displaySensors();
 		
-		/*SmartDashboard.putNumber("Gyro", turn.gyro.getAngle());
-		SmartDashboard.putNumber("Elevator Height", pot.getLevel());*/
+		//SmartDashboard.putNumber("Gyro", turn.gyro.getAngle());
+		SmartDashboard.putNumber("Elevator Height", pot.getLevel());
 		SmartDashboard.putNumber("Elevator Raw", pot.elevatorPot.get());
 		
 		SmartDashboard.putBoolean("Top Out", elevator.topOut());
