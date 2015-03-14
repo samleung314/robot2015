@@ -32,7 +32,7 @@ public class AutonOneTote extends Command {
 			flippersAutoReleaseB;
 	
 	double liftZero = 0,
-		   liftHeightA = 14, 
+		   liftHeightA = 30, 
 		   turnDegA = 90,
 		   forwardDistA = 141.5;
 	
@@ -74,7 +74,7 @@ public class AutonOneTote extends Command {
 					currentStep = "Flippers release A";
 					break;
     	
-	    	case 2: elevatorZero = robot.pot.elevatePID(liftZero);
+	    	case 2: elevatorZero = robot.elevator.zeroElevator();
 					nextStep(elevatorZero);
 					currentStep = "Elevator zero";
 					break;
@@ -90,24 +90,24 @@ public class AutonOneTote extends Command {
 					break;
     			
     	/*---------------------------------Move to autozone--------------------------------*/ 
-    		case 5: turnA = robot.turn.PIDturnDegrees(turnDegA);
-					nextStep(turnA);
+    		case 5: //turnA = robot.turn.PIDturnDegrees(turnDegA);
+					nextStep(true);
 					currentStep = "Turning 90 degrees A";
 					break;
 					
-    		case 6: forwardA = robot.straight.driveDistance(forwardDistA);
-					nextStep(forwardA);
+    		case 6: //forwardA = robot.straight.driveDistance(forwardDistA);
+					nextStep(true);
 					currentStep = "Moving to the landmark";
 					break;
 		/*---------------------------------Dropping down tote--------------------------------*/ 		
 			
-    		case 7: elevatorDownA = robot.pot.elevatePID(liftZero);
-    				nextStep(elevatorDownA);
+    		case 7: //elevatorDownA = robot.pot.elevatePID(liftZero);
+    				nextStep(true);
     				currentStep = "Dropping container";
     				break;
     				
-    		case 8: flippersAutoReleaseB = robot.air.flippersAutoRelease();
-					nextStep(flippersAutoReleaseB);
+    		case 8: //flippersAutoReleaseB = robot.air.flippersAutoRelease();
+					nextStep(true);
 					currentStep = "Flippers release B";
 					break;
 					

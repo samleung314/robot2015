@@ -68,6 +68,20 @@ public class Air {
 		return true;
 	}
 	
+	public boolean armsAutoExtend() { //Extends grabbers
+		solA.set(Value.kForward);
+		solB.set(Value.kForward);
+		Timer.delay(0.5);
+		return true;
+	}
+	
+	public boolean armsAutoRetract() { //Retracts grabbers
+		solA.set(Value.kReverse);
+		solB.set(Value.kReverse);
+		Timer.delay(0.5);
+		return true;
+	}
+	
 	public boolean flippersGrip() {
 		solE.set(Value.kForward);
 		return true;

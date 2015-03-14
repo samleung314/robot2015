@@ -133,27 +133,30 @@ public class Controllers {
 	// Mapping elevator functionality to xBox
 	public void controlElevator() {
 		
-		if (xBoxBack) {
+		if (xBoxStart) {
+			robot.pot.elevatorPID.disable();
 			robot.elevator.noSafety(xBoxLeftY);
-		}
-		else {
-			robot.elevator.singleVicElevator(xBoxLeftY);
+		} else {
+			if (xBoxLeftY < 0.15 && xBoxLeftY > -0.15) {
+				if (xBoxLeftBump) {
+					robot.pot.elevatePID(12);
+				} else if (xBoxRightBump) {
+					robot.pot.elevatePID(38);
+				} else {
+					robot.pot.elevatorPID.disable();
+					robot.elevator.singleVicElevator(0);
+				}
+				
+			} else {
+				robot.elevator.singleVicElevator(xBoxLeftY);
+			}
 		}
 
-		if (xBoxLeftBump) {
-			robot.pot.elevatePID(12);
-		}
-		else if (xBoxRightBump) {
-			robot.pot.elevatePID(34);
-		}
-		
-		else if(xBoxA) robot.air.flippersGrip();
+	    if(xBoxA) robot.air.flippersGrip();
 		else if(xBoxB) robot.air.flippersRelease();
 		else if(xBoxX) robot.air.armsExtend();
 		else if(xBoxY) robot.air.armsRetract();
-		
-		pidRun = robot.pot.elevatorPID.onTarget();
-		
+	    
 	    /*
         if(leftJoyThree) robot.air.flippersGrip();
 		else if(leftJoyTwo) robot.air.flippersRelease();
@@ -220,24 +223,7 @@ public class Controllers {
 					* mult, Constants.lowGearSpeed * rightJoyY * mult);
 		}
 	}
-/*	
-public void ultraSonicDrive(double tolerance) {
-		
-		mult = robot.ultrasonic.UltraRampTele(tolerance);
-		
-		if (!leftTrigger && !rightTrigger) {
-			
-			robot.drive.chasisDrive.tankDrive(Constants.highGearSpeed
-					* leftJoyY * mult, Constants.highGearSpeed * rightJoyY * mult);
-			
-		} else {
-			
-			robot.drive.chasisDrive.tankDrive(
-					Constants.lowGearSpeed * leftJoyY * mult, Constants.lowGearSpeed
-							* rightJoyY* mult);
-		}
-	}
-*/
+
 	public void riceOperate() {
 		if (xBoxLeftBump) {
 			robot.air.armsExtend();

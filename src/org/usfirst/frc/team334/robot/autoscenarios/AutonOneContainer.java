@@ -66,9 +66,8 @@ public class AutonOneContainer extends Command {
     	SmartDashboard.putString("Current Step", currentStep);
     	System.out.println("------------> " + currentStep);
 		
-    	distancePID(robot.smart.autoDist);
     	//withBrake();
-    	//noBrake();
+    	noBrake();
     }
     
     private void distancePID(double distance) {
@@ -78,44 +77,44 @@ public class AutonOneContainer extends Command {
     private void noBrake() {
     	switch (step) {
     	/*---------------------------------Starting Position--------------------------------*/ 
-    		case 1: flippersReleaseA = robot.air.flippersAutoRelease();
+    		case 1: flippersReleaseA = robot.air.armsAutoExtend();
 					nextStep(flippersReleaseA);
 					currentStep = "Flippers release A";
 					break;
     	
-	    	case 2: elevatorZero = robot.pot.elevatePID(liftZero);
+	    	case 2: flippersGripA = robot.air.flippersAutoGrip();
+					nextStep(flippersGripA);
+					currentStep = "Flippers grip A";
+					break;
+		/*---------------------------------Pickup tote------------------------------------*/ 
+    		case 3: elevatorZero = robot.pot.elevatePID(26);
 					nextStep(elevatorZero);
 					currentStep = "Elevator zero";
 					break;
-		/*---------------------------------Pickup tote------------------------------------*/ 
-    		case 3: flippersGripA = robot.air.flippersAutoGrip();
-    				nextStep(flippersGripA);
-    				currentStep = "Flippers grip A";
-    				break;
     				
-    		case 4: elevatorUpA = robot.pot.elevatePID(liftHeightA);
-					nextStep(elevatorUpA);
+    		case 4: //elevatorUpA = robot.pot.elevatePID(liftHeightA);
+					nextStep(true);
 					currentStep = "Lifting container A";
 					break;
     				
     	/*---------------------------------Move to autozone--------------------------------*/ 
-    		case 5: turnA = robot.turn.PIDturnDegrees(turnDegA);
-					nextStep(turnA);
+    		case 5: //turnA = robot.turn.PIDturnDegrees(turnDegA);
+					nextStep(true);
 					currentStep = "Turning 90 degrees A";
 					break;
 					
-    		case 6: forwardA = robot.straight.driveDistance(forwardDistA);
-					nextStep(forwardA);
+    		case 6: //forwardA = robot.straight.driveDistance(forwardDistA);
+					nextStep(true);
 					currentStep = "Moving to the landmark";
 					break;
 		/*---------------------------------Dropping down tote--------------------------------*/ 		
-    		case 7: elevatorDownA = robot.pot.elevatePID(liftZero);
-    				nextStep(elevatorDownA);
+    		case 7://elevatorDownA = robot.elevator.zeroElevator();
+    				nextStep(true);
     				currentStep = "Dropping container";
     				break;
     				
-    		case 8: flippersAutoReleaseB = robot.air.flippersAutoRelease();
-					nextStep(flippersAutoReleaseB);
+    		case 8: //flippersAutoReleaseB = robot.air.flippersAutoRelease();
+					nextStep(true);
 					currentStep = "Flippers release B";
 					break;
 					
@@ -151,17 +150,17 @@ public class AutonOneContainer extends Command {
 					break;
     				
     	/*---------------------------------Move to autozone--------------------------------*/ 
-    		case 5: turnA = robot.turn.PIDturnDegrees(turnDegA);
-					nextStep(turnA);
+    		case 5: //turnA = robot.turn.PIDturnDegrees(turnDegA);
+					nextStep(true);
 					currentStep = "Turning 90 degrees A";
 					break;
 					
-    		case 6: forwardA = robot.straight.driveDistance(forwardDistA);
-					nextStep(forwardA);
+    		case 6: //forwardA = robot.straight.driveDistance(forwardDistA);
+					nextStep(true);
 					currentStep = "Moving to the landmark";
 					break;
 		/*---------------------------------Dropping down tote--------------------------------*/ 		
-    		case 7: elevatorDownA = robot.pot.elevatePIDLock(liftZero);
+    		case 7: elevatorDownA = robot.elevator.zeroElevator();
     				nextStep(elevatorDownA);
     				currentStep = "Dropping container";
     				break;

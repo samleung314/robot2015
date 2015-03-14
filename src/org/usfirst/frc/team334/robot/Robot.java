@@ -64,14 +64,14 @@ public class Robot extends IterativeRobot {
 		autoChoose = new SendableChooser();
 		autoChoose.addDefault("ONE Tote", oneTote);
 		autoChoose.addObject("ONE Container", oneContainer);
-		autoChoose.addObject("TWO Containers", twoContainer);
-		autoChoose.addObject("THREE Totes", threeTotes);
-		autoChoose.addObject("THREE Totes ULTRA", threeTotesUltra);
+		autoChoose.addObject("DO NOT USE 1", twoContainer);
+		autoChoose.addObject("DO NOT USE 2", threeTotes);
+		autoChoose.addObject("DO NOT USE 3", threeTotesUltra);
 		SmartDashboard.putData("Choose Auton Mode", autoChoose);
 	}
 
 	public void autonomousInit() {
-		elevator.elevatorRelease(); // Elevator starts unlocked
+		//elevator.elevatorRelease(); // Elevator starts unlocked
 		smart.getPrefs();
 		encode.resetEncoders();
 		turn.gyro.reset();
@@ -85,9 +85,8 @@ public class Robot extends IterativeRobot {
 	}
 
 	public void autonomousPeriodic() {
-		//Scheduler.getInstance().run();
-		elevatorTuning();
-		//runOnce();
+		Scheduler.getInstance().run();
+		//elevatorTuning();
 		//distanceTuning(smart.autoDist);
 		//turnTuning(smart.autoDegrees);
 		
@@ -130,8 +129,6 @@ public class Robot extends IterativeRobot {
 	}
 
 	public void teleopInit() {
-		elevator.elevatorRelease(); // Elevator starts unlocked
-		//air.flippersRelease(); //Flippers start released
 		encode.resetEncoders();
 		turn.gyro.reset();
 		
