@@ -49,7 +49,7 @@ public class AutonThreeTote extends Command {
 	double liftZero = 0,
 		   liftHeightA = 16, //tote 1 lift
 		   liftHeightB = 16, //tote 2 lift 
-		   liftHeightC = 10, //tote 3 lift
+		   liftHeightC = 12, //tote 3 lift
 		   forwardDistA = 80,//85, //to second tote
 		   forwardDistB = 81, //to last tote
 	       forwardDistC = 155, //to dump zone
@@ -84,9 +84,6 @@ public class AutonThreeTote extends Command {
     	SmartDashboard.putString("Current Step", currentStep);
     	System.out.println("---------->" + currentStep);
   
-    	//driveTurn();
-    	//withBrake();
-    	//withBrakeFix();
     	noBrake();
     }
     
@@ -125,8 +122,8 @@ public class AutonThreeTote extends Command {
 			
 		//---------------------------------Pickup second tote-------------------------------- 
 		case 6:
-			flippersReleaseA = robot.air.flippersAutoRelease();
-			nextStep(flippersReleaseA);
+			//flippersReleaseA = robot.air.flippersAutoRelease();
+			nextStep(true);
 			currentStep = "Flippers release A";
 			break;
 
@@ -156,9 +153,8 @@ public class AutonThreeTote extends Command {
 			break;
 			
 		case 11:
-			flippersGripB = robot.air.flippersAutoRelease();
-			nextStep(flippersGripB);
-			currentStep = "Flippers release B";
+			//flippersGripB = robot.air.flippersAutoRelease();
+			nextStep(true);
 			break;
 
 		case 12:
@@ -195,15 +191,15 @@ public class AutonThreeTote extends Command {
 		//---------------------------------Drop stack-------------------------------- 
 
 		case 17:
-			flippersReleaseB = robot.air.flippersAutoRelease();
-			nextStep(flippersReleaseB);
-			currentStep = "Flippers release B";
-			break;
-			
-		case 18:
 			elevateDownC = robot.elevator.zeroElevator();
 			nextStep(elevateDownC);
 			currentStep = "Dropping off tote stack";
+			break;
+			
+		case 18:
+			flippersReleaseB = robot.air.flippersAutoRelease();
+			nextStep(flippersReleaseB);
+			currentStep = "Flippers release B";
 			break;
 
 		case 19:

@@ -65,13 +65,12 @@ public class Robot extends IterativeRobot {
 		autoChoose.addDefault("ONE Tote", oneTote);
 		autoChoose.addObject("ONE Container", oneContainer);
 		autoChoose.addObject("DO NOT USE 1", twoContainer);
-		autoChoose.addObject("DO NOT USE 2", threeTotes);
+		autoChoose.addObject("THREE Tote", threeTotes);
 		autoChoose.addObject("DO NOT USE 3", threeTotesUltra);
 		SmartDashboard.putData("Choose Auton Mode", autoChoose);
 	}
 
 	public void autonomousInit() {
-		//elevator.elevatorRelease(); // Elevator starts unlocked
 		smart.getPrefs();
 		encode.resetEncoders();
 		turn.gyro.reset();
@@ -98,7 +97,6 @@ public class Robot extends IterativeRobot {
 		
 		SmartDashboard.putData("DistancePID", distance.distancePID);
 		SmartDashboard.putData("StraightPID", straight.keepStraightPID);
-		
 		SmartDashboard.putData("ElevatorPID", pot.elevatorPID);
 		SmartDashboard.putData("TurnPID", turn.turnPID);
 		
