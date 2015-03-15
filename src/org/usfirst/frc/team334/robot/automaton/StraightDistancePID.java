@@ -15,7 +15,7 @@ public class StraightDistancePID implements PIDOutput {
 
 	public PIDController keepStraightPID;
 
-	double straightKp, straightKi, straightKd, straightSpeed;
+	double straightKp = 0.06, straightKi = 0, straightKd = 0.003, straightSpeed;
 
 	public StraightDistancePID(Robot robot) {
 		this.robot = robot;

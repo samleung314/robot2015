@@ -12,7 +12,7 @@ public class DistancePID implements PIDOutput {
     Robot robot;
 
     public PIDController distancePID;
-    double rampKp, rampKi, rampKd, rampSpeed;
+    double rampKp = 0.22, rampKi = 0, rampKd = 0.028, rampSpeed;
 
     Timer rampUpTime, rampDownTime;
 
@@ -23,7 +23,7 @@ public class DistancePID implements PIDOutput {
         rampDownTime = new Timer();
 
         distancePID = new PIDController(rampKp, rampKi, rampKd, robot.encode, this);
-        distancePID.setOutputRange(-1, 1); //Limits the speed to 60% on the victors
+        distancePID.setOutputRange(-1, 0.7); //Limits the speed to 60% on the victors
         distancePID.setAbsoluteTolerance(Constants.distancePIDTolerance);
     }
 

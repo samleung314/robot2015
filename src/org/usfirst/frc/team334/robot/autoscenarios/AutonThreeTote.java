@@ -44,7 +44,9 @@ public class AutonThreeTote extends Command {
 	        //Dump stack
 	        elevatorReleaseC,
 	        elevateDownC,
-	        flippersReleaseB;
+	        flippersReleaseB,
+	        
+	        backLittle;
 	
 	double liftZero = 0,
 		   liftHeightA = 16, //tote 1 lift
@@ -53,7 +55,9 @@ public class AutonThreeTote extends Command {
 		   forwardDistA = 80,//85, //to second tote
 		   forwardDistB = 81, //to last tote
 	       forwardDistC = 155, //to dump zone
-		   turnDegreesA = 90;
+		   turnDegreesA = 90,
+	
+		   backDist = -20;
 	
 	int step;
 	
@@ -75,6 +79,8 @@ public class AutonThreeTote extends Command {
     	travelForwardB = elevatorReleaseB = elevateDownB = flippersGripC = liftToteC = elevatorBrakeC = 
     	turnA = travelForwardC = 
     	elevatorReleaseC = elevateDownC = flippersReleaseB = false;
+    	
+    	backLittle = false;
     	
     }
 
@@ -122,8 +128,8 @@ public class AutonThreeTote extends Command {
 			
 		//---------------------------------Pickup second tote-------------------------------- 
 		case 6:
-			//flippersReleaseA = robot.air.flippersAutoRelease();
-			nextStep(true);
+			flippersReleaseA = robot.air.flippersAutoRelease();
+			nextStep(flippersReleaseA);
 			currentStep = "Flippers release A";
 			break;
 
@@ -153,25 +159,25 @@ public class AutonThreeTote extends Command {
 			break;
 			
 		case 11:
-			//flippersGripB = robot.air.flippersAutoRelease();
-			nextStep(true);
+			flippersGripB = robot.air.flippersAutoRelease();
+			nextStep(flippersGripB);
 			break;
 
 		case 12:
-			elevateDownB = robot.elevator.zeroElevator();
+			elevateDownB = robot.pot.elevatePID(10);
 			nextStep(elevateDownB);
-			currentStep = "Drop elevator B";
+			currentStep = "Lift tote A";
 			break;
 			
 		case 13:
-			flippersGripC = robot.air.flippersAutoGrip();
-			nextStep(flippersGripC);
+			//flippersGripC = robot.air.flippersAutoGrip();
+			nextStep(true);
 			currentStep = "Flippers grip C";
 			break;
 
 		case 14:
-			liftToteC = robot.pot.elevatePID(liftHeightC);
-			nextStep(liftToteC);
+			//liftToteC = robot.pot.elevatePID(liftHeightC);
+			nextStep(true);
 			currentStep = "Lifting third tote";
 			break;
 
@@ -197,9 +203,8 @@ public class AutonThreeTote extends Command {
 			break;
 			
 		case 18:
-			flippersReleaseB = robot.air.flippersAutoRelease();
-			nextStep(flippersReleaseB);
-			currentStep = "Flippers release B";
+			backLittle  = robot.straight.driveDistance(backDist);
+			nextStep(backLittle);
 			break;
 
 		case 19:

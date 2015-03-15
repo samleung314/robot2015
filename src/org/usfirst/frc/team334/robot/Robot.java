@@ -6,6 +6,7 @@ import org.usfirst.frc.team334.robot.human.*;
 import org.usfirst.frc.team334.robot.subsystems.*;
 
 import edu.wpi.first.wpilibj.IterativeRobot;
+import edu.wpi.first.wpilibj.Timer;
 import edu.wpi.first.wpilibj.command.Command;
 import edu.wpi.first.wpilibj.command.Scheduler;
 import edu.wpi.first.wpilibj.smartdashboard.SendableChooser;
@@ -34,6 +35,8 @@ public class Robot extends IterativeRobot {
 
 	public Command autoCommand;
 	public SendableChooser autoChoose;
+	
+	public Timer loopTimer;
 
 	boolean lifted, clamp, once, testDistance, testTurn;
 
@@ -71,6 +74,7 @@ public class Robot extends IterativeRobot {
 	}
 
 	public void autonomousInit() {
+		//Starting loop-time
 		smart.getPrefs();
 		encode.resetEncoders();
 		turn.gyro.reset();
@@ -100,6 +104,7 @@ public class Robot extends IterativeRobot {
 		SmartDashboard.putData("ElevatorPID", pot.elevatorPID);
 		SmartDashboard.putData("TurnPID", turn.turnPID);
 		
+		//Ending loop time
 	}
 	
 	public void distanceTuning(double dist) {

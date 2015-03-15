@@ -36,7 +36,7 @@ public class AutonOneContainer extends Command {
 	double liftZero = 0,
 		   liftHeightA = 30, 
 		   turnDegA = -90,
-		   forwardDistA = 141.5;
+		   forwardDistA = 125;
 	
 	int step;
 	
@@ -118,8 +118,13 @@ public class AutonOneContainer extends Command {
 					currentStep = "Flippers release B";
 					break;
 					
-    		case 9: autonDone = true;
-					 break;	
+    		case 9: forwardA = robot.straight.driveDistance(forwardDistA);
+					nextStep(forwardA);
+					currentStep = "Move to second tote";
+					break;
+					 
+    		case 10: autonDone = true;
+			 		break;	
 					
 			default: System.out.println("Auton One is defaulting");
 					break;
